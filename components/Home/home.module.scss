@@ -1,0 +1,15 @@
+.tradeMark_section {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: ' ';
+    width: 20%;
+    height: 2px;
+    background-color: var(--primary-light-color);
+    bottom: -1rem;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+  }
+}

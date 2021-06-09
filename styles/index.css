@@ -26,6 +26,36 @@
   .text-primary-dark {
     color: var( --primary-dark-color);
   }
+  .bg-gray-light {
+    background-color: var( --gray-light-color);
+  }
+  .text-gray-light {
+    color: var( --gray-light-color);
+  }
+  .bg-gray-medium {
+    background-color: var( --gray-medium-color);
+  }
+  .text-gray-medium {
+    color: var( --gray-medium-color);
+  }
+  .bg-gray-dark {
+    background-color: var( --gray-dark-color);
+  }
+  .text-gray-dark {
+    color: var( --gray-dark-color);
+  }
+  .bg-secondary-light {
+    background-color: var( --secondary-light-color);
+  }
+  .text-secondary-light {
+    color: var( --secondary-light-color);
+  }
+  .bg-secondary-dark {
+    background-color: var( --secondary-dark-color);
+  }
+  .text-secondary-dark {
+    color: var( --secondary-dark-color);
+  }
 }
 
 @layer components {

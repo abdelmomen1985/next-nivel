@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  body {
+    --primary-light-color: #D4B561;
+    --primary-dark-color: #8A6B3E;
+    --gray-light-color: #e3e3e3;
+    --gray-medium-color: #B5BEC4;
+    --gray-dark-color: #5f686e;
+    --secondary-light-color: #D8BA8E;
+    --secondary-dark-color: #AD926B;
+  }
+}
+
+@layer utilities {
+  .bg-primary-light {
+    background-color: var( --primary-light-color);
+  }
+  .text-primary-light {
+    color: var( --primary-light-color);
+  }
+  .bg-primary-dark {
+    background-color: var( --primary-dark-color);
+  }
+  .text-primary-dark {
+    color: var( --primary-dark-color);
+  }
+}
+
+@layer components {
+  .btn-primary-light {
+    @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
+  }
+  .btn-primary-dark {
+    @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md
+  }
+}
+
+button {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}

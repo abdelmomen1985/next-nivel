@@ -1,0 +1,56 @@
+.backdrop {
+  position: fixed;
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 120, 130, .3);
+  z-index: 9999;
+  cursor: pointer;
+
+  .modal {
+    top: 20%;
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    opacity: 1;
+    position: absolute;
+    font-size: 2rem;
+    z-index: 999;
+    transition: opacity 0.3s;
+    padding: 30px 25px;
+    border-radius: 15px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 4px 10px 5px rgba(0, 0, 0, 0.16);
+
+    @media screen and (max-width: 760px) {
+      width: 90%;
+      margin: auto;
+    }
+
+    .modalContent {
+      position: relative;
+      top: 20%;
+      width: 100%;
+      right: auto;
+      left: auto;
+      margin: 0 auto;
+
+    }
+  }
+
+
+}
+
+@media screen and (max-width: 800px) {
+  .modal {
+    .popup {
+      width: 90%;
+    }
+  }
+}

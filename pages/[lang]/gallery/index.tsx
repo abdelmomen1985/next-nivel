@@ -3,7 +3,7 @@ import React from 'react'
 import Layout from '../../../Layouts/Layout';
 import { getLocalizationProps } from '../../../Context/LangContext';
 
-const RoomsPage = () => {
+const GalleryPage = () => {
   return (
     <Layout>
       Rooms page
@@ -11,7 +11,7 @@ const RoomsPage = () => {
   )
 }
 
-export default RoomsPage
+export default GalleryPage
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const localization = getLocalizationProps(ctx, "common");

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import styles from './CustomModal.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AppContext } from './../../../Context/AppContextProvider';
+import { AppContext } from '../../../Context/AppContext';
 
 
 

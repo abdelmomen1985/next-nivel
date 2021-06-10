@@ -1,7 +1,7 @@
 import React from 'react'
 import { Slide } from 'react-slideshow-image';
 import { useContext } from 'react';
-import { AppContext } from './../../context/AppContext';
+import { AppContext } from '../../Context/AppContext';
 
 const sliderImgs = [
   '/images/hero-slider/1.png',

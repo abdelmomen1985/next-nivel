@@ -5,6 +5,7 @@ import useTranslation from '../../hooks/useTranslation';
 import TopLevel from './HeaderSections/TopLevel';
 import NavLinks from './HeaderSections/NavLinks';
 import clsx from 'clsx'
+import Filters from './HeaderSections/Filters';
 const Header = () => {
   const { locale } = useTranslation();
   const [isFixed, setIsFixed] = useState(false)
@@ -27,6 +28,7 @@ const Header = () => {
     <nav className={clsx(styles.navBar, isFixed ? 'fixed bg-white' : 'relative')}>
       <TopLevel />
       <NavLinks />
+      <Filters />
     </nav>
   )
 }

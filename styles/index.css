@@ -17,11 +17,19 @@
   .bg-primary-light {
     background-color: var( --primary-light-color);
   }
+  .bg-outline-primary-light {
+    background-color: transparent;
+    border: 1px solid var(--primary-light-color)
+  }
   .text-primary-light {
     color: var( --primary-light-color);
   }
   .bg-primary-dark {
     background-color: var( --primary-dark-color);
+  }
+  .bg-outline-primary-dark {
+    background-color: transparent;
+    border: 1px solid var(--primary-dark-color)
   }
   .text-primary-dark {
     color: var( --primary-dark-color);
@@ -62,8 +70,14 @@
   .btn-primary-light {
     @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
   }
-  .btn-primary-dark {
-    @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md
+  .btn-primary-light {
+    @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
+  }
+  .btn-outline-primary-light {
+    @apply bg-outline-primary-light text-primary-light py-3 px-5 rounded-md shadow-md
+  }
+  .btn-outline-primary-dark {
+    @apply bg-outline-primary-dark text-primary-dark py-3 px-5 rounded-md shadow-md
   }
 }
 

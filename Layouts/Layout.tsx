@@ -3,9 +3,10 @@ import React, { ReactNode } from "react";
 import useTranslation from "../hooks/useTranslation";
 import Header from '../components/navigation/Header';
 // import Footer from '../navigation/Footer';
+import TheFooter from '../components/navigation/TheFooter';
 
 type LayoutProps = {
-  children?: ReactNode;
+  children?: React.ReactNode;
   title?: string;
 };
 
@@ -25,7 +26,7 @@ const Layout = ({
       <Header />
       {children}
 
-      {/* <Footer title={title} /> */}
+      <TheFooter />
     </div>
   );
 };

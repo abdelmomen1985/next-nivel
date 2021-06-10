@@ -8,8 +8,8 @@ import {
 import { AppReducer } from "./AppReducer";
 import { ACTION_TYPES, StateType } from "./ContextUtils";
 import { useRouter } from "next/router";
-import useTranslation from "./../hooks/useTranslation";
-import useWindowSize from "./../hooks/useWindowSize";
+import useTranslation from "../hooks/useTranslation";
+import useWindowSize from "../hooks/useWindowSize";
 
 const initialState = {
 

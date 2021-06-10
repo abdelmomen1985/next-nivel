@@ -1,11 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from "next/link";
-import { getLocalizationProps } from './../../context/LangContext';
+import { getLocalizationProps } from '../../Context/LangContext'
 import Layout from "../../Layouts/Layout";
 import HeroSection from '../../components/Home/HeroSection';
 import StatsSection from '../../components/Home/StatsSection'
 import TradeMarkSection from '../../components/Home/TradeMarkSection'
 import AmenitiesSection from '../../components/Home/AmenitiesSection'
+import RoomsNdSuits from '../../components/Home/RoomsNdSuits';
+import Dining from '../../components/Home/Dining';
+import MeetingsNdEvents from '../../components/Home/MeetingsNdEvents';
+
 
 const HomePage = () => (
   <Layout title="Home Page">
@@ -13,6 +17,9 @@ const HomePage = () => (
     <StatsSection />
     <TradeMarkSection />
     <AmenitiesSection />
+    <RoomsNdSuits />
+    <Dining />
+    <MeetingsNdEvents />
   </Layout>
 );
 

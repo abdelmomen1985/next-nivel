@@ -1,26 +1,24 @@
-import React from 'react';
-import clsx from 'clsx';
-import styles from './home.module.scss';
-
+import React from "react";
+import styles from "./home.module.scss";
 
 const eventsData = [
   {
-    count: '208',
-    title: 'SQ. M. OF TOTAL EVENT SPACE'
+    count: "208",
+    title: "SQ. M. OF TOTAL EVENT SPACE",
   },
   {
-    count: '104',
-    title: 'SQ. M. OF LARGEST ROOM SETUP'
+    count: "104",
+    title: "SQ. M. OF LARGEST ROOM SETUP",
   },
   {
-    count: '2',
-    title: 'MEETING ROOMS'
+    count: "2",
+    title: "MEETING ROOMS",
   },
   {
-    count: '484',
-    title: 'GUEST ROOMS'
+    count: "484",
+    title: "GUEST ROOMS",
   },
-]
+];
 const MeetingsNdEvents = () => {
   return (
     <section className="mt-5 mb-0 w-full relative ">
@@ -40,7 +38,7 @@ const MeetingsNdEvents = () => {
         </button>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default MeetingsNdEvents
+export default MeetingsNdEvents;

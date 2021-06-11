@@ -1,6 +1,5 @@
 import React from 'react'
-import clsx from 'clsx'
-import styles from './home.module.scss'
+
 const Dining = () => {
 
   return (

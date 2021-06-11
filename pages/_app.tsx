@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react";
 // import { AppProps } from 'next/app'
-import { LanguageProvider } from '../Context/LangContext'
-import AppContextProvider from '../Context/AppContext'
-import '../styles/index.css'
-import 'react-slideshow-image/dist/styles.css'
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-// import "@fortawesome/fontawesome-free/css/all.css"; 
-
+import { LanguageProvider } from "../context/LangContext";
+import AppContextProvider from "../context/AppContext";
+import "../styles/index.css";
+import "react-slideshow-image/dist/styles.css";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+// import "@fortawesome/fontawesome-free/css/all.css";
 
 function MyApp(ctx: any) {
   return (
@@ -16,8 +15,7 @@ function MyApp(ctx: any) {
         <ctx.Component {...ctx.pageProps} />
       </LanguageProvider>
     </AppContextProvider>
-
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

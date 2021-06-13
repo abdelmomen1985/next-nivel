@@ -1,17 +1,13 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import React from 'react'
-import Layout from '../../../Layouts/Layout';
-import { getLocalizationProps } from '../../../Context/LangContext';
+import { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
+import Layout from "../../../Layouts/Layout";
+import { getLocalizationProps } from "../../../context/LangContext";
 
 const LocationPage = () => {
-  return (
-    <Layout>
-      Rooms page
-    </Layout>
-  )
-}
+  return <Layout>Rooms page</Layout>;
+};
 
-export default LocationPage
+export default LocationPage;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const localization = getLocalizationProps(ctx, "common");

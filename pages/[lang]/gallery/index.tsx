@@ -1,17 +1,13 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import React from 'react'
-import Layout from '../../../Layouts/Layout';
-import { getLocalizationProps } from '../../../Context/LangContext';
+import { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
+import Layout from "../../../Layouts/Layout";
+import { getLocalizationProps } from "../../../context/LangContext";
 
 const GalleryPage = () => {
-  return (
-    <Layout>
-      Rooms page
-    </Layout>
-  )
-}
+  return <Layout>Rooms page</Layout>;
+};
 
-export default GalleryPage
+export default GalleryPage;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const localization = getLocalizationProps(ctx, "common");

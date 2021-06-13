@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
 import { DateRange } from "react-date-range";
-import clsx from 'clsx'
+import clsx from "clsx";
 import styles from "../navigation.module.scss";
 
 const today = new Date();
@@ -11,10 +11,10 @@ const singleRoom = {
   childCount: 0,
 };
 const Filters = () => {
-  const { handleSubmit, reset, register, errors } = useForm({
-    mode: 'onTouched',
-    reValidateMode: "onBlur"
-  })
+  const { handleSubmit, register } = useForm({
+    mode: "onTouched",
+    reValidateMode: "onBlur",
+  });
   const datePickerRef = useRef<HTMLDivElement>(null);
   const [initalDateRange, setInitialDateRange] = useState([
     {
@@ -87,9 +87,9 @@ const Filters = () => {
     setRoomDetails(newRoomDetails);
   };
   const checkRoomsHandler = (data: any) => {
-    console.log('data')
+    console.log("data");
     console.log(data);
-  }
+  };
   useEffect(() => {
     let roomDets = [...roomDetails];
     let newRoomCount = roomDets.length;
@@ -113,7 +113,10 @@ const Filters = () => {
     };
   }, []);
   return (
-    <form onSubmit={handleSubmit(checkRoomsHandler)} className="w-full bg-white flex flex-wrap justify-center items-center py-5">
+    <form
+      onSubmit={handleSubmit(checkRoomsHandler)}
+      className="w-full bg-white flex flex-wrap justify-center items-center py-5"
+    >
       <div className={styles.dateContainer}>
         <h3 onClick={() => setShowDatePicker(true)}>
           {currentDateRange?.startDate.toLocaleDateString("en-GB", {
@@ -162,7 +165,10 @@ const Filters = () => {
               <h5 className="text-center text-lg font-medium">Kids</h5>
             </div>
             {roomDetails.map((room, i) => (
-              <div key={i} className="grid grid-cols-3 gap-2 items-center my-4 border-b pb-3">
+              <div
+                key={i}
+                className="grid grid-cols-3 gap-2 items-center my-4 border-b pb-3"
+              >
                 <div className="flex justify-start items-center">
                   {roomDetails.length > 1 && (
                     <button
@@ -233,7 +239,11 @@ const Filters = () => {
             </button>
 
             <div className="flex justify-end items-center my-t mb-0 mr-2">
-              <button type="button" onClick={() => setShowRooms(false)} className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer">
+              <button
+                type="button"
+                onClick={() => setShowRooms(false)}
+                className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
+              >
                 Close
               </button>
             </div>
@@ -248,58 +258,189 @@ const Filters = () => {
         >
           Special Rates
         </button>
-        <div className={showSpecialRate ? styles.datePickerContainer : 'hidden'} ref={datePickerRef} >
-
+        <div
+          className={showSpecialRate ? styles.datePickerContainer : "hidden"}
+          ref={datePickerRef}
+        >
           <div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="usePoints" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="usePoints">Use Points</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="usePoints"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="usePoints"
+              >
+                Use Points
+              </label>
             </div>
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="travelAgents" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="travelAgents">Travel Agents</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="travelAgents"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="travelAgents"
+              >
+                Travel Agents
+              </label>
             </div>
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="aaaRate" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="aaaRate">AAA Rate</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="aaaRate"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="aaaRate"
+              >
+                AAA Rate
+              </label>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="AARPRate" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="AARPRate">AARP Rate</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="AARPRate"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="AARPRate"
+              >
+                AARP Rate
+              </label>
             </div>
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="seniorRate" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="seniorRate">Senior Rate</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="seniorRate"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="seniorRate"
+              >
+                Senior Rate
+              </label>
             </div>
-            <div className={clsx(styles.formGroup, "flex justify-start items-center mx-1")}>
-              <input type="checkbox" className="mx-1" ref={register} name="governmentRates" />
-              <label className="text-lg text-primary-dark font-medium" htmlFor="governmentRates">Government Rates</label>
+            <div
+              className={clsx(
+                styles.formGroup,
+                "flex justify-start items-center mx-1"
+              )}
+            >
+              <input
+                type="checkbox"
+                className="mx-1"
+                ref={register}
+                name="governmentRates"
+              />
+              <label
+                className="text-lg text-primary-dark font-medium"
+                htmlFor="governmentRates"
+              >
+                Government Rates
+              </label>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
             <div className="flex flex-col justify-start">
-              <label className="text-base text-primary-dark font-medium" htmlFor="promotionCode">Promotion Code</label>
-              <input type="text" className="border border-gray-300 w-11/12 py-3" ref={register} name="promotionCode" />
+              <label
+                className="text-base text-primary-dark font-medium"
+                htmlFor="promotionCode"
+              >
+                Promotion Code
+              </label>
+              <input
+                type="text"
+                className="border border-gray-300 w-11/12 py-3"
+                ref={register}
+                name="promotionCode"
+              />
             </div>
             <div className="flex flex-col justify-start">
-              <label className="text-base text-primary-dark font-medium" htmlFor="groupCode">Group Code</label>
-              <input type="text" className="border border-gray-300 w-11/12 py-3" ref={register} name="groupCode" />
+              <label
+                className="text-base text-primary-dark font-medium"
+                htmlFor="groupCode"
+              >
+                Group Code
+              </label>
+              <input
+                type="text"
+                className="border border-gray-300 w-11/12 py-3"
+                ref={register}
+                name="groupCode"
+              />
             </div>
             <div className="flex flex-col justify-start">
-              <label className="text-base text-primary-dark font-medium" htmlFor="corporateAccount">Corporate Account</label>
-              <input type="text" className="border border-gray-300 w-11/12 py-3" ref={register} name="corporateAccount" />
+              <label
+                className="text-base text-primary-dark font-medium"
+                htmlFor="corporateAccount"
+              >
+                Corporate Account
+              </label>
+              <input
+                type="text"
+                className="border border-gray-300 w-11/12 py-3"
+                ref={register}
+                name="corporateAccount"
+              />
             </div>
           </div>
           <div className="flex justify-end items-center my-t mb-0 mr-2">
-            <button type="button" onClick={() => setShowSpecialRate(false)} className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer">
+            <button
+              type="button"
+              onClick={() => setShowSpecialRate(false)}
+              className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
+            >
               Close
             </button>
           </div>
         </div>
       </div>
-      <button type="submit" className="btn-primary-dark mx-2 py-3 px-8 text-white">Check Rooms & Rates</button>
+      <button
+        type="submit"
+        className="btn-primary-dark mx-2 py-3 px-8 text-white"
+      >
+        Check Rooms & Rates
+      </button>
     </form>
   );
 };

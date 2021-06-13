@@ -9,30 +9,41 @@ const CustomModal = ({
   onClose,
   style,
   wrapperStyle,
+  closeWithin,
+  title
 }: {
   children: React.ReactNode;
   show: boolean;
   onClose: () => void;
   style?: any;
   wrapperStyle?: any;
+  closeWithin?: boolean;
+  title?: string
 }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { isMobile } = useContext(AppContext);
-  const backdrop = {
-    visible: { opacity: 1 },
+  const backDrop = {
     hidden: { opacity: 0 },
+    visible: { opacity: 1 },
   };
   const modal = {
-    hidden: {
-      y: "-100vh",
+    initial: {
       opacity: 0,
+      scale: 0.25,
     },
-    visible: {
-      y: isMobile ? "0" : "20%",
+    current: {
       opacity: 1,
+      scale: 1,
       transform: { delay: 1 },
+      transition: { duration: 0.6 },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0,
+      transition: { duration: 0.6 },
     },
   };
+
   useEffect(() => {
     //  add when mounted
     document.addEventListener("mousedown", handleClick);
@@ -56,19 +67,34 @@ const CustomModal = ({
     <AnimatePresence exitBeforeEnter>
       {show && (
         <motion.div
-          className={styles.backdrop}
-          variants={backdrop}
+          variants={backDrop}
           initial="hidden"
           animate="visible"
           exit="hidden"
+          className={styles.backdrop}
+          style={{ ...wrapperStyle }}
         >
           <motion.div
-            ref={modalRef}
-            style={{ ...wrapperStyle }}
-            className={styles.modal}
             variants={modal}
+            initial="initial"
+            animate="current"
+            exit="exit"
+            className={styles.modal}
+            ref={modalRef}
+            style={{ ...style }}
           >
-            <div style={{ ...style }} className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              {closeWithin && (
+                <button onClick={onClose} className={styles.closeBtn}>
+                  &times;
+                </button>
+              )}
+              {
+                title && <h2 className="text-2xl capitalize font-semibold text-center text-primary-dark">{title}</h2>
+              }
+            </div>
+            <div className={styles.modalContent}>
+
               {children}
             </div>
           </motion.div>

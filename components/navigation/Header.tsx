@@ -14,12 +14,11 @@ const Header = () => {
     };
   }, []);
   const changeNavPosition = () => {
-    console.log(screenY);
-    if (window.scrollY > 50) {
-      setIsFixed(true);
-    } else {
-      setIsFixed(false);
-    }
+    // if (window.scrollY > 50) {
+    //   setIsFixed(true);
+    // } else {
+    //   setIsFixed(false);
+    // }
   };
   return (
     <nav

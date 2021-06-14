@@ -70,7 +70,7 @@
   .btn-primary-light {
     @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
   }
-  .btn-primary-dark {
+  .btn-primary-light {
     @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md
   }
   .btn-outline-primary-light {

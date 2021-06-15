@@ -10,6 +10,7 @@ const Header = ({
 	withFilters?: boolean | undefined;
 }) => {
 	const [isFixed, setIsFixed] = useState(false);
+	const [filtersState, updateFiltersState] = useState(undefined);
 	useEffect(() => {
 		window.addEventListener('scroll', changeNavPosition);
 
@@ -30,7 +31,7 @@ const Header = ({
 		>
 			<TopLevel />
 			<NavLinks />
-			{withFilters && <Filters />}
+			{withFilters && <Filters updateFilters={updateFiltersState} />}
 		</nav>
 	);
 };

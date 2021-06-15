@@ -27,7 +27,7 @@ const common = {
   viewDining: "View all Dining",
   meetingsNdEvents: "Meetings and Events",
   meetStyle: "Meet in Style",
-
+  update: "update"
 };
 
 export default common;

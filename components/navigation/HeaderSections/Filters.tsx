@@ -36,8 +36,12 @@ const filtersDefaultValues = {
 };
 const Filters = ({
 	filterValues = filtersDefaultValues,
+	title = 'header',
+	updateFilters,
 }: {
 	filterValues?: any;
+	title?: string;
+	updateFilters: (filters: any) => void;
 }) => {
 	const { handleSubmit, register, setValue } = useForm({
 		mode: 'onTouched',
@@ -136,6 +140,20 @@ const Filters = ({
 		sessionStorage.setItem('filterValues', JSON.stringify(searchData));
 		router.push(`/${locale}/booking`);
 	};
+	const updateFiltersHandler = (data: any) => {
+		let searchData = {
+			...data,
+			roomCount,
+			totalGuestCount,
+			currentDateRange: {
+				startDate: new Date(currentDateRange?.startDate),
+				endDate: new Date(currentDateRange?.endDate),
+				key: currentDateRange?.key,
+			},
+			roomDetails,
+		};
+		updateFilters(searchData);
+	};
 	useEffect(() => {
 		let roomDets = [...roomDetails];
 		let newRoomCount = roomDets.length;
@@ -181,335 +199,346 @@ const Filters = ({
 		};
 	}, []);
 	return (
-		<form
-			onSubmit={handleSubmit(checkRoomsHandler)}
-			className="w-full bg-white flex flex-wrap justify-center items-center py-5"
+		<div
+			className={clsx(
+				title === 'booking' ? 'bg-gray-300 py-10 mx-5' : 'bg-white py-5',
+				'w-full flex flex-wrap justify-center items-center '
+			)}
 		>
-			<div className={styles.dateContainer}>
-				<h3 onClick={() => setShowDatePicker(true)}>
-					{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
-						day: 'numeric',
-						month: 'short',
-						year: 'numeric',
-					})}
-				</h3>
-				<h3 onClick={() => setShowDatePicker(true)}>
-					{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-						day: 'numeric',
-						month: 'short',
-						year: 'numeric',
-					})}
-				</h3>
-				{showDatePicker && (
-					<div className={styles.datePickerContainer} ref={datePickerRef}>
-						<DateRange
-							onChange={(item) => {
-								setInitialDateRange([item?.selection]);
-								setCurrentDateRange({ ...item?.selection });
-							}}
-							moveRangeOnFirstSelection={false}
-							ranges={initalDateRange}
-							editableDateInputs={false}
-							minDate={new Date()}
-							showPreview={false}
-							showDateDisplay={false}
-						/>
-					</div>
+			<form
+				onSubmit={handleSubmit(
+					title === 'header' ? checkRoomsHandler : updateFiltersHandler
 				)}
-			</div>
-			<div className="mx-2 relative">
-				<button
-					onClick={() => setShowRooms(true)}
-					className="btn-outline-primary-dark"
-					type="button"
-				>
-					{roomCount} {t('rooms')}, {totalGuestCount} {t('guests')}
-				</button>
-				{showRooms && (
-					<div className={styles.datePickerContainer} ref={datePickerRef}>
-						<div className="grid grid-cols-3 gap-2 items-center my-3">
-							<h5 className="text-lg font-medium">Rooms</h5>
-							<h5 className="text-center text-lg font-medium">Adults</h5>
-							<h5 className="text-center text-lg font-medium">Kids</h5>
+				className="w-full flex flex-wrap justify-center items-center my-3"
+			>
+				<div className={styles.dateContainer}>
+					<h3 onClick={() => setShowDatePicker(true)}>
+						{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						})}
+					</h3>
+					<h3 onClick={() => setShowDatePicker(true)}>
+						{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						})}
+					</h3>
+					{showDatePicker && (
+						<div className={styles.datePickerContainer} ref={datePickerRef}>
+							<DateRange
+								onChange={(item) => {
+									setInitialDateRange([item?.selection]);
+									setCurrentDateRange({ ...item?.selection });
+								}}
+								moveRangeOnFirstSelection={false}
+								ranges={initalDateRange}
+								editableDateInputs={false}
+								minDate={new Date()}
+								showPreview={false}
+								showDateDisplay={false}
+							/>
 						</div>
-						{roomDetails.map((room, i) => (
-							<div
-								key={i}
-								className="grid grid-cols-3 gap-2 items-center my-4 border-b pb-3"
-							>
-								<div className="flex justify-start items-center">
-									{roomDetails.length > 1 && (
+					)}
+				</div>
+				<div className="mx-2 relative">
+					<button
+						onClick={() => setShowRooms(true)}
+						className="btn-outline-primary-dark"
+						type="button"
+					>
+						{roomCount} {t('rooms')}, {totalGuestCount} {t('guests')}
+					</button>
+					{showRooms && (
+						<div className={styles.datePickerContainer} ref={datePickerRef}>
+							<div className="grid grid-cols-3 gap-2 items-center my-3">
+								<h5 className="text-lg font-medium">Rooms</h5>
+								<h5 className="text-center text-lg font-medium">Adults</h5>
+								<h5 className="text-center text-lg font-medium">Kids</h5>
+							</div>
+							{roomDetails.map((room, i) => (
+								<div
+									key={i}
+									className="grid grid-cols-3 gap-2 items-center my-4 border-b pb-3"
+								>
+									<div className="flex justify-start items-center">
+										{roomDetails.length > 1 && (
+											<button
+												type="button"
+												onClick={() => removeRoomHandler(i)}
+												className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+											>
+												&times;
+											</button>
+										)}{' '}
+										<h3 className="text-center text-lg font-medium ml-2">
+											Room {i + 1}
+										</h3>
+									</div>
+									<div className="flex justify-between items-center mx-3">
 										<button
 											type="button"
-											onClick={() => removeRoomHandler(i)}
+											disabled={room.adultsCount === 1}
+											onClick={() => decrementGuestsHandler('adult', i)}
 											className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
 										>
-											&times;
+											&minus;
 										</button>
-									)}{' '}
-									<h3 className="text-center text-lg font-medium ml-2">
-										Room {i + 1}
-									</h3>
+										<h5 className="text-center text-lg font-medium">
+											{room.adultsCount}
+										</h5>
+										<button
+											type="button"
+											onClick={() => incrementGuestsHandler('adult', i)}
+											className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+										>
+											&#43;
+										</button>
+									</div>
+									<div className="flex justify-between items-center mx-3">
+										<button
+											type="button"
+											disabled={room.childCount === 0}
+											onClick={() => decrementGuestsHandler('kid', i)}
+											className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+										>
+											&minus;
+										</button>
+										<h5 className="text-center text-lg font-medium">
+											{room.childCount}
+										</h5>
+										<button
+											type="button"
+											onClick={() => incrementGuestsHandler('kid', i)}
+											className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+										>
+											&#43;
+										</button>
+									</div>
 								</div>
-								<div className="flex justify-between items-center mx-3">
-									<button
-										type="button"
-										disabled={room.adultsCount === 1}
-										onClick={() => decrementGuestsHandler('adult', i)}
-										className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
-									>
-										&minus;
-									</button>
-									<h5 className="text-center text-lg font-medium">
-										{room.adultsCount}
-									</h5>
-									<button
-										type="button"
-										onClick={() => incrementGuestsHandler('adult', i)}
-										className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
-									>
-										&#43;
-									</button>
-								</div>
-								<div className="flex justify-between items-center mx-3">
-									<button
-										type="button"
-										disabled={room.childCount === 0}
-										onClick={() => decrementGuestsHandler('kid', i)}
-										className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
-									>
-										&minus;
-									</button>
-									<h5 className="text-center text-lg font-medium">
-										{room.childCount}
-									</h5>
-									<button
-										type="button"
-										onClick={() => incrementGuestsHandler('kid', i)}
-										className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
-									>
-										&#43;
-									</button>
-								</div>
-							</div>
-						))}
-						<button
-							type="button"
-							onClick={() =>
-								setRoomDetails((prev) => [...prev, { ...singleRoom }])
-							}
-							className="flex justify-start items-center my-4 border-none bg-transparent"
-						>
-							<i className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-2">
-								&#43;
-							</i>
-							<h3 className="text-center text-lg font-normal">Add a Room</h3>
-						</button>
+							))}
+							<button
+								type="button"
+								onClick={() =>
+									setRoomDetails((prev) => [...prev, { ...singleRoom }])
+								}
+								className="flex justify-start items-center my-4 border-none bg-transparent"
+							>
+								<i className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-2">
+									&#43;
+								</i>
+								<h3 className="text-center text-lg font-normal">Add a Room</h3>
+							</button>
 
+							<div className="flex justify-end items-center my-t mb-0 mr-2">
+								<button
+									type="button"
+									onClick={() => setShowRooms(false)}
+									className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
+								>
+									{t('close')}
+								</button>
+							</div>
+						</div>
+					)}
+				</div>
+				<div className="mx-2 relative">
+					<button
+						onClick={() => setShowSpecialRate(true)}
+						className="btn-outline-primary-dark"
+						type="button"
+					>
+						{t('specialRates')}
+					</button>
+					<div
+						className={showSpecialRate ? styles.datePickerContainer : 'hidden'}
+						ref={specialRateRef}
+					>
+						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="usePoints"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="usePoints"
+								>
+									Use Points
+								</label>
+							</div>
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="travelAgents"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="travelAgents"
+								>
+									Travel Agents
+								</label>
+							</div>
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="aaaRate"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="aaaRate"
+								>
+									AAA Rate
+								</label>
+							</div>
+						</div>
+						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="AARPRate"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="AARPRate"
+								>
+									AARP Rate
+								</label>
+							</div>
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="seniorRate"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="seniorRate"
+								>
+									Senior Rate
+								</label>
+							</div>
+							<div
+								className={clsx(
+									styles.formGroup,
+									'flex justify-start items-center mx-1'
+								)}
+							>
+								<input
+									type="checkbox"
+									className="mx-1"
+									ref={register}
+									name="governmentRates"
+								/>
+								<label
+									className="text-lg text-primary-dark font-medium"
+									htmlFor="governmentRates"
+								>
+									Government Rates
+								</label>
+							</div>
+						</div>
+						<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
+							<div className="flex flex-col justify-start">
+								<label
+									className="text-base text-primary-dark font-medium"
+									htmlFor="promotionCode"
+								>
+									Promotion Code
+								</label>
+								<input
+									type="text"
+									className="border border-gray-300 w-11/12 py-3"
+									ref={register}
+									name="promotionCode"
+								/>
+							</div>
+							<div className="flex flex-col justify-start">
+								<label
+									className="text-base text-primary-dark font-medium"
+									htmlFor="groupCode"
+								>
+									Group Code
+								</label>
+								<input
+									type="text"
+									className="border border-gray-300 w-11/12 py-3"
+									ref={register}
+									name="groupCode"
+								/>
+							</div>
+							<div className="flex flex-col justify-start">
+								<label
+									className="text-base text-primary-dark font-medium"
+									htmlFor="corporateAccount"
+								>
+									Corporate Account
+								</label>
+								<input
+									type="text"
+									className="border border-gray-300 w-11/12 py-3"
+									ref={register}
+									name="corporateAccount"
+								/>
+							</div>
+						</div>
 						<div className="flex justify-end items-center my-t mb-0 mr-2">
 							<button
 								type="button"
-								onClick={() => setShowRooms(false)}
+								onClick={() => setShowSpecialRate(false)}
 								className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
 							>
 								{t('close')}
 							</button>
 						</div>
 					</div>
-				)}
-			</div>
-			<div className="mx-2 relative">
-				<button
-					onClick={() => setShowSpecialRate(true)}
-					className="btn-outline-primary-dark"
-					type="button"
-				>
-					{t('specialRates')}
-				</button>
-				<div
-					className={showSpecialRate ? styles.datePickerContainer : 'hidden'}
-					ref={specialRateRef}
-				>
-					<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="usePoints"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="usePoints"
-							>
-								Use Points
-							</label>
-						</div>
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="travelAgents"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="travelAgents"
-							>
-								Travel Agents
-							</label>
-						</div>
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="aaaRate"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="aaaRate"
-							>
-								AAA Rate
-							</label>
-						</div>
-					</div>
-					<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="AARPRate"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="AARPRate"
-							>
-								AARP Rate
-							</label>
-						</div>
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="seniorRate"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="seniorRate"
-							>
-								Senior Rate
-							</label>
-						</div>
-						<div
-							className={clsx(
-								styles.formGroup,
-								'flex justify-start items-center mx-1'
-							)}
-						>
-							<input
-								type="checkbox"
-								className="mx-1"
-								ref={register}
-								name="governmentRates"
-							/>
-							<label
-								className="text-lg text-primary-dark font-medium"
-								htmlFor="governmentRates"
-							>
-								Government Rates
-							</label>
-						</div>
-					</div>
-					<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
-						<div className="flex flex-col justify-start">
-							<label
-								className="text-base text-primary-dark font-medium"
-								htmlFor="promotionCode"
-							>
-								Promotion Code
-							</label>
-							<input
-								type="text"
-								className="border border-gray-300 w-11/12 py-3"
-								ref={register}
-								name="promotionCode"
-							/>
-						</div>
-						<div className="flex flex-col justify-start">
-							<label
-								className="text-base text-primary-dark font-medium"
-								htmlFor="groupCode"
-							>
-								Group Code
-							</label>
-							<input
-								type="text"
-								className="border border-gray-300 w-11/12 py-3"
-								ref={register}
-								name="groupCode"
-							/>
-						</div>
-						<div className="flex flex-col justify-start">
-							<label
-								className="text-base text-primary-dark font-medium"
-								htmlFor="corporateAccount"
-							>
-								Corporate Account
-							</label>
-							<input
-								type="text"
-								className="border border-gray-300 w-11/12 py-3"
-								ref={register}
-								name="corporateAccount"
-							/>
-						</div>
-					</div>
-					<div className="flex justify-end items-center my-t mb-0 mr-2">
-						<button
-							type="button"
-							onClick={() => setShowSpecialRate(false)}
-							className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
-						>
-							{t('close')}
-						</button>
-					</div>
 				</div>
-			</div>
-			<button
-				type="submit"
-				className="btn-primary-light mx-2 py-3 px-8 text-white"
-			>
-				{t('checkRoomsRates')}
-			</button>
-		</form>
+				{
+					<button
+						type="submit"
+						className="btn-primary-light mx-2 py-3 px-8 text-white capitalize"
+					>
+						{title === 'header' ? t('checkRoomsRates') : t('update')}
+					</button>
+				}
+			</form>
+		</div>
 	);
 };
 

@@ -8,6 +8,9 @@ import styles from './meetings.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import useTranslation from './../../../hooks/useTranslation';
+
+import { initializeApollo } from '../../../lib/apolloClient';
+import { MEETING_ROOMS } from './../../../query/meeting_rooms';
 const eventsData = [
 	{
 		count: '208',
@@ -54,9 +57,9 @@ const eventsData = [
 		},
 	},
 ];
-const MeetingsPage = () => {
+const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 	const { t, locale } = useTranslation();
-	const [activeTab, setActiveTab] = useState<number>(1);
+	const [activeTab, setActiveTab] = useState<string>('conference');
 	return (
 		<Layout>
 			<section className="w-full">
@@ -127,102 +130,72 @@ const MeetingsPage = () => {
 				<div className="border border-t-0 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
 					<button
 						onClick={() => {
-							setActiveTab(1);
+							setActiveTab('conference');
 						}}
-						className={clsx(activeTab === 1 ? styles.active : '', styles.tab)}
-					>
-						Banquet
-					</button>
-					<button
-						onClick={() => {
-							setActiveTab(2);
-						}}
-						className={clsx(activeTab === 2 ? styles.active : '', styles.tab)}
+						className={clsx(
+							activeTab === 'conference' ? styles.active : '',
+							styles.tab
+						)}
 					>
 						Conference
 					</button>
 					<button
 						onClick={() => {
-							setActiveTab(3);
+							setActiveTab('wedding');
 						}}
-						className={clsx(activeTab === 3 ? styles.active : '', styles.tab)}
+						className={clsx(
+							activeTab === 'wedding' ? styles.active : '',
+							styles.tab
+						)}
 					>
-						Square
+						Wedding
 					</button>
 					<button
 						onClick={() => {
-							setActiveTab(4);
+							setActiveTab('reception');
 						}}
-						className={clsx(activeTab === 4 ? styles.active : '', styles.tab)}
+						className={clsx(
+							activeTab === 'reception' ? styles.active : '',
+							styles.tab
+						)}
 					>
 						Reception
 					</button>
 					<button
 						onClick={() => {
-							setActiveTab(5);
+							setActiveTab('theatre');
 						}}
-						className={clsx(activeTab === 5 ? styles.active : '', styles.tab)}
-					>
-						School Room
-					</button>
-					<button
-						onClick={() => {
-							setActiveTab(6);
-						}}
-						className={clsx(activeTab === 6 ? styles.active : '', styles.tab)}
+						className={clsx(
+							activeTab === 'theatre' ? styles.active : '',
+							styles.tab
+						)}
 					>
 						Theatre
 					</button>
-					<button
-						onClick={() => {
-							setActiveTab(7);
-						}}
-						className={clsx(activeTab === 7 ? styles.active : '', styles.tab)}
-					>
-						U-Shape
-					</button>
 				</div>
 				<div className="flex flex-wrap justify-start items-start">
-					<div className={styles.meeting}>
-						<h3>Meeting Room 1</h3>
-						<h5 className="flex justify-center items-center">
-							<FontAwesomeIcon icon={faUser} className="mx-1" />
-							<span>34 Guests</span>
-						</h5>
-						<h5 className="flex justify-center items-center">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								className="bi bi-rulers"
-								viewBox="0 0 16 16"
-							>
-								<path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-							</svg>
-							<span>104 sq. m.</span>
-						</h5>
-					</div>
-					<div className={styles.meeting}>
-						<h3>Meeting Room 1</h3>
-						<h5 className="flex justify-center items-center">
-							<FontAwesomeIcon icon={faUser} className="mx-1" />
-							<span>40 Guests</span>
-						</h5>
-						<h5 className="flex justify-center items-center">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								className="bi bi-rulers"
-								viewBox="0 0 16 16"
-							>
-								<path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-							</svg>
-							<span>105 sq. m.</span>
-						</h5>
-					</div>
+					{meetingRooms.map((meeting) => (
+						<div key={meeting.id} className={styles.meeting}>
+							<h3 className="capitalize">{meeting?.title[locale]}</h3>
+							<h5 className="flex justify-center items-center">
+								<FontAwesomeIcon icon={faUser} className="mx-1" />
+								<span>{meeting?.guests[activeTab]} Guests</span>
+							</h5>
+							<h5 className="flex justify-center items-center">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									className="bi bi-rulers"
+									viewBox="0 0 16 16"
+								>
+									<path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
+								</svg>
+								<span>{meeting?.space} sq. m.</span>
+							</h5>
+						</div>
+					))}
 				</div>
 			</section>
 		</Layout>
@@ -233,9 +206,13 @@ export default MeetingsPage;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
 	const localization = getLocalizationProps(ctx, 'common');
+	const client = initializeApollo();
+	const resp = await client.query({ query: MEETING_ROOMS });
+
 	return {
 		props: {
 			localization,
+			meetingRooms: resp?.data?.meeting_rooms,
 		},
 	};
 };

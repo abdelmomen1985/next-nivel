@@ -27,6 +27,7 @@ const common = {
   viewDining: "عرض جميع خيارات الطعام",
   meetingsNdEvents: "الاجتماعات والاحداث",
   meetStyle: 'نظم اجتماعاتك بأسلوب أنيق',
+  update: "تحديث",
 
 
 

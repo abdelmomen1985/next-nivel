@@ -5,15 +5,18 @@ const RoomCard = ({
 	setModalDetails,
 	setOpenModal,
 	purpose = 'view',
+	pickRoomHandler,
 }: {
 	room: any;
 	setModalDetails: (room: any) => void;
 	setOpenModal: (openModal: boolean) => void;
 	purpose?: string;
+	pickRoomHandler: (room: any) => void;
 }) => {
 	return (
 		<div
-			onClick={() => {
+			onClick={(e) => {
+				e.stopPropagation();
 				setModalDetails({ ...room });
 				setOpenModal(true);
 			}}
@@ -29,7 +32,13 @@ const RoomCard = ({
 						Room Details
 					</button>
 				) : (
-					<button className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block">
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							pickRoomHandler(room);
+						}}
+						className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block"
+					>
 						Book from {room?.price} EGP
 					</button>
 				)}

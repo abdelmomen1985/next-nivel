@@ -6,9 +6,11 @@ import { Slide } from 'react-slideshow-image';
 const RoomDetails = ({
 	modalDetails,
 	purpose = 'view',
+	pickRoomHandler,
 }: {
 	modalDetails: any;
 	purpose?: string;
+	pickRoomHandler: (room: any) => void;
 }) => {
 	const { isMobile } = useContext(AppContext);
 
@@ -33,7 +35,13 @@ const RoomDetails = ({
 						Check Rates
 					</button>
 				) : (
-					<button className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold">
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							pickRoomHandler(modalDetails);
+						}}
+						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
+					>
 						Book from {modalDetails?.price} EGP
 					</button>
 				)}

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import Filters from './../navigation/HeaderSections/Filters';
-import RoomCard from './../Rooms/RoomCard';
-import BookingFilters from './BookingFilters';
+import React from 'react';
+import RoomCard from '../Rooms/RoomCard';
 
-const FirstStep = ({
+const FirstBookingStep = ({
 	currentShow,
-	setModalDetails,
+	setRoomDetails,
 	setOpenModal,
 	pickRoomHandler,
 }: {
 	currentShow: any[];
-	setModalDetails: (details: any) => void;
+	setRoomDetails: (details: any) => void;
 	setOpenModal: (open: boolean) => void;
 	pickRoomHandler: (room: any) => void;
 }) => {
@@ -22,7 +20,7 @@ const FirstStep = ({
 						purpose="booking"
 						key={i}
 						room={room}
-						setModalDetails={setModalDetails}
+						setRoomDetails={setRoomDetails}
 						setOpenModal={setOpenModal}
 						pickRoomHandler={pickRoomHandler}
 					/>
@@ -32,4 +30,4 @@ const FirstStep = ({
 	);
 };
 
-export default FirstStep;
+export default FirstBookingStep;

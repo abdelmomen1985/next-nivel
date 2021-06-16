@@ -118,3 +118,34 @@
     }
   }
 }
+
+.selectedRoom {
+  border: 2px solid var(--primary-light-color);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background-color: var(--primary-light-color);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: .15s;
+    bottom: -2px;
+    right: -2px;
+    height: 21px;
+    width: 21px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: .75rem;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    border-color: #fff;
+    height: 6px;
+    transform: rotate(-57deg) skewX(-15deg);
+    bottom: 7px;
+    right: 2px;
+  }
+}

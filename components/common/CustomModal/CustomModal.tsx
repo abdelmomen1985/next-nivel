@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from 'react';
 import styles from './CustomModal.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AppContext } from '../../../context/AppContext';
+import useTranslation from './../../../hooks/useTranslation';
 
 const CustomModal = ({
 	children,
@@ -18,10 +19,11 @@ const CustomModal = ({
 	style?: any;
 	wrapperStyle?: any;
 	closeWithin?: boolean;
-	title?: string;
+	title?: any;
 }) => {
 	const modalRef = useRef<HTMLDivElement | null>(null);
 	const { isMobile } = useContext(AppContext);
+	const { t, locale } = useTranslation();
 	const backDrop = {
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
@@ -90,7 +92,7 @@ const CustomModal = ({
 							)}
 							{title && (
 								<h2 className="text-2xl capitalize font-semibold text-center text-primary-dark">
-									{title}
+									{title[locale]}
 								</h2>
 							)}
 						</div>

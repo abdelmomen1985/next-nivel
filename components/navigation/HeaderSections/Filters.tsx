@@ -7,7 +7,8 @@ import clsx from 'clsx';
 import useTranslation from './../../../hooks/useTranslation';
 
 import styles from '../navigation.module.scss';
-import { cleanObjects } from './../../../utils/cleanObjects';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const today = new Date();
 const tomorrow = new Date(today.setDate(today.getDate() + 1));
@@ -38,10 +39,12 @@ const Filters = ({
 	filterValues = filtersDefaultValues,
 	title = 'header',
 	updateFilters,
+	hideFilters,
 }: {
 	filterValues?: any;
 	title?: string;
 	updateFilters: (filters: any) => void;
+	hideFilters?: () => void;
 }) => {
 	const { handleSubmit, register, setValue } = useForm({
 		mode: 'onTouched',
@@ -152,7 +155,7 @@ const Filters = ({
 			},
 			roomDetails,
 		};
-		updateFilters(searchData);
+		updateFilters((prev: any) => ({ ...prev, ...searchData }));
 	};
 	useEffect(() => {
 		let roomDets = [...roomDetails];
@@ -205,6 +208,23 @@ const Filters = ({
 				'w-full flex flex-wrap justify-center items-center '
 			)}
 		>
+			{title === 'booking' && (
+				<div className="w-full mx-8 flex justify-between items-start mb-4">
+					<h3 className="text-2xl text-primary-dark font-semibold">
+						Edit Stay
+					</h3>
+					<button
+						onClick={hideFilters!}
+						type="button"
+						className="bg-transparent border-none"
+					>
+						<FontAwesomeIcon
+							icon={faTimes}
+							className="text-primary-dark text-2xl font-normal"
+						/>
+					</button>
+				</div>
+			)}
 			<form
 				onSubmit={handleSubmit(
 					title === 'header' ? checkRoomsHandler : updateFiltersHandler

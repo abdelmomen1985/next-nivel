@@ -1,35 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './../../context/AppContext';
 //@ts-ignore
 import { Slide } from 'react-slideshow-image';
+import { RoomType } from '../../types/rooms';
 
 const RoomDetails = ({
-	modalDetails,
+	roomDetails,
 	purpose = 'view',
 	pickRoomHandler,
 }: {
-	modalDetails: any;
+	roomDetails: RoomType;
 	purpose?: string;
-	pickRoomHandler: (room: any) => void;
+	pickRoomHandler: (room: RoomType) => void;
 }) => {
 	const { isMobile } = useContext(AppContext);
-
+	const [basePrice, setBasePrice] = useState<any>(undefined);
+	useEffect(() => {
+		for (let key in roomDetails.room_rates) {
+			//@ts-ignore
+			if (roomDetails?.room_rates[key]?.rate.title.en === 'Base Package') {
+				//@ts-ignore
+				setBasePrice(roomDetails?.room_rates[key]!);
+			}
+		}
+	}, [roomDetails]);
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-start mx-1 my-1">
 			<div className="mx-2">
-				<Slide
-					easing="ease-in"
-					transitionDuration={500}
-					arrows={isMobile ? false : true}
-					autoplay={false}
-				>
-					{modalDetails?.images.map((img: any, i: number) => (
-						<img src={img} key={i} className="w-full h-full" />
-					))}
-				</Slide>
+				{roomDetails?.media?.images &&
+				roomDetails?.media?.images?.length > 0 ? (
+					<Slide
+						easing="ease-in"
+						transitionDuration={500}
+						arrows={isMobile ? false : true}
+						autoplay={false}
+					>
+						{roomDetails?.media.images.map((img: any, i: number) => (
+							<img src={img} key={i} className="w-full h-full" />
+						))}
+					</Slide>
+				) : (
+					<img src="https://i.imgur.com/bDujVXa.jpg" />
+				)}
 			</div>
 			<div className="mx-2 px-3 py-2 ">
-				<p>{modalDetails?.description}</p>
+				<p>{roomDetails?.description}</p>
 				{purpose === 'view' ? (
 					<button className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold">
 						Check Rates
@@ -38,21 +53,21 @@ const RoomDetails = ({
 					<button
 						onClick={(e) => {
 							e.stopPropagation();
-							pickRoomHandler(modalDetails);
+							pickRoomHandler(roomDetails);
 						}}
 						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
 					>
-						Book from {modalDetails?.price} EGP
+						Book from {basePrice?.base_price} EGP
 					</button>
 				)}
 				<hr />
 				<div className="my-3 px-2">
 					<h5 className="text-black text-xl font-medium">Room Highlights</h5>
-					<ul className="my-2 list-disc mx-5">
-						{modalDetails?.highlights.map((highlight: string, i: number) => (
+					{/* <ul className="my-2 list-disc mx-5">
+						{roomDetails?.highlights.map((highlight: string, i: number) => (
 							<li key={i}>{highlight}</li>
 						))}
-					</ul>
+					</ul> */}
 				</div>
 			</div>
 		</div>

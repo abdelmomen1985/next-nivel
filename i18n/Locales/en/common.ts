@@ -1,5 +1,5 @@
 const common = {
-  join: "Join Nivel",
+  join: "Join Nivel Points",
   signIn: "Sign In",
   headerHome: "Home",
   headerRooms: "Rooms",
@@ -11,23 +11,25 @@ const common = {
   guests: "Guests",
   specialRates: "Special Rates",
   close: "close",
-  checkRoomsRates: 'Check Rooms & Rates',
-  arrivalTime: 'Arrival Time',
-  checkIn: 'Check In',
-  checkOut: 'Check Out',
-  address: 'Address',
-  callUs: 'Call Us',
-  reviews: 'Reviews',
+  checkRoomsRates: "Check Rooms & Rates",
+  arrivalTime: "Arrival Time",
+  checkIn: "Check In",
+  checkOut: "Check Out",
+  address: "Address",
+  callUs: "Call Us",
+  reviews: "Reviews",
   amenities: "Amenities",
   ourAmenities: "Our Amenities",
   roomsNdSuites: "Rooms and Suites",
   viewRooms: "view all rooms",
   diningNdDrinks: "Dining and drinks",
-  diningDesc: "Our dining options include three comfortable cafes serving light bites, coffee, and other beverages throughout the day. Alorchid Restaurant offers a range of pan-Asian cuisine while Alqandeel has a range of buffet and a la carte options as well as live cooking stations.",
+  diningDesc:
+    "Our dining options include three comfortable cafes serving light bites, coffee, and other beverages throughout the day. Alorchid Restaurant offers a range of pan-Asian cuisine while Alqandeel has a range of buffet and a la carte options as well as live cooking stations.",
   viewDining: "View all Dining",
   meetingsNdEvents: "Meetings and Events",
   meetStyle: "Meet in Style",
-  update: "update"
+  update: "update",
+  editStay: "Edit Stay",
 };
 
 export default common;

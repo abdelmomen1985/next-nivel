@@ -45,7 +45,7 @@ const amenities = [
 		},
 	},
 	{
-		image: '/images/icons/stroke/meeting.svg',
+		image: '/images/icons/outline/meeting.svg',
 		title: {
 			ar: 'مركز أعمال',
 			en: 'Business center',

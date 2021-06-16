@@ -5,7 +5,7 @@ import useTranslation from '../../../hooks/useTranslation';
 const NavLinks = () => {
 	const { locale, t } = useTranslation();
 	return (
-		<div className="flex justify-center items-center w-full px-10 py-5  bg-gray-light bg-opacity-50">
+		<div className="flex justify-center items-center w-full px-10 py-3  bg-gray-light bg-opacity-50">
 			<ActiveLink activeClassName={styles.active} href={`/${locale}/`}>
 				<a className={styles.navLink}>{t('headerHome')}</a>
 			</ActiveLink>

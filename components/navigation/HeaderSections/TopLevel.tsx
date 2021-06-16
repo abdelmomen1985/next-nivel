@@ -3,16 +3,16 @@ import ActiveLink from './../ActiveLink';
 import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
 const TopLevel = () => {
 	const { locale, t } = useTranslation();
 
 	return (
-		<div className="flex justify-center lg:justify-between items-center mx-5 py-3 my-2 px-2">
+		<div className="flex justify-center lg:justify-between items-center my-2 mx-5 px-2">
 			<Link href={`/${locale}/`}>
-				<img src="/images/logo.png" className="cursor-pointer" />
+				<img src="/images/logo.png" className="cursor-pointer" style={{height:"80px"}} />
 			</Link>
 			<div className="flex justify-center items-center">
 				<ActiveLink

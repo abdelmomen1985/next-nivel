@@ -211,7 +211,7 @@ const Filters = ({
 			{title === 'booking' && (
 				<div className="w-full mx-8 flex justify-between items-start mb-4">
 					<h3 className="text-2xl text-primary-dark font-semibold">
-						Edit Stay
+					{t("editStay")}
 					</h3>
 					<button
 						onClick={hideFilters!}

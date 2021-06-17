@@ -20,7 +20,9 @@ const ThirdBookingSteps = ({
 	let tax = 15.75;
 	let vat = 5.0;
 	useEffect(() => {
-		let nightCount =
+		const calcTotal = async () => {
+			// Todo get Taxes rates from context
+			let nightCount =
 			(filterValues?.currentDateRange?.endDate?.getTime() -
 				filterValues?.currentDateRange?.startDate?.getTime()) /
 			(1000 * 3600 * 24);
@@ -28,17 +30,23 @@ const ThirdBookingSteps = ({
 		if (nightCount === 0) {
 			nightCount = 1;
 		}
-		let selectedPrice = selectedPackage?.base_price;
-		console.log(selectedPrice);
-		let priceWTax = selectedPrice * (tax / 100) * nightCount;
-		console.log(priceWTax);
-		let priceWVat = selectedPrice * (vat / 100) * nightCount;
+		console.log("nightCount",nightCount);
 
-		console.log(priceWVat);
+		let selectedPrice = +selectedPackage?.base_price * nightCount;
+		console.log("selectedPrice",selectedPrice);
+
+		let priceWTax = selectedPrice * (tax / 100) * nightCount;
+		console.log("priceWTax",priceWTax);
+
+		let priceWVat = selectedPrice * (vat / 100) * nightCount;
+		console.log("priceWVat",priceWVat);
+
 		let totalTaxVal = priceWTax + priceWVat;
 		let totalPriceValue = selectedPrice + totalTaxVal;
-		setTotalPrice(totalPriceValue.toFixed(2));
-		setTotalTax(totalTaxVal.toFixed(2));
+		setTotalPrice(+totalPriceValue.toFixed(2));
+		setTotalTax(+totalTaxVal.toFixed(2));
+		}
+		calcTotal();
 	}, [selectedPackage, filterValues]);
 	return (
 		<section className="mx-8 w-full my-2">

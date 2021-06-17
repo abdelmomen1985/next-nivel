@@ -23,6 +23,10 @@ export type RoomType = {
         en: string,
       },
     }
+  },
+  accessibility: false,
+  room_type: {
+    type: string,
   }
 
 }

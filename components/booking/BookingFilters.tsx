@@ -20,7 +20,7 @@ const BookingFilters = ({
 	const [showSpecialRate, setShowSpecialRate] = useState(false);
 	const [showRoomTypes, setShowRoomTypes] = useState(false);
 	const [selectedRoomType, setSelectedRoomType] = useState('all');
-
+	const [checkAccessibility, setCheckAccessibility] = useState(false);
 	const specialRateRef = useRef<HTMLDivElement>(null);
 	const roomTypeRef = useRef<HTMLDivElement>(null);
 	const handleClick = (e: any) => {
@@ -40,11 +40,11 @@ const BookingFilters = ({
 		};
 	}, []);
 	useEffect(() => {
-		let loadedDateRange = {
-			startDate: new Date(filterValues?.currentDateRange?.startDate),
-			endDate: new Date(filterValues?.currentDateRange?.endDate),
-			key: filterValues?.currentDateRange?.key,
-		};
+		// let loadedDateRange = {
+		// 	startDate: new Date(filterValues?.currentDateRange?.startDate),
+		// 	endDate: new Date(filterValues?.currentDateRange?.endDate),
+		// 	key: filterValues?.currentDateRange?.key,
+		// };
 		if (filterValues?.selectedRoomType) {
 			setSelectedRoomType(filterValues?.selectedRoomType);
 		}
@@ -59,8 +59,12 @@ const BookingFilters = ({
 		setValue('promotionCode', filterValues?.promotionCode);
 	}, [filterValues]);
 	const updateFiltersHandler = (data: any) => {
-		console.log(data);
-		updateFilters((prev: any) => ({ ...prev, ...data, selectedRoomType }));
+		updateFilters((prev: any) => ({
+			...prev,
+			...data,
+			selectedRoomType,
+			accessibility: checkAccessibility,
+		}));
 	};
 	return (
 		<>
@@ -344,14 +348,32 @@ const BookingFilters = ({
 						</div>
 					</div>
 				</div>
-				{
-					<button
-						type="submit"
-						className="btn-primary-light mx-2 py-3 px-8 text-white capitalize"
+				<div
+					className={clsx(
+						styles.formGroup,
+						'flex justify-start items-center mx-1'
+					)}
+				>
+					<input
+						type="checkbox"
+						className="mx-1"
+						name="accessibility"
+						checked={checkAccessibility}
+						onChange={(e) => setCheckAccessibility(e.target.checked)}
+					/>
+					<label
+						className="text-lg text-primary-dark font-medium"
+						htmlFor="accessibility"
 					>
-						{t('update')}
-					</button>
-				}
+						Accessible Rooms
+					</label>
+				</div>
+				<button
+					type="submit"
+					className="btn-primary-light mx-2 py-3 px-8 text-white capitalize"
+				>
+					{t('update')}
+				</button>
 			</form>
 		</>
 	);

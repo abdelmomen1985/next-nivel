@@ -10,15 +10,16 @@ import RoomCard from './../../../components/Rooms/RoomCard';
 import RoomDetails from '../../../components/Rooms/RoomDetails';
 
 // import styles from "./rooms.module.scss";
-import FirstBookingStep from '../../../components/booking/FirstBookingStep';
-import SecondBookingStep from '../../../components/booking/SecondBookingStep';
+import FirstBookingStep from '../../../components/booking/BookingSteps/FirstBookingStep';
+import SecondBookingStep from '../../../components/booking/BookingSteps/SecondBookingStep';
 import Filters from './../../../components/navigation/HeaderSections/Filters';
 import BookingFilters from '../../../components/booking/BookingFilters';
 import BookingStay from './../../../components/booking/BookingStay';
-import { useMutation } from '@apollo/client';
-import { LOAD_ROOMS } from './../../../query/rooms';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { LOAD_ROOMS, ROOMS_AGGREGATE } from './../../../query/rooms';
 import { initializeApollo } from './../../../lib/apolloClient';
 import { RoomType } from '../../../types/rooms';
+import ThirdBookingSteps from './../../../components/booking/BookingSteps/ThirdBookingSteps';
 
 const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
@@ -31,7 +32,16 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const [stepTitle, setStepTitle] = useState<string>('Select a room');
 	const [selectedRoom, setSelectedRoom] = useState<any>(undefined);
 	const [showEdit, setShowEdit] = useState(false);
-
+	const [selectedPackage, setSelectedPackage] = useState(undefined);
+	const [filterRooms, { data: filteredRooms }] = useLazyQuery(ROOMS_AGGREGATE, {
+		onCompleted() {
+			console.log(filteredRooms?.rooms_aggregate?.nodes);
+			setCurrentShow([...filteredRooms?.rooms_aggregate?.nodes]);
+		},
+		onError(err) {
+			console.log(err);
+		},
+	});
 	useEffect(() => {
 		let localDefaultFilters = sessionStorage.getItem('filterValues');
 		if (localDefaultFilters) {
@@ -47,18 +57,42 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 			setFilterValues(finalDefaultFilters);
 		}
 	}, []);
+
+	useEffect(() => {
+		console.log(filterValues?.selectedRoomType);
+		console.log(filterValues?.accessibility);
+		let variables = {} as any;
+		if (filterValues?.accessibility) {
+			variables.accessibility = filterValues?.accessibility;
+		}
+		if (filterValues?.selectedRoomType !== 'all') {
+			variables.type = filterValues?.selectedRoomType;
+		}
+		console.log(variables);
+		filterRooms({
+			variables,
+		});
+	}, [filterValues]);
 	const editStayHandler = () => {
 		setShowEdit(true);
 		setCurrentStep(1);
 		setStepTitle('Select a room');
 	};
 
-	const pickRoomHandler = (room: RoomType) => {
-		setSelectedRoom(room);
-		console.log(room);
-		console.log(filterValues);
+	const pickRoomHandler = (
+		room: RoomType,
+		packagePrices: any[],
+		basePrice: any
+	) => {
+		setSelectedRoom({ ...room, packagePrices, basePrice });
 		setCurrentStep(2);
 		setStepTitle('Select a Rate');
+	};
+	const pickPackageHandler = (selectedPack: any) => {
+		console.log(selectedPack);
+		setSelectedPackage(selectedPack);
+		setCurrentStep(3);
+		setStepTitle('Payment and Guest Details');
 	};
 	return (
 		<Layout withFilters={false}>
@@ -99,7 +133,20 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 							/>
 						</div>
 					)}
-					{currentStep === 2 && <SecondBookingStep />}
+					{currentStep === 2 && (
+						<SecondBookingStep
+							selectedRoom={selectedRoom}
+							filterValues={filterValues}
+							pickPackageHandler={pickPackageHandler}
+						/>
+					)}
+					{currentStep === 3 && (
+						<ThirdBookingSteps
+							selectedRoom={selectedRoom}
+							filterValues={filterValues}
+							selectedPackage={selectedPackage}
+						/>
+					)}
 				</div>
 				<BookingStay
 					editStayHandler={editStayHandler}

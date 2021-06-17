@@ -14,7 +14,11 @@ const RoomCard = ({
 	setRoomDetails: (room: RoomType) => void;
 	setOpenModal: (openModal: boolean) => void;
 	purpose?: string;
-	pickRoomHandler: (room: RoomType) => void;
+	pickRoomHandler: (
+		room: RoomType,
+		packagePrices: any[],
+		basePrice: any
+	) => void;
 }) => {
 	const { t, locale } = useTranslation();
 	const [src, setSrc] = useState<any>();
@@ -67,7 +71,7 @@ const RoomCard = ({
 					<button
 						onClick={(e) => {
 							e.stopPropagation();
-							pickRoomHandler(room);
+							pickRoomHandler(room, packagePrices, basePrice);
 						}}
 						className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block"
 					>

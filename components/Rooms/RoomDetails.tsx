@@ -11,17 +11,27 @@ const RoomDetails = ({
 }: {
 	roomDetails: RoomType;
 	purpose?: string;
-	pickRoomHandler: (room: RoomType) => void;
+	pickRoomHandler: (
+		room: RoomType,
+		packagePrices: any[],
+		basePrice: any
+	) => void;
 }) => {
 	const { isMobile } = useContext(AppContext);
 	const [basePrice, setBasePrice] = useState<any>(undefined);
+	const [packagePrices, setPackagePrices] = useState<any>(undefined);
 	useEffect(() => {
+		let packages = [];
 		for (let key in roomDetails.room_rates) {
 			//@ts-ignore
 			if (roomDetails?.room_rates[key]?.rate.title.en === 'Base Package') {
 				//@ts-ignore
 				setBasePrice(roomDetails?.room_rates[key]!);
+			} else {
+				//@ts-ignore
+				packages.push(room?.room_rates[key]);
 			}
+			setPackagePrices([...packages]);
 		}
 	}, [roomDetails]);
 	return (
@@ -53,7 +63,7 @@ const RoomDetails = ({
 					<button
 						onClick={(e) => {
 							e.stopPropagation();
-							pickRoomHandler(roomDetails);
+							pickRoomHandler(roomDetails, packagePrices, basePrice);
 						}}
 						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
 					>

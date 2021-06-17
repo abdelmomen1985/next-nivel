@@ -70,7 +70,7 @@
   .btn-primary-light {
     @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
   }
-  .btn-primary-light {
+  .btn-primary-dark {
     @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md
   }
   .btn-outline-primary-light {
@@ -87,4 +87,17 @@ button {
 
 button:focus {
   outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+input[type=number] {
+  -moz-appearance: textfield;
 }

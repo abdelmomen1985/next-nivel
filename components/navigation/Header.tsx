@@ -19,17 +19,18 @@ const Header = ({
 		};
 	}, []);
 	const changeNavPosition = () => {
-
-		if (window.scrollY > 50) {
-			setIsFixed(true);
-		} else {
-			setIsFixed(false);
-		}
-
+		// if (window.scrollY > 50) {
+		// 	setIsFixed(true);
+		// } else {
+		// 	setIsFixed(false);
+		// }
 	};
 	return (
 		<nav
-			className={clsx(styles.navBar, isFixed ? 'fixed bg-white shadow' : 'relative')}
+			className={clsx(
+				styles.navBar,
+				isFixed ? 'fixed bg-white shadow' : 'relative'
+			)}
 		>
 			<TopLevel />
 			<NavLinks />

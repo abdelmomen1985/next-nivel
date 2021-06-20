@@ -21,15 +21,16 @@ const RoomDetails = ({
 	const [basePrice, setBasePrice] = useState<any>(undefined);
 	const [packagePrices, setPackagePrices] = useState<any>(undefined);
 	useEffect(() => {
+		console.log('within', roomDetails);
 		let packages = [];
-		for (let key in roomDetails.room_rates) {
+		for (let key in roomDetails?.room_rates) {
 			//@ts-ignore
 			if (roomDetails?.room_rates[key]?.rate.title.en === 'Base Package') {
 				//@ts-ignore
 				setBasePrice(roomDetails?.room_rates[key]!);
 			} else {
 				//@ts-ignore
-				packages.push(room?.room_rates[key]);
+				packages.push(roomDetails?.room_rates[key]);
 			}
 			setPackagePrices([...packages]);
 		}
@@ -37,16 +38,16 @@ const RoomDetails = ({
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-start mx-1 my-1">
 			<div className="mx-2">
-				{roomDetails?.media?.images &&
-				roomDetails?.media?.images?.length > 0 ? (
+				{roomDetails?.media?.room_images &&
+				roomDetails?.media?.room_images?.length > 0 ? (
 					<Slide
 						easing="ease-in"
 						transitionDuration={500}
 						arrows={isMobile ? false : true}
 						autoplay={false}
 					>
-						{roomDetails?.media.images.map((img: any, i: number) => (
-							<img src={img} key={i} className="w-full h-full" />
+						{roomDetails?.media.room_images.map((img: any, i: number) => (
+							<img src={img?.url} key={i} className="w-full h-full" />
 						))}
 					</Slide>
 				) : (

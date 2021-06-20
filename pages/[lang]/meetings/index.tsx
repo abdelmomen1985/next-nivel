@@ -63,7 +63,7 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 	return (
 		<Layout>
 			<section className="w-full">
-				<img src="/images/restaurant.png" className="w-full" />
+				<img src="/images/meeting.jpg" className="w-full" />
 			</section>
 			<section className="my-5 w-full text-center">
 				<h3 className="text-3xl font-bold text-primary-dark">

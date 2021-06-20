@@ -3,7 +3,7 @@ export type RoomType = {
   description?: string
   media?: {
     icon?: string,
-    images?: [string]
+    room_images?: [string]
   },
   title: {
     ar: string,

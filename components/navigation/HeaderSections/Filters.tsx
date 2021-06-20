@@ -211,7 +211,7 @@ const Filters = ({
 			{title === 'booking' && (
 				<div className="w-full mx-8 flex justify-between items-start mb-4">
 					<h3 className="text-2xl text-primary-dark font-semibold">
-					{t("editStay")}
+						{t('editStay')}
 					</h3>
 					<button
 						onClick={hideFilters!}
@@ -232,19 +232,49 @@ const Filters = ({
 				className="w-full flex flex-wrap justify-center items-center my-3"
 			>
 				<div className={styles.dateContainer}>
-					<h3 onClick={() => setShowDatePicker(true)}>
-						{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
-							day: 'numeric',
-							month: 'short',
-							year: 'numeric',
-						})}
+					<h3
+						className="flex justify-center items-center cursor-pointer"
+						onClick={() => setShowDatePicker(true)}
+					>
+						<span className="mx-1 text-5xl font-bold">
+							{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
+								day: 'numeric',
+							})}
+						</span>
+						<div>
+							<span className="block text-lg my-0 text-black font-semibold">
+								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
+									month: 'short',
+								})}
+							</span>
+							<span className="block text-lg my-0 text-black font-normal">
+								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
+									weekday: 'short',
+								})}
+							</span>
+						</div>
 					</h3>
-					<h3 onClick={() => setShowDatePicker(true)}>
-						{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-							day: 'numeric',
-							month: 'short',
-							year: 'numeric',
-						})}
+					<h3
+						className="flex justify-center items-center cursor-pointer"
+						onClick={() => setShowDatePicker(true)}
+					>
+						<span className="mx-1 text-5xl font-bold">
+							{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
+								day: 'numeric',
+							})}
+						</span>
+						<div>
+							<span className="block text-lg my-0 text-black font-semibold">
+								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
+									month: 'short',
+								})}
+							</span>
+							<span className="block text-lg my-0 text-black font-normal">
+								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
+									weekday: 'short',
+								})}
+							</span>
+						</div>
 					</h3>
 					{showDatePicker && (
 						<div className={styles.datePickerContainer} ref={datePickerRef}>

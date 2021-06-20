@@ -25,13 +25,9 @@ export const LOAD_ROOMS = gql`
 export const ROOMS_AGGREGATE = gql`
   query rooms_agg(
   $accessibility: Boolean, 
-  $type: jsonb
+  $type: String
    ) {
-    rooms_aggregate(where:
-    {
-      accessibility: {_eq: $accessibility},
-      room_type: {_contains: $type}
-    }) {
+    rooms_aggregate(where: {room_type: {_contains: {type: $type}}, accessibility: {_eq: $accessibility}}) {
     nodes {
       ${ROOM_FIELDS}
     }

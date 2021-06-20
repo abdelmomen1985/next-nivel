@@ -125,18 +125,18 @@ const BookingFilters = ({
 								All
 							</h5>
 							<h5
-								onClick={() => setSelectedRoomType('one bed')}
+								onClick={() => setSelectedRoomType('1bed')}
 								className={clsx(
-									selectedRoomType === 'one bed' ? styles.selectedRoom : ' ',
+									selectedRoomType === '1bed' ? styles.selectedRoom : ' ',
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
 								1 bed
 							</h5>
 							<h5
-								onClick={() => setSelectedRoomType('two beds')}
+								onClick={() => setSelectedRoomType('2beds')}
 								className={clsx(
-									selectedRoomType === 'two beds' ? styles.selectedRoom : ' ',
+									selectedRoomType === '2beds' ? styles.selectedRoom : ' ',
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>

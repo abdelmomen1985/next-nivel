@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -12,12 +12,25 @@ import RoomCard from './../../../components/Rooms/RoomCard';
 import RoomDetails from '../../../components/Rooms/RoomDetails';
 
 import styles from './rooms.module.scss';
+import { RoomType } from '../../../types/rooms';
+import { initializeApollo } from './../../../lib/apolloClient';
+import { LOAD_ROOMS } from '../../../query/rooms';
 
-const RoomsPage = () => {
-	const [currentShow, setCurrentShow] = useState<any[]>([...rooms]);
+const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
+	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
 	const [activeTab, setActiveTab] = useState(1);
-	const [modalDetails, setModalDetails] = useState<any>(undefined);
+	const [roomDetails, setRoomDetails] = useState<any>(undefined);
 	const [openModal, setOpenModal] = useState(false);
+	const pickRoomHandler = (
+		room: RoomType,
+		packagePrices: any[],
+		basePrice: any
+	) => {
+		console.log(room);
+	};
+	useEffect(() => {
+		console.log(roomDetails);
+	}, [roomDetails]);
 	return (
 		<Layout>
 			<h2 className="text-4xl font-bold mt-10 mb-10 text-primary-dark text-center">
@@ -27,7 +40,7 @@ const RoomsPage = () => {
 				<button
 					onClick={() => {
 						setActiveTab(1);
-						setCurrentShow([...rooms]);
+						setCurrentShow([...roomsData]);
 					}}
 					className={clsx(activeTab === 1 ? styles.active : '', styles.tab)}
 				>
@@ -67,7 +80,7 @@ const RoomsPage = () => {
 							purpose="view"
 							key={i}
 							room={room}
-							setModalDetails={setModalDetails}
+							setRoomDetails={setRoomDetails}
 							setOpenModal={setOpenModal}
 						/>
 					))}
@@ -84,14 +97,18 @@ const RoomsPage = () => {
 					top: 0,
 					zIndex: '9999',
 				}}
-				title={modalDetails?.title}
-				show={openModal && modalDetails !== undefined}
+				title={roomDetails?.title}
+				show={openModal && roomDetails !== undefined}
 				onClose={() => {
 					setOpenModal(false);
-					setModalDetails(undefined);
+					setRoomDetails(undefined);
 				}}
 			>
-				<RoomDetails modalDetails={modalDetails} />
+				<RoomDetails
+					pickRoomHandler={pickRoomHandler}
+					setRoomDetails={setRoomDetails}
+					roomDetails={roomDetails}
+				/>
 			</CustomModal>
 		</Layout>
 	);
@@ -101,9 +118,13 @@ export default RoomsPage;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
 	const localization = getLocalizationProps(ctx, 'common');
+	const client = initializeApollo();
+	const resp = await client.query({ query: LOAD_ROOMS });
+	console.log(resp?.data?.rooms);
 	return {
 		props: {
 			localization,
+			roomsData: resp?.data?.rooms,
 		},
 	};
 };

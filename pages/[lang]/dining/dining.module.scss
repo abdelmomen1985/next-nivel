@@ -1,0 +1,35 @@
+.resturantContainer {
+  width: 100%;
+  margin: 0;
+  padding: 3rem 10px;
+  background-color: #fff;
+
+
+  &:nth-of-type(even) {
+    background-color: var(--gray-light-color);
+
+    .resturant {
+      flex-direction: row-reverse;
+
+    }
+  }
+
+  .resturant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 3rem;
+    flex-direction: row;
+    max-width: 80rem;
+    width: 100%;
+
+
+
+    img {
+      width: 50%;
+      height: 80%;
+    }
+
+
+  }
+}

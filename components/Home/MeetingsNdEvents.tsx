@@ -52,7 +52,7 @@ const MeetingsNdEvents = () => {
 	const { t, locale } = useTranslation();
 	return (
 		<section className="mt-5 mb-0 w-full relative ">
-			<img src="/images/restaurant.png" className="w-full" />
+			<img src="/images/meeting.jpg" className="w-full" />
 			<div className={styles.meetingsContainer}>
 				<h3>{t('meetingsNdEvents')}</h3>
 				<div className="grid grid-cols-4 gap-2 my-3 mx-2 items-center">

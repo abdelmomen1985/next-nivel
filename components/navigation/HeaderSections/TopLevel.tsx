@@ -5,16 +5,22 @@ import useTranslation from './../../../hooks/useTranslation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-
+import LocaleSwitch from './LocaleSwitch';
 const TopLevel = () => {
 	const { locale, t } = useTranslation();
 
 	return (
 		<div className="flex justify-center lg:justify-between items-center my-2 mx-5 px-2">
 			<Link href={`/${locale}/`}>
-				<img src="/images/logo.png" className="cursor-pointer" style={{height:"80px"}} />
+				<img
+					src="/images/logo.png"
+					className="cursor-pointer"
+					style={{ height: '80px' }}
+				/>
 			</Link>
 			<div className="flex justify-center items-center">
+				<LocaleSwitch />
+				<span>|</span>
 				<ActiveLink
 					activeClassName={styles.active}
 					href={`/${locale}/register`}

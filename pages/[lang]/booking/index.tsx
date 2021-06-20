@@ -196,7 +196,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 	const localization = getLocalizationProps(ctx, 'common');
 	const client = initializeApollo();
 	const resp = await client.query({ query: LOAD_ROOMS });
-	console.log(resp.data);
 	return {
 		props: {
 			localization,

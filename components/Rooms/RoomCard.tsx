@@ -14,7 +14,7 @@ const RoomCard = ({
 	setRoomDetails: (room: RoomType) => void;
 	setOpenModal: (openModal: boolean) => void;
 	purpose?: string;
-	pickRoomHandler: (
+	pickRoomHandler?: (
 		room: RoomType,
 		packagePrices: any[],
 		basePrice: any
@@ -27,8 +27,8 @@ const RoomCard = ({
 
 	useEffect(() => {
 		let packages = [];
-		if (room?.media?.images) {
-			setSrc(room?.media?.images[0]);
+		if (room?.media?.room_images) {
+			setSrc(room?.media?.room_images[0].url);
 		} else {
 			setSrc('https://i.imgur.com/bDujVXa.jpg');
 		}
@@ -57,7 +57,7 @@ const RoomCard = ({
 			<img
 				src={src}
 				onError={() => setSrc('https://i.imgur.com/bDujVXa.jpg')}
-				className="w-full"
+				className="w-full h-1/2"
 			/>
 			<div className="mt-2 py-2 px-2">
 				<h2 className="text-xl my-4 font-semibold text-primary-dark text-center capitalize">

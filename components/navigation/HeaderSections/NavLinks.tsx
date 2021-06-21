@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import ActiveLink from '../ActiveLink';
+import clsx from 'clsx';
 import styles from '../navigation.module.scss';
 import useTranslation from '../../../hooks/useTranslation';
-const NavLinks = () => {
+import { AppContext } from './../../../context/AppContext';
+const NavLinks = ({
+	openNav,
+	setOpenNav,
+}: {
+	openNav: boolean;
+	setOpenNav: (open: boolean) => void;
+}) => {
 	const { locale, t } = useTranslation();
+
 	return (
-		<div className="flex justify-center items-center w-full px-10 py-3  bg-gray-light bg-opacity-50">
+		<>
 			<ActiveLink activeClassName={styles.active} href={`/${locale}/`}>
 				<a className={styles.navLink}>{t('headerHome')}</a>
 			</ActiveLink>
@@ -24,7 +33,7 @@ const NavLinks = () => {
 			<ActiveLink activeClassName={styles.active} href={`/${locale}/meetings`}>
 				<a className={styles.navLink}>{t('headerMeetings')}</a>
 			</ActiveLink>
-		</div>
+		</>
 	);
 };
 

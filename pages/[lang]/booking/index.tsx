@@ -20,8 +20,10 @@ import { LOAD_ROOMS, ROOMS_AGGREGATE } from './../../../query/rooms';
 import { initializeApollo } from './../../../lib/apolloClient';
 import { RoomType } from '../../../types/rooms';
 import ThirdBookingSteps from './../../../components/booking/BookingSteps/ThirdBookingSteps';
+import useTranslation from './../../../hooks/useTranslation';
 
 const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
+	const { t, locale } = useTranslation();
 	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
 	const [roomDetails, setRoomDetails] = useState<RoomType | undefined>(
 		undefined
@@ -29,7 +31,10 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const [openModal, setOpenModal] = useState(false);
 	const [filterValues, setFilterValues] = useState<any>(undefined);
 	const [currentStep, setCurrentStep] = useState<number>(1);
-	const [stepTitle, setStepTitle] = useState<string>('Select a room');
+	const [stepTitle, setStepTitle] = useState<any>({
+		ar: 'اختر غرفة',
+		en: 'Select a room',
+	});
 	const [selectedRoom, setSelectedRoom] = useState<any>(undefined);
 	const [showEdit, setShowEdit] = useState(false);
 	const [selectedPackage, setSelectedPackage] = useState(undefined);
@@ -76,7 +81,10 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const editStayHandler = () => {
 		setShowEdit(true);
 		setCurrentStep(1);
-		setStepTitle('Select a room');
+		setStepTitle({
+			ar: 'اختر غرفة',
+			en: 'Select a room',
+		});
 	};
 
 	const pickRoomHandler = (
@@ -86,24 +94,29 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	) => {
 		setSelectedRoom({ ...room, packagePrices, basePrice });
 		setCurrentStep(2);
-		setStepTitle('Select a Rate');
+		setStepTitle({
+			ar: 'اختر السعر ',
+			en: 'Select a rate',
+		});
 	};
 	const pickPackageHandler = (selectedPack: any) => {
-		console.log(selectedPack);
 		setSelectedPackage(selectedPack);
 		setCurrentStep(3);
-		setStepTitle('Payment and Guest Details');
+		setStepTitle({
+			ar: 'بيانات السداد والضيوف',
+			en: 'Payment and Guest Details',
+		});
 	};
 	return (
 		<Layout withFilters={false}>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-2">
 					<div className="mt-8">
-						<h5 className="mx-12 text-lg font-medium text-primary-light my-1">
-							Step {currentStep} of 3
+						<h5 className="mx-12 text-lg font-medium text-primary-light my-1 capitalize">
+							{t('step')} {currentStep} {t('of')} 3
 						</h5>
 						<h3 className="mx-12 text-xl font-bold text-primary-dark mt-1 mb-3">
-							{stepTitle}
+							{stepTitle[locale]}
 						</h3>
 					</div>
 					<Steps
@@ -152,6 +165,8 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 					editStayHandler={editStayHandler}
 					filterValues={filterValues}
 					currentStep={currentStep}
+					selectedRoom={selectedRoom}
+					setCurrentStep={setCurrentStep}
 				/>
 			</div>
 			{currentStep === 1 && (

@@ -67,12 +67,10 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 			</section>
 			<section className="my-5 w-full text-center">
 				<h3 className="text-3xl font-bold text-primary-dark">
-					Meetings and Events
+					{t('meetingsNdEvents')}
 				</h3>
 				<p className="text-xl font-medium text-gray-dark w-full mx-auto md:w-1/2 my-3">
-					Our dedicated staff are available to help you plan your next meeting
-					or event – we have two flexible meeting rooms available, as well as
-					A/V equipment, and a business center.
+					{t('meetingsDesc')}
 				</p>
 			</section>
 			<hr />
@@ -98,13 +96,13 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 					<img src="/images/icons/outline/cocktail.svg" className="" />
 					<div className="mx-2">
 						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
-							Hosting an Event?
+							{t('hostingEvent')}
 						</h3>
 						<p className="text-base font-normal text-black w-2/3 md:2-full">
-							Submit your proposal to find out what we can offer for your event.
+							{t('hostingEventDisc')}
 						</p>
 						<button className="my-2 btn-primary-light py-4 px-8 font-medium">
-							Request Pricing
+							{t('requestPricing')}
 						</button>
 					</div>
 				</div>
@@ -112,20 +110,20 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 					<img src="/images/icons/stroke/meeting.svg" className="" />
 					<div className="mx-2">
 						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
-							Traveling as a group?
+							{t('travelGroup')}
 						</h3>
 						<p className="text-base font-normal text-black w-2/3 md:2-full">
-							Keep the team together by reserving a group of ten or more rooms.
+							{t('travelGroupDisc')}
 						</p>
 						<button className="my-2 btn-primary-light py-4 px-8 font-medium">
-							Book a room block
+							{t('bookRoomBlock')}
 						</button>
 					</div>
 				</div>
 			</section>
 			<section className="my-10 w-full">
 				<h2 className="text-2xl font-bold text-primary-dark text-center">
-					Venues
+					{t('venues')}
 				</h2>
 				<div className="border border-t-0 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
 					<button
@@ -137,7 +135,7 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 							styles.tab
 						)}
 					>
-						Conference
+						{t('conference')}
 					</button>
 					<button
 						onClick={() => {
@@ -148,7 +146,7 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 							styles.tab
 						)}
 					>
-						Wedding
+						{t('weeding')}
 					</button>
 					<button
 						onClick={() => {
@@ -159,7 +157,7 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 							styles.tab
 						)}
 					>
-						Reception
+						{t('reception')}
 					</button>
 					<button
 						onClick={() => {
@@ -170,7 +168,7 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 							styles.tab
 						)}
 					>
-						Theatre
+						{t('theatre')}
 					</button>
 				</div>
 				<div className="flex flex-wrap justify-start items-start">
@@ -179,7 +177,10 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 							<h3 className="capitalize">{meeting?.title[locale]}</h3>
 							<h5 className="flex justify-center items-center">
 								<FontAwesomeIcon icon={faUser} className="mx-1" />
-								<span>{meeting?.guests[activeTab]} Guests</span>
+								<span>
+									{meeting?.guests[activeTab]}{' '}
+									{locale === 'en' ? 'Guests' : 'ضيف'}
+								</span>
 							</h5>
 							<h5 className="flex justify-center items-center">
 								<svg
@@ -192,7 +193,9 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 								>
 									<path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
 								</svg>
-								<span>{meeting?.space} sq. m.</span>
+								<span>
+									{meeting?.space} {t('sqM')}
+								</span>
 							</h5>
 						</div>
 					))}

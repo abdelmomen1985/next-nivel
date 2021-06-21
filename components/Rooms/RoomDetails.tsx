@@ -3,6 +3,7 @@ import { AppContext } from './../../context/AppContext';
 //@ts-ignore
 import { Slide } from 'react-slideshow-image';
 import { RoomType } from '../../types/rooms';
+import useTranslation from './../../hooks/useTranslation';
 
 const RoomDetails = ({
 	roomDetails,
@@ -17,6 +18,7 @@ const RoomDetails = ({
 		basePrice: any
 	) => void;
 }) => {
+	const { t, locale } = useTranslation();
 	const { isMobile } = useContext(AppContext);
 	const [basePrice, setBasePrice] = useState<any>(undefined);
 	const [packagePrices, setPackagePrices] = useState<any>(undefined);
@@ -58,7 +60,7 @@ const RoomDetails = ({
 				<p>{roomDetails?.description}</p>
 				{purpose === 'view' ? (
 					<button className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold">
-						Check Rates
+						{t('checkRates')}
 					</button>
 				) : (
 					<button
@@ -68,12 +70,14 @@ const RoomDetails = ({
 						}}
 						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
 					>
-						Book from {basePrice?.base_price} EGP
+						{t('bookFrom')} {basePrice?.base_price} {t('egp')}
 					</button>
 				)}
 				<hr />
 				<div className="my-3 px-2">
-					<h5 className="text-black text-xl font-medium">Room Highlights</h5>
+					<h5 className="text-black text-xl font-medium">
+						{t('roomHighlights')}
+					</h5>
 					{/* <ul className="my-2 list-disc mx-5">
 						{roomDetails?.highlights.map((highlight: string, i: number) => (
 							<li key={i}>{highlight}</li>

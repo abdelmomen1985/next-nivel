@@ -16,22 +16,24 @@ const SecondBookingStep = ({
 		<section className="w-full mx-12">
 			<ChildAlert />
 			<div className="py-5 flex justify-between items-center mx-5 my-5 border border-gray-200 border-l-0 border-r-0 px-5">
-				<h3 className="text-2xl text-black font-normal">Best Available Rate</h3>
+				<h3 className="text-2xl text-black font-normal capitalize">
+					{t('bestAvRate')}
+				</h3>
 				<div>
 					<h2 className="text-black text-center text-xl font-bold">
 						{selectedRoom?.basePrice?.base_price} {t('egp')}
 					</h2>
 					<button
 						onClick={() => pickPackageHandler(selectedRoom?.basePrice)}
-						className="my-4 bg-outline-primary-light text-primary-light text-lg font-medium px-10 py-2 rounded-lg"
+						className="my-4 bg-outline-primary-light text-primary-light capitalize text-lg font-medium px-10 py-2 rounded-lg"
 					>
-						Book
+						{t('book')}
 					</button>
 				</div>
 			</div>
 			<div className="w-full my-8">
 				<div className="flex justify-start items-baseline mt-2 my-5 mx-5 px-5">
-					<h3 className="mx-1 text-xl font-medium">Make it a package deal</h3>
+					<h3 className="mx-1 text-xl font-medium">{t('makeItPackage')}</h3>
 					<hr className="w-2/3" />
 				</div>
 				{selectedRoom?.packagePrices.map((pack: any, index: number) => (
@@ -48,9 +50,9 @@ const SecondBookingStep = ({
 							</h2>
 							<button
 								onClick={() => pickPackageHandler(pack)}
-								className="my-4 bg-outline-primary-light text-primary-light text-lg font-medium px-10 py-2 rounded-lg"
+								className="my-4 bg-outline-primary-light text-primary-light text-lg capitalize font-medium px-10 py-2 rounded-lg"
 							>
-								Book
+								{t('book')}
 							</button>
 						</div>
 					</div>

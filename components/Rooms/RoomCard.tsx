@@ -57,7 +57,7 @@ const RoomCard = ({
 			<img
 				src={src}
 				onError={() => setSrc('https://i.imgur.com/bDujVXa.jpg')}
-				className="w-full h-1/2"
+				className="w-full h-2/3"
 			/>
 			<div className="mt-2 py-2 px-2">
 				<h2 className="text-xl my-4 font-semibold text-primary-dark text-center capitalize">
@@ -65,7 +65,7 @@ const RoomCard = ({
 				</h2>
 				{purpose === 'view' ? (
 					<button className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block">
-						Room Details
+						{t('roomDetails')}
 					</button>
 				) : (
 					<button
@@ -75,7 +75,7 @@ const RoomCard = ({
 						}}
 						className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block"
 					>
-						Book from {basePrice?.base_price} EGP
+						{t('bookFrom')} {basePrice?.base_price} {t('egp')}
 					</button>
 				)}
 			</div>

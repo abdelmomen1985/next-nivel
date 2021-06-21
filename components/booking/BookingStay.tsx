@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/useTranslation';
+import Steps, { Step } from 'rc-steps';
 
 const BookingStay = ({
 	filterValues,
 	editStayHandler,
 	currentStep,
+	selectedRoom,
+	setCurrentStep,
 }: {
 	filterValues: any;
 	editStayHandler: () => void;
 	currentStep: number;
+	selectedRoom: any;
+	setCurrentStep: (step: number) => void;
 }) => {
-	const { t } = useTranslation();
+	const { t, locale } = useTranslation();
 	const [childCount, setChildCount] = useState(0);
 	const [adultCount, setAdultCount] = useState(0);
 	const [nightsCount, setNightsCount] = useState(0);
+	const [currentLocale, setCurrentLocale] = useState(
+		locale === 'en' ? 'en-GB' : 'ar-EG'
+	);
 	useEffect(() => {
 		setAdultCount(
 			filterValues?.roomDetails.reduce(
@@ -33,6 +41,9 @@ const BookingStay = ({
 				(1000 * 3600 * 24)
 		);
 	}, [filterValues]);
+	useEffect(() => {
+		locale === 'en' ? setCurrentLocale('en-GB') : setCurrentLocale('ar-EG');
+	}, [locale]);
 	return (
 		<div className="mx-auto">
 			<img
@@ -56,7 +67,7 @@ const BookingStay = ({
 					<>
 						<h3>
 							{filterValues?.currentDateRange?.startDate?.toLocaleDateString(
-								'en-GB',
+								currentLocale,
 								{
 									day: 'numeric',
 									month: 'short',
@@ -64,22 +75,32 @@ const BookingStay = ({
 							)}{' '}
 							-{' '}
 							{filterValues?.currentDateRange?.endDate?.toLocaleDateString(
-								'en-GB',
+								currentLocale,
 								{
 									day: 'numeric',
 									month: 'short',
 									year: 'numeric',
 								}
 							)}{' '}
-							({nightsCount === 0 && 'Day only'}
-							{nightsCount === 1 && `${nightsCount} night`}
-							{nightsCount > 1 && `${nightsCount} nights`})
+							({nightsCount === 0 && t('dayOnly')}
+							{nightsCount === 1 && `${nightsCount} ${t('night')}`}
+							{nightsCount > 1 && `${nightsCount} ${t('nights')}`})
 						</h3>
 						<h5>
-							<span>{filterValues?.roomCount} Rooms</span>
-							{adultCount > 0 && <span>, {adultCount} Adult</span>}
+							<span>
+								{filterValues?.roomCount} {t('rooms')}
+							</span>
+							{adultCount > 0 && (
+								<span>
+									{t('comma')} {adultCount} {t('adults')}
+								</span>
+							)}
 
-							{childCount > 0 && <span>, {childCount} Children</span>}
+							{childCount > 0 && (
+								<span>
+									{t('comma')} {childCount} {t('kids')}
+								</span>
+							)}
 						</h5>
 					</>
 				)}
@@ -89,6 +110,18 @@ const BookingStay = ({
 				>
 					{t('editStay')}
 				</button>
+				{currentStep > 1 && (
+					<Steps direction="vertical" size="default" current={currentStep - 1}>
+						<Step
+							title={selectedRoom.title[locale]}
+							description={t('changeRoom')}
+							onClick={() => setCurrentStep(1)}
+							className="cursor-pointer"
+						/>
+						<Step title={t('selectRate')} description=" " />
+						<Step title={t('paymentGuestDetails')} description=" " />
+					</Steps>
+				)}
 			</div>
 		</div>
 	);

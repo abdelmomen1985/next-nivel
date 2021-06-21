@@ -101,3 +101,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.react-slideshow-container {
+  direction: ltr !important;
+}
+
+.rc-steps {
+  direction: ltr !important;
+}

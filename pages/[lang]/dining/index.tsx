@@ -126,7 +126,7 @@ const DiningPage = () => {
 		<Layout>
 			<img src="/images/restaurant.png" className="w-full h-full" />
 			<h3 className="my-5 py-5 mx-auto text-center text-black text-3xl font-bold">
-				Dining and drinks
+				{t('diningNdDrinks')}
 			</h3>
 			<hr className="w-full my-10" />
 			{resturantsData.map((resturant, i) => (
@@ -147,7 +147,7 @@ const DiningPage = () => {
 								}}
 								className="btn-primary-light text-white px-10 py-5 rounded-sm block my-3 text-lg font-semibold"
 							>
-								Details
+								{t('details')}
 							</button>
 						</div>
 					</div>

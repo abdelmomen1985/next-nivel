@@ -18,9 +18,11 @@ const GalleryPage = ({ galleryCats }: { galleryCats: any }) => {
 	const [galleryDetails, setGalleryDetails] = useState<any>(undefined);
 	return (
 		<Layout>
-			<h3 className="text-center text-black font-semibold text-xl">Gallery</h3>
+			<h3 className="text-center text-black font-semibold text-xl">
+				{t('gallery')}
+			</h3>
 			<h5 className="text-center my-1 text-base font-normal">
-				55 reasons to love our hotel
+				{t('galleryDisc')}
 			</h5>
 			<hr className="my-10 w-full" />
 			<div className={styles.galleryContainer}>

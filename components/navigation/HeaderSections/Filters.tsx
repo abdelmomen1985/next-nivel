@@ -194,7 +194,9 @@ const Filters = ({
 		setValue('groupCode', filterValues?.groupCode);
 		setValue('promotionCode', filterValues?.promotionCode);
 	}, [filterValues]);
-
+	useEffect(() => {
+		locale === 'en' ? setCurrentLocale('en-GB') : setCurrentLocale('ar-EG');
+	}, [locale]);
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClick);
 		return () => {
@@ -304,9 +306,11 @@ const Filters = ({
 					{showRooms && (
 						<div className={styles.datePickerContainer} ref={datePickerRef}>
 							<div className="grid grid-cols-3 gap-2 items-center my-3">
-								<h5 className="text-lg font-medium">Rooms</h5>
-								<h5 className="text-center text-lg font-medium">Adults</h5>
-								<h5 className="text-center text-lg font-medium">Kids</h5>
+								<h5 className="text-lg font-medium">{t('rooms')}</h5>
+								<h5 className="text-center text-lg font-medium">
+									{t('adults')}
+								</h5>
+								<h5 className="text-center text-lg font-medium">{t('kids')}</h5>
 							</div>
 							{roomDetails.map((room, i) => (
 								<div
@@ -324,7 +328,7 @@ const Filters = ({
 											</button>
 										)}{' '}
 										<h3 className="text-center text-lg font-medium ml-2">
-											Room {i + 1}
+											{t('room')} {i + 1}
 										</h3>
 									</div>
 									<div className="flex justify-between items-center mx-3">
@@ -379,7 +383,9 @@ const Filters = ({
 								<i className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-2">
 									&#43;
 								</i>
-								<h3 className="text-center text-lg font-normal">Add a Room</h3>
+								<h3 className="text-center text-lg font-normal">
+									{t('addRoom')}
+								</h3>
 							</button>
 
 							<div className="flex justify-end items-center my-t mb-0 mr-2">

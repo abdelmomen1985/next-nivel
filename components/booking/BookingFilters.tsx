@@ -66,30 +66,41 @@ const BookingFilters = ({
 			accessibility: checkAccessibility,
 		}));
 	};
+	const amenities = [
+		{
+			en: 'Free WiFi',
+			ar: 'واي فاي مجاني',
+		},
+		{
+			en: 'Non-smoking rooms',
+			ar: 'غرف لغير المدخنين',
+		},
+		{
+			en: 'On-site restaurant',
+			ar: 'مطعم داخل الفندق',
+		},
+		{
+			en: 'Fitness center',
+			ar: 'مركز لياقة بدنية',
+		},
+		{
+			en: 'Business center',
+			ar: 'مركز لإدارة الأعمال',
+		},
+	];
 	return (
 		<>
 			<div className="mx-auto px-8 my-5 w-full flex flex-wrap justify-between items-center">
-				<h3 className="text-black text-lg font-medium">Your stay includes</h3>
-				<h5 className="flex justify-center items-center text-gray-400 text-base font-normal">
-					<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-					<span>Free WiFi</span>
-				</h5>
-				<h5 className="flex justify-center items-center text-gray-400 text-base font-normal">
-					<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-					<span>Non-smoking rooms</span>
-				</h5>
-				<h5 className="flex justify-center items-center text-gray-400 text-base font-normal">
-					<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-					<span>On-site restaurant</span>
-				</h5>
-				<h5 className="flex justify-center items-center text-gray-400 text-base font-normal">
-					<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-					<span>Fitness center</span>
-				</h5>
-				<h5 className="flex justify-center items-center text-gray-400 text-base font-normal">
-					<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-					<span>Business center</span>
-				</h5>
+				<h3 className="text-black text-lg font-medium">{t('stayIncludes')}</h3>
+				{amenities.map((amenity, i) => (
+					<h5
+						key={i}
+						className="flex justify-center items-center text-gray-400 text-base font-normal"
+					>
+						<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
+						<span>{amenity[locale]}</span>
+					</h5>
+				))}
 			</div>
 			<form
 				onSubmit={handleSubmit(updateFiltersHandler)}
@@ -101,7 +112,7 @@ const BookingFilters = ({
 						className="btn-outline-primary-dark"
 						type="button"
 					>
-						Room Filters
+						{t('roomFilters')}
 					</button>
 					<div
 						className={
@@ -122,7 +133,7 @@ const BookingFilters = ({
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
-								All
+								{t('all')}
 							</h5>
 							<h5
 								onClick={() => setSelectedRoomType('1bed')}
@@ -131,7 +142,7 @@ const BookingFilters = ({
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
-								1 bed
+								1 {t('bed')}
 							</h5>
 							<h5
 								onClick={() => setSelectedRoomType('2beds')}
@@ -140,7 +151,7 @@ const BookingFilters = ({
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
-								2 beds
+								2 {t('bed')}
 							</h5>
 							<h5
 								onClick={() => setSelectedRoomType('suite')}
@@ -149,7 +160,7 @@ const BookingFilters = ({
 									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
-								suite
+								{t('suite')}
 							</h5>
 						</div>
 						<div className="flex justify-end items-center my-t mb-0 mr-2">
@@ -365,7 +376,7 @@ const BookingFilters = ({
 						className="text-lg text-primary-dark font-medium"
 						htmlFor="accessibility"
 					>
-						Accessible Rooms
+						{t('accessibleRooms')}
 					</label>
 				</div>
 				<button

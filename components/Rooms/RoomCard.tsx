@@ -52,7 +52,7 @@ const RoomCard = ({
 				setRoomDetails({ ...room });
 				setOpenModal(true);
 			}}
-			className="border border-gray-400 my-5 mx-auto w-11/12 cursor-pointer"
+			className="border border-gray-400 my-3 md:my-5 mx-auto w-11/12 cursor-pointer pb-6 md:pb-0"
 		>
 			<img
 				src={src}

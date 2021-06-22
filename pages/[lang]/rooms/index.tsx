@@ -16,9 +16,11 @@ import { RoomType } from '../../../types/rooms';
 import { initializeApollo } from './../../../lib/apolloClient';
 import { LOAD_ROOMS } from '../../../query/rooms';
 import useTranslation from './../../../hooks/useTranslation';
+import { AppContext } from './../../../context/AppContext';
 
 const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const { t, locale } = useTranslation();
+	const { isMobile, isTablet } = useContext(AppContext);
 	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
 	const [activeTab, setActiveTab] = useState(1);
 	const [roomDetails, setRoomDetails] = useState<any>(undefined);
@@ -35,7 +37,7 @@ const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	}, [roomDetails]);
 	return (
 		<Layout>
-			<h2 className="text-4xl font-bold mt-10 mb-10 text-primary-dark text-center">
+			<h2 className="text-lg md:text-xl lg:text-4xl font-bold mt-10 mb-10 text-primary-dark text-center">
 				{t('roomsNdSuites')}
 			</h2>
 			<div className="border border-t-2 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
@@ -44,7 +46,11 @@ const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 						setActiveTab(1);
 						setCurrentShow([...roomsData]);
 					}}
-					className={clsx(activeTab === 1 ? styles.active : '', styles.tab)}
+					className={clsx(
+						activeTab === 1 ? styles.active : '',
+						styles.tab,
+						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+					)}
 				>
 					{t('guestRooms')}
 				</button>
@@ -53,7 +59,11 @@ const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 						setActiveTab(2);
 						setCurrentShow([...suites]);
 					}}
-					className={clsx(activeTab === 2 ? styles.active : '', styles.tab)}
+					className={clsx(
+						activeTab === 2 ? styles.active : '',
+						styles.tab,
+						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+					)}
 				>
 					{t('suites')}
 				</button>
@@ -62,7 +72,11 @@ const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 						setActiveTab(3);
 						setCurrentShow([...accessible]);
 					}}
-					className={clsx(activeTab === 3 ? styles.active : '', styles.tab)}
+					className={clsx(
+						activeTab === 3 ? styles.active : '',
+						styles.tab,
+						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+					)}
 				>
 					{t('accessible')}
 				</button>
@@ -93,7 +107,7 @@ const RoomsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 					width: '80%',
 					overflowY: 'auto',
 					maxHeight: '100%',
-					top: '3rem',
+					top: isMobile || isTablet ? '0rem' : '3rem',
 					zIndex: '9999',
 				}}
 				title={roomDetails?.title}

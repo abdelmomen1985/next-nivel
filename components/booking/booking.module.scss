@@ -28,7 +28,10 @@
 
     &:focus {
       border: 2px solid #000;
+    }
 
+    @media screen and (max-width: 768px) {
+      width: 97%;
     }
   }
 }

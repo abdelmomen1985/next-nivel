@@ -74,9 +74,9 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 				</p>
 			</section>
 			<hr />
-			<section className="my-5 py-10 flex flex-wrap items-center justify-between px-10">
+			<section className="my-5 py-10 flex flex-wrap md:items-center items-stretch  justify-center md:justify-between px-10">
 				{eventsData.map((event, i) => (
-					<div className="mx-5 text-center" key={i}>
+					<div className="md:mx-5 mx-2 my-4 md:my-0 text-center" key={i}>
 						<h5>
 							<span className="text-primary-dark text-4xl font-bold">
 								{event.count}
@@ -91,31 +91,37 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 					</div>
 				))}
 			</section>
-			<section className="my-4 mx-0 w-full bg-gray-200 py-8 px-10 md:px-20  grid grid-cols-2 items-start gap-4">
+			<section className="my-4 mx-0 w-full bg-gray-200 py-8 px-10 md:px-20  grid  grid-cols-1 md:grid-cols-2 items-start gap-4">
 				<div className="flex justify-start items-start mx-auto">
-					<img src="/images/icons/outline/cocktail.svg" className="" />
+					<img
+						src="/images/icons/outline/cocktail.svg"
+						className="w-16 h-24 md:w-auto md:h-auto"
+					/>
 					<div className="mx-2">
 						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
 							{t('hostingEvent')}
 						</h3>
-						<p className="text-base font-normal text-black w-2/3 md:2-full">
+						<p className="text-base font-normal text-black w-full">
 							{t('hostingEventDisc')}
 						</p>
-						<button className="my-2 btn-primary-light py-4 px-8 font-medium">
+						<button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8 font-medium">
 							{t('requestPricing')}
 						</button>
 					</div>
 				</div>
 				<div className="flex justify-start items-start mx-auto">
-					<img src="/images/icons/stroke/meeting.svg" className="" />
+					<img
+						src="/images/icons/stroke/meeting.svg"
+						className="w-16 h-24 md:w-auto md:h-auto"
+					/>
 					<div className="mx-2">
 						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
 							{t('travelGroup')}
 						</h3>
-						<p className="text-base font-normal text-black w-2/3 md:2-full">
+						<p className="text-base font-normal text-black w-full">
 							{t('travelGroupDisc')}
 						</p>
-						<button className="my-2 btn-primary-light py-4 px-8 font-medium">
+						<button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8  font-medium">
 							{t('bookRoomBlock')}
 						</button>
 					</div>
@@ -132,7 +138,8 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 						}}
 						className={clsx(
 							activeTab === 'conference' ? styles.active : '',
-							styles.tab
+							styles.tab,
+							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
 						)}
 					>
 						{t('conference')}
@@ -143,7 +150,8 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 						}}
 						className={clsx(
 							activeTab === 'wedding' ? styles.active : '',
-							styles.tab
+							styles.tab,
+							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
 						)}
 					>
 						{t('weeding')}
@@ -154,7 +162,8 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 						}}
 						className={clsx(
 							activeTab === 'reception' ? styles.active : '',
-							styles.tab
+							styles.tab,
+							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
 						)}
 					>
 						{t('reception')}
@@ -165,7 +174,8 @@ const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
 						}}
 						className={clsx(
 							activeTab === 'theatre' ? styles.active : '',
-							styles.tab
+							styles.tab,
+							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
 						)}
 					>
 						{t('theatre')}

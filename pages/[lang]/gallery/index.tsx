@@ -50,7 +50,7 @@ const GalleryPage = ({ galleryCats }: { galleryCats: any }) => {
 					width: '80%',
 					overflowY: 'auto',
 					maxHeight: '100%',
-					top: '4rem',
+					top: isMobile ? 0 : '4rem',
 					zIndex: '9999',
 				}}
 				title={galleryDetails?.title}

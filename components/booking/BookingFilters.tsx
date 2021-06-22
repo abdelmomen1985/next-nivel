@@ -92,24 +92,28 @@ const BookingFilters = ({
 		<>
 			<div className="mx-auto px-8 my-5 w-full flex flex-wrap justify-between items-center">
 				<h3 className="text-black text-lg font-medium">{t('stayIncludes')}</h3>
-				{amenities.map((amenity, i) => (
-					<h5
-						key={i}
-						className="flex justify-center items-center text-gray-400 text-base font-normal"
-					>
-						<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
-						<span>{amenity[locale]}</span>
-					</h5>
-				))}
+				<div
+					className={`grid grid-cols-2 justify-start md:grid-cols-${amenities.length} gap-2 `}
+				>
+					{amenities.map((amenity, i) => (
+						<h5
+							key={i}
+							className="flex justify-center items-center text-gray-400 text-base font-normal"
+						>
+							<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
+							<span>{amenity[locale]}</span>
+						</h5>
+					))}
+				</div>
 			</div>
 			<form
 				onSubmit={handleSubmit(updateFiltersHandler)}
-				className="w-full flex flex-wrap justify-start items-center my-3 mx-auto px-8"
+				className="w-full grid grid-cols-2 gap-1 md:flex md:flex-wrap md:justify-start md:items-center my-3 mx-auto px-8"
 			>
 				<div className="mx-2 relative">
 					<button
 						onClick={() => setShowRoomTypes(true)}
-						className="btn-outline-primary-dark"
+						className="btn-outline-primary-dark text-base md:text-lg"
 						type="button"
 					>
 						{t('roomFilters')}
@@ -177,7 +181,7 @@ const BookingFilters = ({
 				<div className="mx-2 relative">
 					<button
 						onClick={() => setShowSpecialRate(true)}
-						className="btn-outline-primary-dark"
+						className="btn-outline-primary-dark text-base md:text-lg"
 						type="button"
 					>
 						{t('specialRates')}
@@ -373,7 +377,7 @@ const BookingFilters = ({
 						onChange={(e) => setCheckAccessibility(e.target.checked)}
 					/>
 					<label
-						className="text-lg text-primary-dark font-medium"
+						className="text-base md:text-lg text-primary-dark font-medium "
 						htmlFor="accessibility"
 					>
 						{t('accessibleRooms')}
@@ -381,7 +385,7 @@ const BookingFilters = ({
 				</div>
 				<button
 					type="submit"
-					className="btn-primary-light mx-2 py-3 px-8 text-white capitalize"
+					className="btn-primary-light mx-2 py-3 px-8 text-white capitalize text-base md:text-lg"
 				>
 					{t('update')}
 				</button>

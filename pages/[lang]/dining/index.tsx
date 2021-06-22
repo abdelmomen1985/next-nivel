@@ -1,11 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Layout from '../../../Layouts/Layout';
 import { getLocalizationProps } from '../../../context/LangContext';
 import { daysInWeek } from '../../../utils/daysInWeek';
 import styles from './dining.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
 import CustomModal from './../../../components/common/CustomModal/CustomModal';
+import { AppContext } from './../../../context/AppContext';
 const resturantsData = [
 	{
 		image: '/images/restuarnts/1.jpg',
@@ -119,6 +120,7 @@ const resturantsData = [
 	},
 ];
 const DiningPage = () => {
+	const { isMobile } = useContext(AppContext);
 	const { t, locale } = useTranslation();
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const [restDetails, setRestDetails] = useState<any>(undefined);
@@ -133,7 +135,7 @@ const DiningPage = () => {
 				<div className={styles.resturantContainer}>
 					<div key={i} className={styles.resturant}>
 						<img src={resturant?.image} className="w-full" />
-						<div className="mx-10">
+						<div className="mx-5 md:mx-10">
 							<h3 className="text-black text-2xl font-semibold my-2">
 								{resturant?.title[locale]}
 							</h3>
@@ -161,7 +163,7 @@ const DiningPage = () => {
 					width: '80%',
 					overflowY: 'auto',
 					maxHeight: '100%',
-					top: '2rem',
+					top: isMobile ? 0 : '2rem',
 					zIndex: '9999',
 				}}
 				title={restDetails?.title}

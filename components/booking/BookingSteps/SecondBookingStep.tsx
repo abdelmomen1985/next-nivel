@@ -13,7 +13,7 @@ const SecondBookingStep = ({
 }) => {
 	const { t, locale } = useTranslation();
 	return (
-		<section className="w-full mx-12">
+		<section className="w-full mx-auto lg:mx-12">
 			<ChildAlert />
 			<div className="py-5 flex justify-between items-center mx-5 my-5 border border-gray-200 border-l-0 border-r-0 px-5">
 				<h3 className="text-2xl text-black font-normal capitalize">

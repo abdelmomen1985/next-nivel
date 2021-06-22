@@ -16,6 +16,7 @@
 
   .resturant {
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     margin: 30px 3rem;
@@ -23,12 +24,21 @@
     max-width: 80rem;
     width: 100%;
 
-
-
     img {
       width: 50%;
       height: 80%;
     }
+
+    @media screen and (max-width: 768px) {
+      margin: 15px auto;
+      flex-wrap: wrap;
+
+      img {
+        width: 100%;
+      }
+    }
+
+
 
 
   }

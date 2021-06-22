@@ -55,7 +55,7 @@ const TopLevel = ({
 						)}
 					>
 						<LocaleSwitch />
-						{isMobile || isTablet ? (
+						{isMobile ? (
 							<hr
 								className="mx-auto my-2 w-1/2 bg-primary-dark border-transparent"
 								style={{ height: '2px' }}
@@ -76,7 +76,7 @@ const TopLevel = ({
 								{t('join')}
 							</a>
 						</ActiveLink>
-						{isMobile || isTablet ? (
+						{isMobile ? (
 							<hr
 								className="mx-auto my-2 w-1/2 bg-primary-dark border-transparent"
 								style={{ height: '2px' }}

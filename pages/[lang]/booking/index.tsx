@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Steps, { Step } from 'rc-steps';
 import { accessible, rooms, suites } from '../../../data/rooms';
 
@@ -21,9 +21,11 @@ import { initializeApollo } from './../../../lib/apolloClient';
 import { RoomType } from '../../../types/rooms';
 import ThirdBookingSteps from './../../../components/booking/BookingSteps/ThirdBookingSteps';
 import useTranslation from './../../../hooks/useTranslation';
+import { AppContext } from './../../../context/AppContext';
 
 const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const { t, locale } = useTranslation();
+	const { isMobile, isTablet } = useContext(AppContext);
 	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
 	const [roomDetails, setRoomDetails] = useState<RoomType | undefined>(
 		undefined
@@ -92,6 +94,7 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 		packagePrices: any[],
 		basePrice: any
 	) => {
+		console.log(room, packagePrices, basePrice);
 		setSelectedRoom({ ...room, packagePrices, basePrice });
 		setCurrentStep(2);
 		setStepTitle({
@@ -109,27 +112,29 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	};
 	return (
 		<Layout withFilters={false}>
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-				<div className="col-span-2">
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-2 lg:gap-4">
+				<div className="col-span-2 order-last md:order-none">
 					<div className="mt-8">
-						<h5 className="mx-12 text-lg font-medium text-primary-light my-1 capitalize">
+						<h5 className="mx-4 md:mx-12 text-lg font-medium text-primary-light my-1 capitalize">
 							{t('step')} {currentStep} {t('of')} 3
 						</h5>
-						<h3 className="mx-12 text-xl font-bold text-primary-dark mt-1 mb-3">
+						<h3 className="mx-4 md:mx-12 text-xl font-bold text-primary-dark mt-1 mb-3">
 							{stepTitle[locale]}
 						</h3>
 					</div>
-					<Steps
-						progressDot
-						status="process"
-						size="small"
-						current={currentStep}
-					>
-						<Step title=" " description=" " />
-						<Step title=" " description=" " />
-						<Step title=" " description=" " />
-						<Step title=" " description=" " />
-					</Steps>
+					{!isMobile && (
+						<Steps
+							progressDot
+							status="process"
+							size="small"
+							current={currentStep}
+						>
+							<Step title=" " description=" " />
+							<Step title=" " description=" " />
+							<Step title=" " description=" " />
+							<Step title=" " description=" " />
+						</Steps>
+					)}
 					{currentStep === 1 && (
 						<div>
 							{showEdit && (

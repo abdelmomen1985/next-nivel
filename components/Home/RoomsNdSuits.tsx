@@ -27,14 +27,14 @@ const RoomsNdSuits = () => {
 	];
 	const { t, locale } = useTranslation();
 	return (
-		<section className="bg-gray-light px-10 py-10 my-4">
+		<section className="bg-gray-light md:px-10 py-5 px-5 md:py-10 my-4">
 			<h3 className="my-3 text-center text-primary-dark text-xl font-bold">
 				{t('roomsNdSuites')}
 			</h3>
-			<div className="grid grid-cols-3 gap-2 items-center">
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
 				{roomsNdSuits.map((room, i) => (
 					<div
-						className="relative"
+						className="relative mx-auto md:mx-0"
 						key={i}
 						style={{
 							backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.8) 100%), url(${room.img})`,
@@ -63,7 +63,7 @@ const RoomsNdSuits = () => {
 				))}
 			</div>
 			<Link href={`/${locale}/rooms`}>
-				<a className="btn-primary-light text-white text-lg w-10/12 md:w-1/5 text-center font-semibold capitalize mx-auto my-5 block">
+				<a className="btn-primary-light text-white text-lg w-10/12 lg:w-1/5 text-center font-semibold capitalize mx-auto my-5 block">
 					{t('viewRooms')}
 				</a>
 			</Link>

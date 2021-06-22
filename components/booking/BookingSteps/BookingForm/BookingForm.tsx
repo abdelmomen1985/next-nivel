@@ -29,7 +29,7 @@ const BookingForm = () => {
 		console.log(data);
 	};
 	return (
-		<div className="w-full my-5">
+		<div className="w-full my-5 px-2">
 			<h3>{t('allFields')}</h3>
 			<form onSubmit={handleSubmit(bookingFormHandler)}>
 				<h3 className="flex flex-wrap justify-start items-start my-5">

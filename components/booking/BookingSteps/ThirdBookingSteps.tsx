@@ -49,7 +49,7 @@ const ThirdBookingSteps = ({
 		calcTotal();
 	}, [selectedPackage, filterValues]);
 	return (
-		<section className="mx-8 w-full my-2">
+		<section className="mx-auto md:mx-8 w-full my-2">
 			<div
 				className="py-6 bg-outline-primary-light border-2 px-4"
 				style={{

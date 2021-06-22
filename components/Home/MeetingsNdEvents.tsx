@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './home.module.scss';
 import useTranslation from './../../hooks/useTranslation';
-
+import clsx from 'clsx';
 const eventsData = [
 	{
 		count: '208',
@@ -55,18 +55,24 @@ const MeetingsNdEvents = () => {
 			<img src="/images/meeting.jpg" className="w-full" />
 			<div className={styles.meetingsContainer}>
 				<h3>{t('meetingsNdEvents')}</h3>
-				<div className="grid grid-cols-4 gap-2 my-3 mx-2 items-center">
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-2 my-3 mx-2 items-center">
 					{eventsData.map((event, i) => (
-						<div className="mx-5 text-center" key={i}>
+						<div
+							className={clsx(
+								styles.singleMeeting,
+								'mx-auto md:mx-5 text-center'
+							)}
+							key={i}
+						>
 							<h5>
-								<span className="text-primary-dark text-4xl font-bold">
+								<span className="text-primary-dark text-lg md:text-2xl lg:text-4xl font-bold">
 									{event.count}
 								</span>{' '}
-								<span className="text-black text-base font-medium">
+								<span className="text-black text-sm md:text-base font-medium">
 									{event.unit[locale]}
 								</span>
 							</h5>
-							<h4 className="text-black text-lg font-bold">
+							<h4 className="text-black text-base md:text-lg font-bold">
 								{event.title[locale]}
 							</h4>
 						</div>

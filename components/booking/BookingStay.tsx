@@ -62,6 +62,7 @@ const BookingStay = ({
 						margin: '10px auto',
 					}}
 					src="/images/logo.png"
+					className="w-full md:w-auto"
 				/>
 				{filterValues && (
 					<>

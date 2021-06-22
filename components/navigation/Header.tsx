@@ -21,11 +21,11 @@ const Header = ({
 		};
 	}, []);
 	const changeNavPosition = () => {
-		// if (window.scrollY > 50) {
-		// 	setIsFixed(true);
-		// } else {
-		// 	setIsFixed(false);
-		// }
+		if (window.scrollY > 50) {
+			setIsFixed(true);
+		} else {
+			setIsFixed(false);
+		}
 	};
 	const { isMobile, isTablet } = useContext(AppContext);
 	const navMenuRef = useRef<HTMLDivElement>(null);

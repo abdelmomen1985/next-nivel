@@ -60,11 +60,11 @@ const AmenitiesSection = () => {
 			<h3 className="text-center text-2xl text-black font-semibold mb-5">
 				{t('ourAmenities')}
 			</h3>
-			<div className="grid grid-cols-5 gap-3 items-center">
+			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 md:gap-2 lg:gap-4 items-center">
 				{amenities.map((amenity, i) => (
 					<div
 						key={i}
-						className="mx-2 my-2 rounded-md w-11/12 h-full border py-4 px-5 border-gray-400"
+						className="mx-auto md:mx-2 my-2 rounded-md w-11/12 h-full border py-4 px-5 border-gray-400"
 					>
 						<img src={amenity?.image} className="w-16 my-4 mx-auto" />
 						<h5 className="text-primary-light text-center mx-auto mt-2 mb-4 text-lg font-medium capitalize">

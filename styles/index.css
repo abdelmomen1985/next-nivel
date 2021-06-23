@@ -3,6 +3,7 @@
 @tailwind utilities;
 @layer base {
   body {
+    font-family: "Montserrat", sans-serif;
     --primary-light-color: #D4B561;
     --primary-dark-color: #8A6B3E;
     --gray-light-color: #e3e3e3;
@@ -63,6 +64,9 @@
   }
   .text-secondary-dark {
     color: var( --secondary-dark-color);
+  }
+  .font-montserrat {
+    font-family: "Montserrat", sans-serif;
   }
 }
 

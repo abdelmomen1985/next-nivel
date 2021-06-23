@@ -102,7 +102,9 @@ const common = {
   changeRoom: "Change Room",
   selectRate: "Select a Rate",
   paymentGuestDetails: "Payment and Guest Details",
-
+  what2Expect: "What To Expect During Your Visit",
+  readMore: "read more",
+  sar: "SAR",
 
 
 

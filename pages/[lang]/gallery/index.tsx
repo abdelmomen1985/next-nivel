@@ -10,7 +10,7 @@ import CustomModal from './../../../components/common/CustomModal/CustomModal';
 import { AppContext } from './../../../context/AppContext';
 //@ts-ignore
 import { Slide } from 'react-slideshow-image';
-
+import Image from 'next/image';
 const GalleryPage = ({ galleryCats }: { galleryCats: any }) => {
 	const { t, locale } = useTranslation();
 	const { isMobile } = useContext(AppContext);

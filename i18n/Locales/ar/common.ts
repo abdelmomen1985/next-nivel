@@ -102,6 +102,12 @@ const common = {
   changeRoom: "غير الغرفة",
   selectRate: "اختر السعر",
   paymentGuestDetails: "بيانات السداد والضيف",
+  what2Expect: "ما يجب أن تتوقعه أثناء زيارتك",
+  readMore: "اقرأ المزيد",
+  sar: "ريال سعودي ",
+
+
+
 
 
 

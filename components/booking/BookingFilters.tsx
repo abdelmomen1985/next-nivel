@@ -11,9 +11,13 @@ import styles from '../navigation/navigation.module.scss';
 const BookingFilters = ({
 	updateFilters,
 	filterValues,
+	specialRatesCount,
+	setSpecialRatesCount,
 }: {
 	updateFilters: (filters: any) => void;
 	filterValues: any;
+	specialRatesCount?: number;
+	setSpecialRatesCount?: (val: number) => void;
 }) => {
 	const { t, locale } = useTranslation();
 	const { errors, register, reset, handleSubmit, setValue } = useForm();
@@ -40,11 +44,6 @@ const BookingFilters = ({
 		};
 	}, []);
 	useEffect(() => {
-		// let loadedDateRange = {
-		// 	startDate: new Date(filterValues?.currentDateRange?.startDate),
-		// 	endDate: new Date(filterValues?.currentDateRange?.endDate),
-		// 	key: filterValues?.currentDateRange?.key,
-		// };
 		if (filterValues?.selectedRoomType) {
 			setSelectedRoomType(filterValues?.selectedRoomType);
 		}
@@ -65,6 +64,16 @@ const BookingFilters = ({
 			selectedRoomType,
 			accessibility: checkAccessibility,
 		}));
+	};
+	const handleFilterChange = (label: any, value: boolean) => {
+		if (value) {
+			setSpecialRatesCount!((prev) => prev + 1);
+		} else {
+			setSpecialRatesCount!((prev) => prev - 1);
+		}
+		let newFilters = {};
+		newFilters[label] = value;
+		updateFilters((prev: any) => ({ ...prev, ...newFilters }));
 	};
 	const amenities = [
 		{
@@ -123,6 +132,7 @@ const BookingFilters = ({
 							showRoomTypes
 								? clsx(
 										styles.datePickerContainer,
+										// styles.roomDetailsContainer,
 										'bg-white px-4 py-2 border border-gray-200 shadow-md'
 								  )
 								: 'hidden'
@@ -134,7 +144,7 @@ const BookingFilters = ({
 								onClick={() => setSelectedRoomType('all')}
 								className={clsx(
 									selectedRoomType === 'all' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
+									' capitalize p-5 text-center text-primary-light text-sm md:text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
 								{t('all')}
@@ -143,7 +153,7 @@ const BookingFilters = ({
 								onClick={() => setSelectedRoomType('1bed')}
 								className={clsx(
 									selectedRoomType === '1bed' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
+									' capitalize p-5 text-center text-primary-light text-sm md:text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
 								1 {t('bed')}
@@ -152,7 +162,7 @@ const BookingFilters = ({
 								onClick={() => setSelectedRoomType('2beds')}
 								className={clsx(
 									selectedRoomType === '2beds' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
+									' capitalize p-5 text-center text-primary-light text-sm md:text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
 								2 {t('bed')}
@@ -161,7 +171,7 @@ const BookingFilters = ({
 								onClick={() => setSelectedRoomType('suite')}
 								className={clsx(
 									selectedRoomType === 'suite' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-lg font-medium cursor-pointer border border-gray-300'
+									' capitalize p-5 text-center text-primary-light text-sm md:text-lg font-medium cursor-pointer border border-gray-300'
 								)}
 							>
 								{t('suite')}
@@ -184,10 +194,16 @@ const BookingFilters = ({
 						className="btn-outline-primary-dark text-base md:text-lg"
 						type="button"
 					>
+						{specialRatesCount! > 0 && (
+							<span className={styles.notification}>{specialRatesCount}</span>
+						)}
 						{t('specialRates')}
 					</button>
 					<div
-						className={showSpecialRate ? styles.datePickerContainer : 'hidden'}
+						className={clsx(
+							showSpecialRate ? styles.datePickerContainer : 'hidden',
+							styles.specialRatesBookingContainer
+						)}
 						ref={specialRateRef}
 					>
 						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
@@ -199,12 +215,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('usePoints', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="usePoints"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="usePoints"
 								>
 									Use Points
@@ -218,12 +237,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('travelAgents', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="travelAgents"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="travelAgents"
 								>
 									Travel Agents
@@ -237,12 +259,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('aaaRate', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="aaaRate"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="aaaRate"
 								>
 									AAA Rate
@@ -258,12 +283,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('AARPRate', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="AARPRate"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="AARPRate"
 								>
 									AARP Rate
@@ -277,12 +305,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('seniorRate', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="seniorRate"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="seniorRate"
 								>
 									Senior Rate
@@ -296,12 +327,15 @@ const BookingFilters = ({
 							>
 								<input
 									type="checkbox"
+									onChange={(e: any) =>
+										handleFilterChange('governmentRates', e.target.checked)
+									}
 									className="mx-1"
 									ref={register}
 									name="governmentRates"
 								/>
 								<label
-									className="text-lg text-primary-dark font-medium"
+									className="text-sm md:text-lg text-primary-dark font-medium"
 									htmlFor="governmentRates"
 								>
 									Government Rates

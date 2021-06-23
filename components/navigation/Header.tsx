@@ -21,7 +21,7 @@ const Header = ({
 		};
 	}, []);
 	const changeNavPosition = () => {
-		if (window.scrollY > 50) {
+		if (window.scrollY > 100) {
 			setIsFixed(true);
 		} else {
 			setIsFixed(false);
@@ -47,6 +47,9 @@ const Header = ({
 				styles.navBar,
 				isFixed ? 'fixed bg-white shadow' : 'relative'
 			)}
+			style={{
+				zIndex: isFixed ? 999 : 'unset',
+			}}
 			ref={navMenuRef}
 		>
 			<TopLevel openNav={openNav} setOpenNav={setOpenNav} />

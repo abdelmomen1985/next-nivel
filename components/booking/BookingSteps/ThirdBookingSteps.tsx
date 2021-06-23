@@ -60,7 +60,7 @@ const ThirdBookingSteps = ({
 				<div className="flex justify-between items-center my-2 text-xl font-bold text-primary-dark">
 					<h2>{t('total4Stay')}</h2>
 					<h2>
-						{totalPrice} {t('egp')}
+						{totalPrice} {t('sar')}
 					</h2>
 				</div>
 				<div className="my-2 text-lg font-medium text-black">
@@ -79,12 +79,12 @@ const ThirdBookingSteps = ({
 							</h5>
 							<div className="flex justify-between items-center text-gray-300 text-base font-normal">
 								<h3>
-									{selectedPackage?.base_price} {t('egp')} {t('perNight')} *{' '}
+									{selectedPackage?.base_price} {t('sar')} {t('perNight')} *{' '}
 									{nightsCount} {t('nights')}
 								</h3>
 								<h3>
 									{(selectedPackage?.base_price * nightsCount).toFixed(2)}{' '}
-									{t('egp')}
+									{t('sar')}
 								</h3>
 							</div>
 						</>
@@ -93,7 +93,7 @@ const ThirdBookingSteps = ({
 				<div className="flex justify-between items-center my-2 text-lg font-medium text-black">
 					<h2>{t('totalRoomCharge')}</h2>
 					<h2>
-						{(selectedPackage?.base_price * nightsCount).toFixed(2)} {t('egp')}
+						{(selectedPackage?.base_price * nightsCount).toFixed(2)} {t('sar')}
 					</h2>
 				</div>
 				{showPriceDetails && (
@@ -111,7 +111,7 @@ const ThirdBookingSteps = ({
 				<div className="flex justify-between items-center my-2 text-lg font-medium text-black">
 					<h2>{t('totalTaxes')}</h2>
 					<h2>
-						{totalTax} {t('egp')}
+						{totalTax} {t('sar')}
 					</h2>
 				</div>
 				{showPriceDetails && (
@@ -120,7 +120,7 @@ const ThirdBookingSteps = ({
 						<div className="flex justify-end items-center font-semibold">
 							<h2 className="mx-1">{t('total4Stay')}:</h2>
 							<h2>
-								{totalPrice} {t('egp')}
+								{totalPrice} {t('sar')}
 							</h2>
 						</div>
 					</>

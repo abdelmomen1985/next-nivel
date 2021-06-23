@@ -70,7 +70,7 @@ const RoomDetails = ({
 						}}
 						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
 					>
-						{t('bookFrom')} {basePrice?.base_price} {t('egp')}
+						{t('bookFrom')} {basePrice?.base_price} {t('sar')}
 					</button>
 				)}
 				<hr />

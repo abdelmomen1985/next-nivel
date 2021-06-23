@@ -40,11 +40,15 @@ const Filters = ({
 	title = 'header',
 	updateFilters,
 	hideFilters,
+	specialRatesCount,
+	setSpecialRatesCount,
 }: {
 	filterValues?: any;
 	title?: string;
 	updateFilters: (filters: any) => void;
 	hideFilters?: () => void;
+	specialRatesCount?: number;
+	setSpecialRatesCount?: (val: number) => void;
 }) => {
 	const { handleSubmit, register, setValue } = useForm({
 		mode: 'onTouched',
@@ -156,6 +160,16 @@ const Filters = ({
 			roomDetails,
 		};
 		updateFilters((prev: any) => ({ ...prev, ...searchData }));
+	};
+	const handleFilterChange = (label: any, value: boolean) => {
+		if (value) {
+			setSpecialRatesCount!((prev) => prev + 1);
+		} else {
+			setSpecialRatesCount!((prev) => prev - 1);
+		}
+		let newFilters = {};
+		newFilters[label] = value;
+		updateFilters((prev: any) => ({ ...prev, ...newFilters }));
 	};
 	useEffect(() => {
 		let roomDets = [...roomDetails];
@@ -307,7 +321,13 @@ const Filters = ({
 							{roomCount} {t('rooms')}, {totalGuestCount} {t('guests')}
 						</button>
 						{showRooms && (
-							<div className={styles.datePickerContainer} ref={datePickerRef}>
+							<div
+								className={clsx(
+									styles.datePickerContainer,
+									styles.roomDetailsContainer
+								)}
+								ref={datePickerRef}
+							>
 								<div className="grid grid-cols-3 gap-2 items-center my-3">
 									<h5 className="text-lg font-medium">{t('rooms')}</h5>
 									<h5 className="text-center text-lg font-medium">
@@ -327,12 +347,12 @@ const Filters = ({
 												<button
 													type="button"
 													onClick={() => removeRoomHandler(i)}
-													className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+													className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-2"
 												>
 													&times;
 												</button>
 											)}{' '}
-											<h3 className="text-center text-lg font-medium ml-2">
+											<h3 className="text-center text-lg font-medium mx-2">
 												{t('room')} {i + 1}
 											</h3>
 										</div>
@@ -341,17 +361,17 @@ const Filters = ({
 												type="button"
 												disabled={room.adultsCount === 1}
 												onClick={() => decrementGuestsHandler('adult', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
 											>
 												&minus;
 											</button>
-											<h5 className="text-center text-lg font-medium">
+											<h5 className="text-center text-lg font-medium mx-1">
 												{room.adultsCount}
 											</h5>
 											<button
 												type="button"
 												onClick={() => incrementGuestsHandler('adult', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
 											>
 												&#43;
 											</button>
@@ -361,17 +381,17 @@ const Filters = ({
 												type="button"
 												disabled={room.childCount === 0}
 												onClick={() => decrementGuestsHandler('kid', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
 											>
 												&minus;
 											</button>
-											<h5 className="text-center text-lg font-medium">
+											<h5 className="text-center text-lg font-medium mx-1">
 												{room.childCount}
 											</h5>
 											<button
 												type="button"
 												onClick={() => incrementGuestsHandler('kid', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg ml-2"
+												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
 											>
 												&#43;
 											</button>
@@ -408,15 +428,19 @@ const Filters = ({
 					<div className="mx-2 relative">
 						<button
 							onClick={() => setShowSpecialRate(true)}
-							className="btn-outline-primary-dark text-xs md:text-lg my-4 md:my-0 "
+							className="btn-outline-primary-dark text-xs md:text-lg my-4 md:my-0 relative"
 							type="button"
 						>
+							{specialRatesCount! > 0 && (
+								<span className={styles.notification}>{specialRatesCount}</span>
+							)}
 							{t('specialRates')}
 						</button>
 						<div
-							className={
-								showSpecialRate ? styles.datePickerContainer : 'hidden'
-							}
+							className={clsx(
+								showSpecialRate ? styles.datePickerContainer : 'hidden',
+								styles.specialRatesContainer
+							)}
 							ref={specialRateRef}
 						>
 							<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
@@ -428,12 +452,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('usePoints', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="usePoints"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="usePoints"
 									>
 										Use Points
@@ -447,12 +474,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('travelAgents', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="travelAgents"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="travelAgents"
 									>
 										Travel Agents
@@ -466,12 +496,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('aaaRate', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="aaaRate"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="aaaRate"
 									>
 										AAA Rate
@@ -487,12 +520,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('AARPRate', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="AARPRate"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="AARPRate"
 									>
 										AARP Rate
@@ -506,12 +542,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('seniorRate', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="seniorRate"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="seniorRate"
 									>
 										Senior Rate
@@ -525,12 +564,15 @@ const Filters = ({
 								>
 									<input
 										type="checkbox"
+										onChange={(e: any) =>
+											handleFilterChange('governmentRates', e.target.checked)
+										}
 										className="mx-1"
 										ref={register}
 										name="governmentRates"
 									/>
 									<label
-										className="text-lg text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="governmentRates"
 									>
 										Government Rates
@@ -540,7 +582,7 @@ const Filters = ({
 							<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
 								<div className="flex flex-col justify-start">
 									<label
-										className="text-base text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="promotionCode"
 									>
 										Promotion Code
@@ -554,7 +596,7 @@ const Filters = ({
 								</div>
 								<div className="flex flex-col justify-start">
 									<label
-										className="text-base text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="groupCode"
 									>
 										Group Code
@@ -568,7 +610,7 @@ const Filters = ({
 								</div>
 								<div className="flex flex-col justify-start">
 									<label
-										className="text-base text-primary-dark font-medium"
+										className="text-sm md:text-lg text-primary-dark font-medium"
 										htmlFor="corporateAccount"
 									>
 										Corporate Account

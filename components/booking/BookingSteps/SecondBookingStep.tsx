@@ -16,12 +16,12 @@ const SecondBookingStep = ({
 		<section className="w-full mx-auto lg:mx-12">
 			<ChildAlert />
 			<div className="py-5 flex justify-between items-center mx-5 my-5 border border-gray-200 border-l-0 border-r-0 px-5">
-				<h3 className="text-2xl text-black font-normal capitalize">
+				<h3 className="text-lg md:text-2xl text-black font-normal capitalize">
 					{t('bestAvRate')}
 				</h3>
 				<div>
 					<h2 className="text-black text-center text-xl font-bold">
-						{selectedRoom?.basePrice?.base_price} {t('egp')}
+						{selectedRoom?.basePrice?.base_price} {t('sar')}
 					</h2>
 					<button
 						onClick={() => pickPackageHandler(selectedRoom?.basePrice)}
@@ -41,12 +41,12 @@ const SecondBookingStep = ({
 						key={index}
 						className="py-5 flex justify-between items-center mx-5 my-5 border border-gray-200 border-t-0 border-l-0 border-r-0 px-5"
 					>
-						<h3 className="text-2xl text-black font-normal">
+						<h3 className="text-lg md:text-2xl text-black font-normal">
 							{pack?.rate?.title[locale]}
 						</h3>
 						<div>
 							<h2 className="text-black text-center text-xl font-bold">
-								{pack.base_price} {t('egp')}
+								{pack.base_price} {t('sar')}
 							</h2>
 							<button
 								onClick={() => pickPackageHandler(pack)}

@@ -40,6 +40,7 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 	const [selectedRoom, setSelectedRoom] = useState<any>(undefined);
 	const [showEdit, setShowEdit] = useState(false);
 	const [selectedPackage, setSelectedPackage] = useState(undefined);
+	const [specialRatesCount, setSpecialRatesCount] = useState<number>(0);
 	const [filterRooms, { data: filteredRooms }] = useLazyQuery(ROOMS_AGGREGATE, {
 		onCompleted() {
 			console.log(filteredRooms?.rooms_aggregate?.nodes);
@@ -143,11 +144,15 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
 									title="booking"
 									filterValues={filterValues}
 									hideFilters={() => setShowEdit(false)}
+									specialRatesCount={specialRatesCount}
+									setSpecialRatesCount={setSpecialRatesCount}
 								/>
 							)}
 							<BookingFilters
 								filterValues={filterValues}
 								updateFilters={setFilterValues}
+								specialRatesCount={specialRatesCount}
+								setSpecialRatesCount={setSpecialRatesCount}
 							/>
 						</div>
 					)}

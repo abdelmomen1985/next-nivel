@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useTranslation from './../../hooks/useTranslation';
 import { useEffect } from 'react';
 import { RoomType } from '../../types/rooms';
+// import { Image } from 'next/image';
 
 const RoomCard = ({
 	room,
@@ -64,7 +65,7 @@ const RoomCard = ({
 					{room?.title[locale]}
 				</h2>
 				{purpose === 'view' ? (
-					<button className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block">
+					<button className="btn-primary-light text-white py-3 text-base md:text-xl font-semibold  px-5 w-11/12 mx-auto block">
 						{t('roomDetails')}
 					</button>
 				) : (
@@ -73,9 +74,9 @@ const RoomCard = ({
 							e.stopPropagation();
 							pickRoomHandler(room, packagePrices, basePrice);
 						}}
-						className="btn-primary-light text-white py-3 text-xl font-semibold  px-5 w-11/12 mx-auto block"
+						className="btn-primary-light text-white py-3 text-base md:text-xl font-semibold  px-5 w-11/12 mx-auto block"
 					>
-						{t('bookFrom')} {basePrice?.base_price} {t('egp')}
+						{t('bookFrom')} {basePrice?.base_price} {t('sar')}
 					</button>
 				)}
 			</div>

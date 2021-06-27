@@ -17,7 +17,7 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
         <div>
           <div className="flex justify-center">
             <img
-              src={layout.remoteSchemaUrl + layout.footer_logo_en.url}
+              src={layout?.remoteSchemaUrl + layout?.footer_logo_en?.url}
               className="mb-4"
             />
           </div>

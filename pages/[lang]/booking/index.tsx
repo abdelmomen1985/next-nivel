@@ -8,6 +8,8 @@ import FirstBookingStep from "../../../components/booking/BookingSteps/FirstBook
 import SecondBookingStep from "../../../components/booking/BookingSteps/SecondBookingStep";
 import RoomDetails from "../../../components/Rooms/RoomDetails";
 import { getLocalizationProps } from "../../../context/LangContext";
+import Layout from "../../../Layouts/Layout";
+import { LayoutType } from "../../../types/layout";
 import { RoomType } from "../../../types/rooms";
 import BookingStay from "./../../../components/booking/BookingStay";
 import ThirdBookingSteps from "./../../../components/booking/BookingSteps/ThirdBookingSteps";
@@ -107,7 +109,7 @@ const MeetingsPage = ({ roomsData }: { roomsData: RoomType[] }) => {
     });
   };
   return (
-    <Layout withFilters={false}>
+    <Layout withFilters={false} layout={{} as LayoutType}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-2 lg:gap-4">
         <div className="col-span-2 order-last md:order-none">
           <div className="mt-8">

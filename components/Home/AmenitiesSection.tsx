@@ -1,58 +1,14 @@
 import React from 'react';
+import { AmenityType } from '../../types/amenities';
 import useTranslation from './../../hooks/useTranslation';
 
-const amenities = [
-	{
-		image: '/images/icons/outline/room-service.svg',
-		title: {
-			ar: 'خدمة الغرف',
-			en: 'Room Service',
-		},
-	},
-	{
-		image: '/images/icons/outline/gym.svg',
-		title: {
-			ar: 'مركز لياقة بدنية',
-			en: 'Fitness center',
-		},
-	},
-	{
-		image: '/images/icons/outline/swimming-pool.svg',
-		title: {
-			ar: 'حمام سباحة',
-			en: 'swimming pool',
-		},
-	},
-	{
-		image: '/images/icons/outline/restaurant.svg',
-		title: {
-			ar: 'مطعم بالفندق',
-			en: 'On-site restaurant',
-		},
-	},
-	{
-		image: '/images/icons/outline/Group.svg',
-		title: {
-			ar: 'قاعة مؤتمرات',
-			en: 'conference room',
-		},
-	},
-	{
-		image: '/images/icons/outline/food-cart.svg',
-		title: {
-			ar: 'خدمات الاستقبال والإرشاد',
-			en: 'Concierge',
-		},
-	},
-	{
-		image: '/images/icons/outline/meeting.svg',
-		title: {
-			ar: 'مركز أعمال',
-			en: 'Business center',
-		},
-	},
-];
-const AmenitiesSection = () => {
+const AmenitiesSection = ({
+	amenities,
+	defaultUrl,
+}: {
+	amenities: AmenityType[];
+	defaultUrl?: string;
+}) => {
 	const { t, locale } = useTranslation();
 
 	return (
@@ -66,9 +22,16 @@ const AmenitiesSection = () => {
 						key={i}
 						className="mx-auto md:mx-2 my-2 rounded-md w-11/12 h-full border py-4 px-5 border-gray-400"
 					>
-						<img src={amenity?.image} className="w-16 my-4 mx-auto" />
+						<img
+							src={
+								amenity?.media.length > 0
+									? `${defaultUrl}${amenity?.media[0]?.url}`
+									: 'https://i.imgur.com/bDujVXa.jpg'
+							}
+							className="w-16 my-4 mx-auto"
+						/>
 						<h5 className="text-primary-light text-center mx-auto mt-2 mb-4 text-lg font-medium capitalize">
-							{amenity.title[locale]}
+							{amenity.name[locale]}
 						</h5>
 					</div>
 				))}

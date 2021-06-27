@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { LAYOUT_FRAGMENT } from './fragments/layout';
 
 export const ROOM_FIELDS = `
       id
@@ -15,9 +16,13 @@ export const ROOM_FIELDS = `
       }
 `
 export const LOAD_ROOMS = gql`
+  ${LAYOUT_FRAGMENT}
   query load_rooms{
     rooms{
       ${ROOM_FIELDS}
+    }
+    layout{
+      ...LayoutFragment
     }
 }
 `

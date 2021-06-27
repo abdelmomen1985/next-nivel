@@ -1,8 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import useTranslation from './../../hooks/useTranslation';
+import Markdown from 'markdown-to-jsx';
 
-const StatsSection = () => {
+const StatsSection = ({ home }: { home: any }) => {
 	const { t, locale } = useTranslation();
 	return (
 		<section className="px-16 py-10 mt-0 mb-5 bg-gray-light">
@@ -28,9 +29,15 @@ const StatsSection = () => {
 					<h4 className="text-gray-dark text-lg uppercase font-medium">
 						{t('address')}
 					</h4>
-					<p className="text-black text-lg mt-1 w-full">
-						Jabal Omar Ibrahim Al Khalil Makkah, 21955, Saudi Arabia
-					</p>
+					<Markdown
+						options={{
+							overrides: {
+								p: { props: { className: 'text-black text-lg mt-1 w-full' } },
+							},
+						}}
+					>
+						{home[`address_${locale}`]}
+					</Markdown>
 				</div>
 				<div className="mx-0 lg:mx-auto my-2 lg:my-0">
 					<h4 className="text-gray-dark text-lg uppercase font-medium">

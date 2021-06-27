@@ -105,6 +105,7 @@ const common = {
   what2Expect: "What To Expect During Your Visit",
   readMore: "read more",
   sar: "SAR",
+  workingHrs: "working hours",
 
 
 

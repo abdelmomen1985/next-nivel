@@ -105,6 +105,7 @@ const common = {
   what2Expect: "ما يجب أن تتوقعه أثناء زيارتك",
   readMore: "اقرأ المزيد",
   sar: "ريال سعودي ",
+  workingHrs: "ساعات العمل",
 
 
 

@@ -1,4 +1,4 @@
-.resturantContainer {
+.homeSectionContainer {
   width: 100%;
   margin: 0;
   padding: 3rem 10px;
@@ -8,13 +8,13 @@
   &:nth-of-type(even) {
     background-color: var(--gray-light-color);
 
-    .resturant {
+    .homeSection {
       flex-direction: row-reverse;
 
     }
   }
 
-  .resturant {
+  .homeSection {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -37,6 +37,5 @@
         width: 100%;
       }
     }
-
   }
 }

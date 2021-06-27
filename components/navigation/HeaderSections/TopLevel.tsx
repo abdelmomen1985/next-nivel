@@ -44,7 +44,7 @@ const TopLevel = ({
     <div className="flex flex-wrap justify-between lg:justify-between items-center my-2 mx-2 md:mx-5 px-1 md:px-2">
       <Link href={`/${locale}/`}>
         <img
-          src={layout.remoteSchemaUrl + layout.top_logo_en.url}
+          src={layout?.remoteSchemaUrl + layout?.top_logo_en?.url}
           className="cursor-pointer"
           style={{ height: "80px" }}
         />

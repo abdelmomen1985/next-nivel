@@ -1,237 +1,235 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import Layout from '../../../Layouts/Layout';
-import { getLocalizationProps } from '../../../context/LangContext';
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clsx from "clsx";
+import { GetStaticPaths, GetStaticProps } from "next";
+import React, { useState } from "react";
+import { getLocalizationProps } from "../../../context/LangContext";
+import { initializeApollo } from "../../../lib/apolloClient";
+import useTranslation from "./../../../hooks/useTranslation";
+import { MEETING_ROOMS } from "./../../../query/meeting_rooms";
+import styles from "./meetings.module.scss";
 
-import styles from './meetings.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import useTranslation from './../../../hooks/useTranslation';
-
-import { initializeApollo } from '../../../lib/apolloClient';
-import { MEETING_ROOMS } from './../../../query/meeting_rooms';
 const eventsData = [
-	{
-		count: '208',
-		unit: {
-			ar: 'متر مربع',
-			en: 'SQ. M.',
-		},
-		title: {
-			ar: 'من مساجة الحدث الإجمالية',
-			en: 'OF TOTAL EVENT SPACE',
-		},
-	},
-	{
-		count: '104',
-		unit: {
-			ar: 'متر مربع',
-			en: 'SQ. M.',
-		},
-		title: {
-			ar: 'من أضخم إعدادات الغرف',
-			en: 'OF LARGEST ROOM SETUP',
-		},
-	},
-	{
-		count: '2',
-		unit: {
-			ar: '',
-			en: '',
-		},
-		title: {
-			ar: 'غرف اجتماعات',
-			en: 'MEETING ROOMS',
-		},
-	},
-	{
-		count: '484',
-		unit: {
-			ar: '',
-			en: '',
-		},
-		title: {
-			ar: 'غرف ضيوف',
-			en: 'Guest Rooms',
-		},
-	},
+  {
+    count: "208",
+    unit: {
+      ar: "متر مربع",
+      en: "SQ. M.",
+    },
+    title: {
+      ar: "من مساجة الحدث الإجمالية",
+      en: "OF TOTAL EVENT SPACE",
+    },
+  },
+  {
+    count: "104",
+    unit: {
+      ar: "متر مربع",
+      en: "SQ. M.",
+    },
+    title: {
+      ar: "من أضخم إعدادات الغرف",
+      en: "OF LARGEST ROOM SETUP",
+    },
+  },
+  {
+    count: "2",
+    unit: {
+      ar: "",
+      en: "",
+    },
+    title: {
+      ar: "غرف اجتماعات",
+      en: "MEETING ROOMS",
+    },
+  },
+  {
+    count: "484",
+    unit: {
+      ar: "",
+      en: "",
+    },
+    title: {
+      ar: "غرف ضيوف",
+      en: "Guest Rooms",
+    },
+  },
 ];
 const MeetingsPage = ({ meetingRooms }: { meetingRooms: any[] }) => {
-	const { t, locale } = useTranslation();
-	const [activeTab, setActiveTab] = useState<string>('conference');
-	return (
-		<Layout>
-			<section className="w-full">
-				<img src="/images/meeting.jpg" className="w-full" />
-			</section>
-			<section className="my-5 w-full text-center">
-				<h3 className="text-3xl font-bold text-primary-dark">
-					{t('meetingsNdEvents')}
-				</h3>
-				<p className="text-xl font-medium text-gray-dark w-full mx-auto md:w-1/2 my-3">
-					{t('meetingsDesc')}
-				</p>
-			</section>
-			<hr />
-			<section className="my-5 py-10 flex flex-wrap md:items-center items-stretch  justify-center md:justify-between px-10">
-				{eventsData.map((event, i) => (
-					<div className="md:mx-5 mx-2 my-4 md:my-0 text-center" key={i}>
-						<h5>
-							<span className="text-primary-dark text-4xl font-bold">
-								{event.count}
-							</span>{' '}
-							<span className="text-black text-base font-medium">
-								{event.unit[locale]}
-							</span>
-						</h5>
-						<h4 className="text-black text-lg font-bold">
-							{event.title[locale]}
-						</h4>
-					</div>
-				))}
-			</section>
-			<section className="my-4 mx-0 w-full bg-gray-200 py-8 px-10 md:px-20  grid  grid-cols-1 md:grid-cols-2 items-start gap-4">
-				<div className="flex justify-start items-start mx-auto">
-					<img
-						src="/images/icons/outline/cocktail.svg"
-						className="w-16 h-24 md:w-auto md:h-auto"
-					/>
-					<div className="mx-2">
-						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
-							{t('hostingEvent')}
-						</h3>
-						<p className="text-base font-normal text-black w-full">
-							{t('hostingEventDisc')}
-						</p>
-						<button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8 font-medium">
-							{t('requestPricing')}
-						</button>
-					</div>
-				</div>
-				<div className="flex justify-start items-start mx-auto">
-					<img
-						src="/images/icons/stroke/meeting.svg"
-						className="w-16 h-24 md:w-auto md:h-auto"
-					/>
-					<div className="mx-2">
-						<h3 className="text-xl font-semibold text-primary-dark my-2 ">
-							{t('travelGroup')}
-						</h3>
-						<p className="text-base font-normal text-black w-full">
-							{t('travelGroupDisc')}
-						</p>
-						<button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8  font-medium">
-							{t('bookRoomBlock')}
-						</button>
-					</div>
-				</div>
-			</section>
-			<section className="my-10 w-full">
-				<h2 className="text-2xl font-bold text-primary-dark text-center">
-					{t('venues')}
-				</h2>
-				<div className="border border-t-0 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
-					<button
-						onClick={() => {
-							setActiveTab('conference');
-						}}
-						className={clsx(
-							activeTab === 'conference' ? styles.active : '',
-							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-						)}
-					>
-						{t('conference')}
-					</button>
-					<button
-						onClick={() => {
-							setActiveTab('wedding');
-						}}
-						className={clsx(
-							activeTab === 'wedding' ? styles.active : '',
-							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-						)}
-					>
-						{t('weeding')}
-					</button>
-					<button
-						onClick={() => {
-							setActiveTab('reception');
-						}}
-						className={clsx(
-							activeTab === 'reception' ? styles.active : '',
-							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-						)}
-					>
-						{t('reception')}
-					</button>
-					<button
-						onClick={() => {
-							setActiveTab('theatre');
-						}}
-						className={clsx(
-							activeTab === 'theatre' ? styles.active : '',
-							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-						)}
-					>
-						{t('theatre')}
-					</button>
-				</div>
-				<div className="flex flex-wrap justify-start items-start">
-					{meetingRooms.map((meeting) => (
-						<div key={meeting.id} className={styles.meeting}>
-							<h3 className="capitalize">{meeting?.title[locale]}</h3>
-							<h5 className="flex justify-center items-center">
-								<FontAwesomeIcon icon={faUser} className="mx-1" />
-								<span>
-									{meeting?.guests[activeTab]}{' '}
-									{locale === 'en' ? 'Guests' : 'ضيف'}
-								</span>
-							</h5>
-							<h5 className="flex justify-center items-center">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									className="bi bi-rulers"
-									viewBox="0 0 16 16"
-								>
-									<path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-								</svg>
-								<span>
-									{meeting?.space} {t('sqM')}
-								</span>
-							</h5>
-						</div>
-					))}
-				</div>
-			</section>
-		</Layout>
-	);
+  const { t, locale } = useTranslation();
+  const [activeTab, setActiveTab] = useState<string>("conference");
+  return (
+    <Layout>
+      <section className="w-full">
+        <img src="/images/meeting.jpg" className="w-full" />
+      </section>
+      <section className="my-5 w-full text-center">
+        <h3 className="text-3xl font-bold text-primary-dark">
+          {t("meetingsNdEvents")}
+        </h3>
+        <p className="text-xl font-medium text-gray-dark w-full mx-auto md:w-1/2 my-3">
+          {t("meetingsDesc")}
+        </p>
+      </section>
+      <hr />
+      <section className="my-5 py-10 flex flex-wrap md:items-center items-stretch  justify-center md:justify-between px-10">
+        {eventsData.map((event, i) => (
+          <div className="md:mx-5 mx-2 my-4 md:my-0 text-center" key={i}>
+            <h5>
+              <span className="text-primary-dark text-4xl font-bold">
+                {event.count}
+              </span>{" "}
+              <span className="text-black text-base font-medium">
+                {event.unit[locale]}
+              </span>
+            </h5>
+            <h4 className="text-black text-lg font-bold">
+              {event.title[locale]}
+            </h4>
+          </div>
+        ))}
+      </section>
+      <section className="my-4 mx-0 w-full bg-gray-200 py-8 px-10 md:px-20  grid  grid-cols-1 md:grid-cols-2 items-start gap-4">
+        <div className="flex justify-start items-start mx-auto">
+          <img
+            src="/images/icons/outline/cocktail.svg"
+            className="w-16 h-24 md:w-auto md:h-auto"
+          />
+          <div className="mx-2">
+            <h3 className="text-xl font-semibold text-primary-dark my-2 ">
+              {t("hostingEvent")}
+            </h3>
+            <p className="text-base font-normal text-black w-full">
+              {t("hostingEventDisc")}
+            </p>
+            <button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8 font-medium">
+              {t("requestPricing")}
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-start items-start mx-auto">
+          <img
+            src="/images/icons/stroke/meeting.svg"
+            className="w-16 h-24 md:w-auto md:h-auto"
+          />
+          <div className="mx-2">
+            <h3 className="text-xl font-semibold text-primary-dark my-2 ">
+              {t("travelGroup")}
+            </h3>
+            <p className="text-base font-normal text-black w-full">
+              {t("travelGroupDisc")}
+            </p>
+            <button className="my-2 btn-primary-light py-2 md:py-4 px-4 md:px-8  font-medium">
+              {t("bookRoomBlock")}
+            </button>
+          </div>
+        </div>
+      </section>
+      <section className="my-10 w-full">
+        <h2 className="text-2xl font-bold text-primary-dark text-center">
+          {t("venues")}
+        </h2>
+        <div className="border border-t-0 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
+          <button
+            onClick={() => {
+              setActiveTab("conference");
+            }}
+            className={clsx(
+              activeTab === "conference" ? styles.active : "",
+              styles.tab,
+              "text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5"
+            )}
+          >
+            {t("conference")}
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("wedding");
+            }}
+            className={clsx(
+              activeTab === "wedding" ? styles.active : "",
+              styles.tab,
+              "text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5"
+            )}
+          >
+            {t("weeding")}
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("reception");
+            }}
+            className={clsx(
+              activeTab === "reception" ? styles.active : "",
+              styles.tab,
+              "text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5"
+            )}
+          >
+            {t("reception")}
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("theatre");
+            }}
+            className={clsx(
+              activeTab === "theatre" ? styles.active : "",
+              styles.tab,
+              "text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5"
+            )}
+          >
+            {t("theatre")}
+          </button>
+        </div>
+        <div className="flex flex-wrap justify-start items-start">
+          {meetingRooms.map((meeting) => (
+            <div key={meeting.id} className={styles.meeting}>
+              <h3 className="capitalize">{meeting?.title[locale]}</h3>
+              <h5 className="flex justify-center items-center">
+                <FontAwesomeIcon icon={faUser} className="mx-1" />
+                <span>
+                  {meeting?.guests[activeTab]}{" "}
+                  {locale === "en" ? "Guests" : "ضيف"}
+                </span>
+              </h5>
+              <h5 className="flex justify-center items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-rulers"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
+                </svg>
+                <span>
+                  {meeting?.space} {t("sqM")}
+                </span>
+              </h5>
+            </div>
+          ))}
+        </div>
+      </section>
+    </Layout>
+  );
 };
 
 export default MeetingsPage;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-	const localization = getLocalizationProps(ctx, 'common');
-	const client = initializeApollo();
-	const resp = await client.query({ query: MEETING_ROOMS });
+  const localization = getLocalizationProps(ctx, "common");
+  const client = initializeApollo();
+  const resp = await client.query({ query: MEETING_ROOMS });
 
-	return {
-		props: {
-			localization,
-			meetingRooms: resp?.data?.meeting_rooms,
-		},
-	};
+  return {
+    props: {
+      localization,
+      meetingRooms: resp?.data?.meeting_rooms,
+    },
+  };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: ['en', 'ar'].map((lang) => ({ params: { lang } })),
-		fallback: false,
-	};
+  return {
+    paths: ["en", "ar"].map((lang) => ({ params: { lang } })),
+    fallback: false,
+  };
 };

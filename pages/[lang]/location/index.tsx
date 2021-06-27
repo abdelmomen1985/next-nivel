@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
-import Layout from "../../../Layouts/Layout";
 import { getLocalizationProps } from "../../../context/LangContext";
 
 const LocationPage = () => {

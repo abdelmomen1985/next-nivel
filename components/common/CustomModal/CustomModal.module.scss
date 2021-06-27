@@ -20,7 +20,6 @@
     border: none;
     border-radius: 10px;
 
-
     .modalContent {
       position: relative;
       width: 100%;
@@ -52,9 +51,8 @@
       }
     }
 
-
     @media screen and (max-width: 750px) {
-      width: 80%;
+      width: 97%;
     }
   }
 }

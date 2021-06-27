@@ -1,12 +1,25 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
+import { LAYOUT_FRAGMENT } from "./fragments/layout";
+
+const GALLERY_FRAGMENT = gql`
+  fragment GalleryFragment on gallery {
+    id
+    media
+    title
+    description
+  }
+`;
 
 export const LOAD_GALLERY = gql`
-  query gallery {
-    gallery{
-      id
-      media
-      title
-      description
+  ${GALLERY_FRAGMENT}
+  ${LAYOUT_FRAGMENT}
+
+  query GalleryPage {
+    gallery {
+      ...GalleryFragment
+    }
+    layout {
+      ...LayoutFragment
     }
   }
-`
+`;

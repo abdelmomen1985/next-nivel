@@ -1,0 +1,9 @@
+POST https://nivel-backend.hasura.app/v1/metadata
+Content-Type: application/json
+x-hasura-admin-secret: wYFunZN3WCnepXxE7REG8TNLdm9s0jLfyPaypDIrw5YcierwwRpRQOUowjekZEwi
+
+{
+    "type": "export_metadata",
+    "args": {
+    }
+}

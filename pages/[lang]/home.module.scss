@@ -4,13 +4,11 @@
   padding: 3rem 10px;
   background-color: #fff;
 
-
   &:nth-of-type(even) {
     background-color: var(--gray-light-color);
 
     .homeSection {
       flex-direction: row-reverse;
-
     }
   }
 
@@ -19,18 +17,16 @@
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    margin: 30px 3rem;
     flex-direction: row;
-    max-width: 80rem;
-    width: 100%;
+    max-width: 100%;
 
     img {
-      width: 50%;
+      width: 45%;
       height: 80%;
     }
 
     @media screen and (max-width: 768px) {
-      margin: 15px auto;
+      margin: 1rem auto;
       flex-wrap: wrap;
 
       img {

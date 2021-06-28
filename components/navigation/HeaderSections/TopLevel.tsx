@@ -66,10 +66,7 @@ const TopLevel = ({
             ) : (
               <span>|</span>
             )}
-            <ActiveLink
-              activeClassName={styles.active}
-              href={`/${locale}/register`}
-            >
+            <ActiveLink activeClassName={styles.active} href={`/${locale}/#`}>
               <a
                 className={clsx(
                   isMobile || isTablet ? "my-2" : "my-0",
@@ -87,10 +84,7 @@ const TopLevel = ({
             ) : (
               <span>|</span>
             )}
-            <ActiveLink
-              activeClassName={styles.active}
-              href={`/${locale}/login`}
-            >
+            <ActiveLink activeClassName={styles.active} href={`/${locale}/#`}>
               <a
                 className={clsx(
                   isMobile || isTablet ? "my-2" : "my-0",

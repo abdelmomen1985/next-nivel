@@ -3,7 +3,7 @@
 
   &::after {
     position: absolute;
-    content: ' ';
+    content: " ";
     width: 20%;
     height: 2px;
     background-color: var(--primary-light-color);
@@ -15,27 +15,28 @@
 }
 
 .meetingFooterSection {
-  @apply flex justify-center;
-  background-color: #4158d0;
+  @apply flex justify-center bg-gray-600;
 }
-
 
 .heroImg {
   position: relative;
 
   &::before {
-    content: ' ';
+    content: " ";
     width: 100%;
     height: 100%;
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(to bottom right, rgba(240, 100, 150, 0.2) 60%, rgba(140, 200, 208, 0.1) 40%);
-    background-color: #4158D0;
+    background-image:
+      linear-gradient(
+        to bottom right,
+        rgba(240, 100, 150, 0.2) 60%,
+        rgba(140, 200, 208, 0.1) 40%
+      );
+    background-color: #4158d0;
     // background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-
   }
 }
-
 
 .meetingsContainer {
   position: absolute;
@@ -58,7 +59,6 @@
 
     &.singleMeeting:not(:last-of-type) {
       border-right: 1px solid var(--gray-light-color);
-
     }
 
     @media screen and (max-width: 767px) {
@@ -66,7 +66,6 @@
 
       &.singleMeeting:nth-of-type(odd) {
         border-right: 1px solid var(--gray-light-color) !important;
-
       }
     }
 
@@ -86,7 +85,6 @@
       width: auto;
       margin: 2rem 5px 2rem 0;
     }
-
   }
 
   @media screen and (max-width: 1023px) {
@@ -103,6 +101,5 @@
       width: 90%;
       margin: 2rem auto;
     }
-
   }
 }

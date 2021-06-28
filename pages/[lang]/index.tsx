@@ -14,6 +14,7 @@ import { HOME_PAGE } from "../../query/home";
 import { AmenityType } from "../../types/amenities";
 import { HomeSectionType } from "../../types/HomeSection";
 import { LayoutType } from "../../types/layout";
+import { StrpRoomType } from "../../types/strpRoom";
 import ExpectSection from "./../../components/Home/ExpectSection";
 import Layout from "./../../Layouts/Layout";
 import styles from "./home.module.scss";
@@ -22,11 +23,15 @@ const HomePage = ({
   layout,
   amenities,
   homeSections,
+  rooms,
+  remoteSchemaUrl,
 }: {
   home: any;
   layout: LayoutType;
   amenities: AmenityType[];
   homeSections: HomeSectionType[];
+  rooms: StrpRoomType[];
+  remoteSchemaUrl: string;
 }) => {
   const { locale } = useTranslation();
   return (
@@ -39,7 +44,7 @@ const HomePage = ({
         defaultUrl={layout?.remoteSchemaUrl}
         amenities={amenities}
       />
-      <RoomsNdSuits />
+      <RoomsNdSuits rooms={rooms} remoteSchemaUrl={remoteSchemaUrl} />
       <Dining />
       <MeetingsNdEvents />
       {homeSections.length > 0 &&
@@ -71,6 +76,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const remoteSchemaUrl = await getRemoteSchemaUrl();
   const client = initializeApollo();
   const resp = await client.query({ query: HOME_PAGE });
+
   return {
     props: {
       localization,
@@ -78,6 +84,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       layout: { ...resp?.data.layout, remoteSchemaUrl },
       amenities: resp?.data?.amenities,
       homeSections: resp?.data?.homepage?.home_sections,
+      rooms: resp?.data?.strpRooms,
+      remoteSchemaUrl: remoteSchemaUrl,
     },
   };
 };

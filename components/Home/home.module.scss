@@ -41,7 +41,16 @@
     }
   }
 }
-
+.roomCard {
+  @apply relative my-2 mx-auto md:mx-0 shadow-lg hover:shadow-2xl;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.05);
+    h3 {
+      color: var(--primary-light-color);
+    }
+  }
+}
 .heroImg {
   position: relative;
 

@@ -6,7 +6,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import RoomDetails from '../../../components/Rooms/RoomDetails';
 import { getLocalizationProps } from '../../../context/LangContext';
 import { accessible, suites } from '../../../data/rooms';
-import { LOAD_ROOMS } from '../../../query/rooms';
+import {
+	LOAD_ROOMS,
+	LOAD_ROOMS_BY_RATES,
+	ROOM_AMENITIES,
+} from '../../../query/rooms';
 import { RoomType } from '../../../types/rooms';
 import CustomModal from './../../../components/common/CustomModal/CustomModal';
 import RoomCard from './../../../components/Rooms/RoomCard';
@@ -17,6 +21,7 @@ import styles from './rooms.module.scss';
 import Layout from './../../../Layouts/Layout';
 import { LayoutType } from '../../../types/layout';
 import { getRemoteSchemaUrl } from '../../../data/remoteSchemaUrl';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
 const RoomsPage = ({
 	roomsData,
@@ -27,66 +32,45 @@ const RoomsPage = ({
 }) => {
 	const { t, locale } = useTranslation();
 	const { isMobile, isTablet } = useContext(AppContext);
-	const [currentShow, setCurrentShow] = useState<any[]>([...roomsData]);
+	const [currentRooms, setCurrentRooms] = useState<any[]>([...roomsData]);
 	const [activeTab, setActiveTab] = useState(1);
 	const [roomDetails, setRoomDetails] = useState<any>(undefined);
 	const [openModal, setOpenModal] = useState(false);
-	const pickRoomHandler = (
-		room: RoomType,
-		packagePrices: any[],
-		basePrice: any
-	) => {
+	const [roomAmenitiesState, setRoomAmenitiesState] = useState([]);
+	const [fetchRoomAmenities, { data: roomAmenitiesData }] = useLazyQuery(
+		ROOM_AMENITIES,
+		{
+			fetchPolicy: 'no-cache',
+			onCompleted() {
+				console.log(roomAmenitiesData, 'roomAmenitiesData');
+				setRoomAmenitiesState([...roomAmenitiesData.roomAmenities]);
+			},
+			onError(err) {
+				console.log(err);
+			},
+		}
+	);
+	const pickRoomHandler = (room: any) => {
 		console.log(room);
 	};
-	useEffect(() => {
-		console.log(roomDetails);
-	}, [roomDetails]);
+	const selectRoomHandler = (room: any) => {
+		setRoomDetails({ ...room });
+		setRoomAmenitiesState([]);
+		setOpenModal(true);
+		console.log(room?.RelWithStrapiRoom?.id);
+		fetchRoomAmenities({
+			variables: {
+				room_id: room?.RelWithStrapiRoom?.id,
+			},
+		});
+	};
+
 	return (
 		<Layout layout={layout}>
 			<h2 className="text-lg md:text-xl lg:text-4xl font-bold mt-10 mb-10 text-primary-dark text-center">
 				{t('roomsNdSuites')}
 			</h2>
-			<div className="border border-t-2 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
-				<button
-					onClick={() => {
-						setActiveTab(1);
-						setCurrentShow([...roomsData]);
-					}}
-					className={clsx(
-						activeTab === 1 ? styles.active : '',
-						styles.tab,
-						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-					)}
-				>
-					{t('guestRooms')}
-				</button>
-				<button
-					onClick={() => {
-						setActiveTab(2);
-						setCurrentShow([...suites]);
-					}}
-					className={clsx(
-						activeTab === 2 ? styles.active : '',
-						styles.tab,
-						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-					)}
-				>
-					{t('suites')}
-				</button>
-				<button
-					onClick={() => {
-						setActiveTab(3);
-						setCurrentShow([...accessible]);
-					}}
-					className={clsx(
-						activeTab === 3 ? styles.active : '',
-						styles.tab,
-						'text-lg md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
-					)}
-				>
-					{t('accessible')}
-				</button>
-			</div>
+
 			<div className="mt-10 mb-5">
 				<div className={styles.alert}>
 					<FontAwesomeIcon icon={faCheckCircle} className="mx-1" />
@@ -94,13 +78,13 @@ const RoomsPage = ({
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-					{currentShow.map((room, i) => (
+					{currentRooms.map((room, i) => (
 						<RoomCard
 							purpose="view"
 							key={i}
 							room={room}
-							setRoomDetails={setRoomDetails}
-							setOpenModal={setOpenModal}
+							selectRoom={selectRoomHandler}
+							remoteUrl={layout?.remoteSchemaUrl}
 						/>
 					))}
 				</div>
@@ -108,15 +92,15 @@ const RoomsPage = ({
 
 			<CustomModal
 				closeWithin={true}
-				wrapperStyle={{ zIndex: '9999' }}
+				wrapperStyle={{ zIndex: '9999', overflowY: 'hidden' }}
 				style={{
 					width: '80%',
-					overflowY: 'auto',
+					overflowY: 'hidden',
 					maxHeight: '100%',
 					top: isMobile || isTablet ? '0rem' : '3rem',
 					zIndex: '9999',
 				}}
-				title={roomDetails?.title}
+				title={roomDetails?.RelWithStrapiRoom?.name}
 				show={openModal && roomDetails !== undefined}
 				onClose={() => {
 					setOpenModal(false);
@@ -127,6 +111,8 @@ const RoomsPage = ({
 					pickRoomHandler={pickRoomHandler}
 					setRoomDetails={setRoomDetails}
 					roomDetails={roomDetails}
+					roomAmenities={roomAmenitiesState}
+					remoteUrl={layout?.remoteSchemaUrl}
 				/>
 			</CustomModal>
 		</Layout>
@@ -139,12 +125,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 	const localization = getLocalizationProps(ctx, 'common');
 	const remoteSchemaUrl = await getRemoteSchemaUrl();
 	const client = initializeApollo();
-	const resp = await client.query({ query: LOAD_ROOMS });
+	const resp = await client.query({ query: LOAD_ROOMS_BY_RATES });
 	console.log(resp?.data);
 	return {
 		props: {
 			localization,
-			roomsData: resp?.data?.rooms,
+			roomsData: resp?.data?.room_rates,
 			layout: { ...resp?.data?.layout, remoteSchemaUrl },
 		},
 	};

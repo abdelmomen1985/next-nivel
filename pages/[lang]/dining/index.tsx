@@ -13,6 +13,7 @@ import { getRemoteSchemaUrl } from '../../../data/remoteSchemaUrl';
 import { LOAD_RESTAURANTS } from '../../../query/restaurants';
 import { RestaurantType } from '../../../types/restaurant';
 import Markdown from 'markdown-to-jsx';
+import { cardholderName } from 'card-validator/dist/cardholder-name';
 const resturantsData = [
 	{
 		image: '/images/restuarnts/1.jpg',
@@ -140,7 +141,13 @@ const DiningPage = ({
 	);
 	return (
 		<Layout layout={layout}>
-			<img src="/images/restaurant.png" className="w-full h-full" />
+			<img
+				src="/images/restaurant.png"
+				className="w-full h-full"
+				style={{
+					maxHeight: '90vh',
+				}}
+			/>
 			<h3 className="my-5 py-5 mx-auto text-center text-black text-3xl font-bold">
 				{t('diningNdDrinks')}
 			</h3>

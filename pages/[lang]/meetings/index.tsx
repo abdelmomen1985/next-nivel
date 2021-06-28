@@ -70,7 +70,13 @@ const MeetingsPage = ({
 	return (
 		<Layout layout={layout}>
 			<section className="w-full">
-				<img src="/images/meeting.jpg" className="w-full" />
+				<img
+					src="/images/meeting.jpg"
+					className="w-full"
+					style={{
+						maxHeight: '90vh',
+					}}
+				/>
 			</section>
 			<section className="my-5 w-full text-center">
 				<h3 className="text-3xl font-bold text-primary-dark">
@@ -141,27 +147,39 @@ const MeetingsPage = ({
 				<div className="border border-t-0 border-l-0 border-r-0 border-gray-400 my-5 py-5 px-5 flex justify-center items-center">
 					<button
 						onClick={() => {
+							setActiveTab('banquet');
+						}}
+						className={clsx(
+							activeTab === 'banquet' ? styles.active : '',
+							styles.tab,
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
+						)}
+					>
+						{t('banquet')}
+					</button>
+					<button
+						onClick={() => {
 							setActiveTab('conference');
 						}}
 						className={clsx(
 							activeTab === 'conference' ? styles.active : '',
 							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
 						)}
 					>
 						{t('conference')}
 					</button>
 					<button
 						onClick={() => {
-							setActiveTab('wedding');
+							setActiveTab('square');
 						}}
 						className={clsx(
-							activeTab === 'wedding' ? styles.active : '',
+							activeTab === 'square' ? styles.active : '',
 							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
 						)}
 					>
-						{t('weeding')}
+						{t('square')}
 					</button>
 					<button
 						onClick={() => {
@@ -170,10 +188,22 @@ const MeetingsPage = ({
 						className={clsx(
 							activeTab === 'reception' ? styles.active : '',
 							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
 						)}
 					>
 						{t('reception')}
+					</button>
+					<button
+						onClick={() => {
+							setActiveTab('class_room');
+						}}
+						className={clsx(
+							activeTab === 'class_room' ? styles.active : '',
+							styles.tab,
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
+						)}
+					>
+						{t('class_room')}
 					</button>
 					<button
 						onClick={() => {
@@ -182,10 +212,22 @@ const MeetingsPage = ({
 						className={clsx(
 							activeTab === 'theatre' ? styles.active : '',
 							styles.tab,
-							'text-sm md:text-2xl lg:text-3xl mx-2 md:mx-3 lg:mx-5'
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
 						)}
 					>
 						{t('theatre')}
+					</button>
+					<button
+						onClick={() => {
+							setActiveTab('u_shape');
+						}}
+						className={clsx(
+							activeTab === 'u_shape' ? styles.active : '',
+							styles.tab,
+							'text-base md:text-sm lg:text-lg mx-2 md:mx-3 lg:mx-3'
+						)}
+					>
+						{t('u_shape')}
 					</button>
 				</div>
 				<div className="flex flex-wrap justify-start items-start">

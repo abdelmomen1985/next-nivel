@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from '@apollo/client';
 import { LAYOUT_FRAGMENT } from './fragments/layout';
+import { AMENITIES_FRAGMENT } from './fragments/amenities';
 
 export const ROOM_FIELDS = `
       id
@@ -14,7 +15,51 @@ export const ROOM_FIELDS = `
           description
         }
       }
-`
+`;
+export const Room4RatesFields = `
+				id
+				name
+				images {
+					url
+					width
+					height
+				}
+				slug
+				accessibility
+				area
+				decription_ar
+				decription_en
+`;
+export const RateFields = `
+		base_price
+			id
+			rate {
+				description
+				title
+		}
+`;
+export const LOAD_ROOMS_BY_RATES = gql`
+  ${LAYOUT_FRAGMENT}
+	query roomRates {
+		room_rates(where: { is_base_pkg: { _eq: true } }) {
+			${RateFields}
+			RelWithStrapiRoom {
+				${Room4RatesFields}
+			}
+		}
+		layout{
+      ...LayoutFragment
+    }
+	}
+`;
+
+export const LOAD_ROOM_RATES = gql`
+	query roomRates($room_id: Int!) {
+  	room_rates(where: {strp_room_id: {_eq: $room_id}, is_base_pkg: {_eq: false}}) {
+			${RateFields}
+		}
+	}
+`;
 export const LOAD_ROOMS = gql`
   ${LAYOUT_FRAGMENT}
   query load_rooms{
@@ -25,7 +70,7 @@ export const LOAD_ROOMS = gql`
       ...LayoutFragment
     }
 }
-`
+`;
 
 export const ROOMS_AGGREGATE = gql`
   query rooms_agg(
@@ -38,4 +83,17 @@ export const ROOMS_AGGREGATE = gql`
     }
   }
   }
-`
+`;
+
+export const ROOM_AMENITIES = gql`
+	${AMENITIES_FRAGMENT}
+	query roomAmenities($room_id: JSON!) {
+		roomAmenities(where: { room: { id: $room_id } }) {
+			count
+			unit
+			amenitiy {
+				...AmenityFragment
+			}
+		}
+	}
+`;

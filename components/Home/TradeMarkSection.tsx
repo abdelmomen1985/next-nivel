@@ -24,7 +24,7 @@ const TradeMarkSection = ({ home }: { home: any }) => {
 						p: {
 							props: {
 								className:
-									'text-base text-black text-opacity-50 w-full md:w-1/2 mx-auto text-center my-2',
+									'text-base text-black text-opacity-50 w-full mx-auto px-5 text-center my-2',
 							},
 						},
 					},

@@ -43,7 +43,7 @@ export const HOME_PAGE = gql`
 		layout {
 			...LayoutFragment
 		}
-		amenities {
+		amenities(where: { hotel_amenity: true }) {
 			...AmenityFragment
 		}
 	}

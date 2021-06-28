@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   body {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat", 'Cairo', sans-serif;
     --primary-light-color: #D4B561;
     --primary-dark-color: #8A6B3E;
     --gray-light-color: #e3e3e3;
@@ -68,6 +68,9 @@
   .font-montserrat {
     font-family: "Montserrat", sans-serif;
   }
+  .font-cairo {
+    font-family: 'Cairo', sans-serif;
+  }
 }
 
 @layer components {
@@ -110,6 +113,45 @@ input[type=number] {
   direction: ltr !important;
 }
 
+.react-slideshow-container .default-nav {
+  width: 50px;
+  height: 50px;
+  background: transparent !important;
+}
+
+.react-slideshow-container .default-nav:last-of-type {
+  margin-left: -50px;
+}
+
+.react-slideshow-container .default-nav:first-of-type {
+  margin-right: -50px;
+}
+
+.react-slideshow-container .default-nav svg {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  font-weight: 800;
+}
+
 .rc-steps {
   direction: ltr !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  background-color: var(--primary-dark-color) !important;
+  border-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon {
+  border-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-icon-dot {
+  background-color: var(--primary-dark-color) !important;
+  /* display: none !important; */
 }

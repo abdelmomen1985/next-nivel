@@ -8,12 +8,14 @@ const BookingStay = ({
 	currentStep,
 	selectedRoom,
 	setCurrentStep,
+	remoteUrl,
 }: {
 	filterValues: any;
 	editStayHandler: () => void;
 	currentStep: number;
 	selectedRoom: any;
 	setCurrentStep: (step: number) => void;
+	remoteUrl: string;
 }) => {
 	const { t, locale } = useTranslation();
 	const [childCount, setChildCount] = useState(0);
@@ -45,15 +47,17 @@ const BookingStay = ({
 		locale === 'en' ? setCurrentLocale('en-GB') : setCurrentLocale('ar-EG');
 	}, [locale]);
 	return (
-		<div className="mx-auto">
-			<img
-				src="/images/hero-slider/1.png"
-				style={{
-					width: '300px',
-					height: '250px',
-					margin: '10px auto',
-				}}
-			/>
+		<div className="mx-auto my-3">
+			{selectedRoom && (
+				<img
+					src={remoteUrl + selectedRoom?.images[0]?.url}
+					style={{
+						width: '300px',
+						height: '250px',
+						margin: '10px auto',
+					}}
+				/>
+			)}
 			<div className="my-3">
 				<img
 					style={{
@@ -114,7 +118,7 @@ const BookingStay = ({
 				{currentStep > 1 && (
 					<Steps direction="vertical" size="default" current={currentStep - 1}>
 						<Step
-							title={selectedRoom.title[locale]}
+							title={selectedRoom.name[locale]}
 							description={t('changeRoom')}
 							onClick={() => setCurrentStep(1)}
 							className="cursor-pointer"

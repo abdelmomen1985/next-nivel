@@ -3,88 +3,88 @@
 @tailwind utilities;
 @layer base {
   body {
-    font-family: "Montserrat", 'Cairo', sans-serif;
-    --primary-light-color: #D4B561;
-    --primary-dark-color: #8A6B3E;
+    font-family: "Montserrat", "Cairo", sans-serif;
+    --primary-light-color: #d4b561;
+    --primary-dark-color: #8a6b3e;
     --gray-light-color: #e3e3e3;
-    --gray-medium-color: #B5BEC4;
+    --gray-medium-color: #b5bec4;
     --gray-dark-color: #5f686e;
-    --secondary-light-color: #D8BA8E;
-    --secondary-dark-color: #AD926B;
+    --secondary-light-color: #d8ba8e;
+    --secondary-dark-color: #ad926b;
   }
 }
 
 @layer utilities {
   .bg-primary-light {
-    background-color: var( --primary-light-color);
+    background-color: var(--primary-light-color);
   }
   .bg-outline-primary-light {
     background-color: transparent;
-    border: 1px solid var(--primary-light-color)
+    border: 1px solid var(--primary-light-color);
   }
   .text-primary-light {
-    color: var( --primary-light-color);
+    color: var(--primary-light-color);
   }
   .bg-primary-dark {
-    background-color: var( --primary-dark-color);
+    background-color: var(--primary-dark-color);
   }
   .bg-outline-primary-dark {
     background-color: transparent;
-    border: 1px solid var(--primary-dark-color)
+    border: 1px solid var(--primary-dark-color);
   }
   .text-primary-dark {
-    color: var( --primary-dark-color);
+    color: var(--primary-dark-color);
   }
   .bg-gray-light {
-    background-color: var( --gray-light-color);
+    background-color: var(--gray-light-color);
   }
   .text-gray-light {
-    color: var( --gray-light-color);
+    color: var(--gray-light-color);
   }
   .bg-gray-medium {
-    background-color: var( --gray-medium-color);
+    background-color: var(--gray-medium-color);
   }
   .text-gray-medium {
-    color: var( --gray-medium-color);
+    color: var(--gray-medium-color);
   }
   .bg-gray-dark {
-    background-color: var( --gray-dark-color);
+    background-color: var(--gray-dark-color);
   }
   .text-gray-dark {
-    color: var( --gray-dark-color);
+    color: var(--gray-dark-color);
   }
   .bg-secondary-light {
-    background-color: var( --secondary-light-color);
+    background-color: var(--secondary-light-color);
   }
   .text-secondary-light {
-    color: var( --secondary-light-color);
+    color: var(--secondary-light-color);
   }
   .bg-secondary-dark {
-    background-color: var( --secondary-dark-color);
+    background-color: var(--secondary-dark-color);
   }
   .text-secondary-dark {
-    color: var( --secondary-dark-color);
+    color: var(--secondary-dark-color);
   }
   .font-montserrat {
     font-family: "Montserrat", sans-serif;
   }
   .font-cairo {
-    font-family: 'Cairo', sans-serif;
+    font-family: "Cairo", sans-serif;
   }
 }
 
 @layer components {
   .btn-primary-light {
-    @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md
+    @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md;
   }
   .btn-primary-dark {
-    @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md
+    @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md;
   }
   .btn-outline-primary-light {
-    @apply bg-outline-primary-light text-primary-light py-3 px-5 rounded-md shadow-md
+    @apply bg-outline-primary-light text-primary-light py-3 px-5 rounded-md shadow-md;
   }
   .btn-outline-primary-dark {
-    @apply bg-outline-primary-dark text-primary-dark py-3 px-5 rounded-md shadow-md
+    @apply bg-outline-primary-dark text-primary-dark py-3 px-5 rounded-md shadow-md;
   }
 }
 
@@ -98,14 +98,15 @@ button:focus {
 
 /* Chrome, Safari, Edge, Opera */
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
 
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 

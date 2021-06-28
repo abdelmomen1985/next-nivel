@@ -14,8 +14,32 @@
   }
 }
 
-.meetingFooterSection {
-  @apply flex justify-center bg-gray-600;
+.amenityCard {
+  @apply hover:shadow-xl
+    shadow-sm
+    flex flex-col
+    justify-between
+    mx-auto
+    md:mx-2
+    my-2
+    rounded-md
+    w-11/12
+    border
+    p-4
+    h-full
+    border-gray-400;
+
+  &:hover {
+    background-color: var(--primary-light-color);
+
+    img {
+      filter: invert(1);
+    }
+
+    h5 {
+      @apply text-white;
+    }
+  }
 }
 
 .heroImg {
@@ -27,12 +51,11 @@
     height: 100%;
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(
-        to bottom right,
-        rgba(240, 100, 150, 0.2) 60%,
-        rgba(140, 200, 208, 0.1) 40%
-      );
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(240, 100, 150, 0.2) 60%,
+      rgba(140, 200, 208, 0.1) 40%
+    );
     background-color: #4158d0;
     // background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
   }
@@ -52,21 +75,18 @@
     font-weight: 600;
   }
 
+  .meetingFooterSection {
+    @apply flex justify-center;
+  }
+
+  .singleMeeting {
+    @apply flex-col h-full;
+    padding: 0.5rem;
+  }
+
   div {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 5px;
-
-    &.singleMeeting:not(:last-of-type) {
-      border-right: 1px solid var(--gray-light-color);
-    }
-
     @media screen and (max-width: 767px) {
       border-right: none !important;
-
-      &.singleMeeting:nth-of-type(odd) {
-        border-right: 1px solid var(--gray-light-color) !important;
-      }
     }
 
     h4 {

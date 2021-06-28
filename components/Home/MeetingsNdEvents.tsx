@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './home.module.scss';
-import useTranslation from './../../hooks/useTranslation';
 import clsx from 'clsx';
+import React from 'react';
+import useTranslation from './../../hooks/useTranslation';
+import styles from './home.module.scss';
 const eventsData = [
 	{
 		count: '208',
@@ -10,7 +10,7 @@ const eventsData = [
 			en: 'SQ. M.',
 		},
 		title: {
-			ar: 'من مساجة الحدث الإجمالية',
+			ar: 'من المساحة الإجمالية',
 			en: 'OF TOTAL EVENT SPACE',
 		},
 	},
@@ -21,7 +21,7 @@ const eventsData = [
 			en: 'SQ. M.',
 		},
 		title: {
-			ar: 'من أضخم إعدادات الغرف',
+			ar: 'من إعدادات الغرف',
 			en: 'OF LARGEST ROOM SETUP',
 		},
 	},

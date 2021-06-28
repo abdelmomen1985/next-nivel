@@ -78,9 +78,12 @@ const MeetingsNdEvents = () => {
 						</div>
 					))}
 				</div>
+				<div className={styles.meetingFooterSection}>
+
 				<button className="btn-primary-light text-white text-lg font-semibold capitalize block">
 					{t('meetStyle')}
 				</button>
+				</div>
 			</div>
 		</section>
 	);

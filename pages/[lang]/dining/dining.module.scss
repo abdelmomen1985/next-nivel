@@ -4,13 +4,11 @@
   padding: 3rem 10px;
   background-color: #fff;
 
-
-  &:nth-of-type(even) {
+  &:nth-of-type(odd) {
     background-color: var(--gray-light-color);
 
     .resturant {
       flex-direction: row-reverse;
-
     }
   }
 
@@ -37,6 +35,5 @@
         width: 100%;
       }
     }
-
   }
 }

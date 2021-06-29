@@ -14,7 +14,7 @@ const AmenitiesSection = ({
 
   return (
     <section className="mt-10 mb-5  w-full">
-      <h3 className="text-center text-2xl text-black font-semibold mb-5">
+      <h3 className="text-center text-2xl text-primary-dark font-semibold mb-5">
         {t("ourAmenities")}
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 lg:gap-4 items-center">

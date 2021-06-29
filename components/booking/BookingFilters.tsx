@@ -97,15 +97,19 @@ const BookingFilters = ({
   ];
   return (
     <>
-      <div className="mx-auto px-8 my-5 w-full flex flex-wrap justify-between items-center">
-        <h3 className="text-black text-lg font-medium">{t("stayIncludes")}</h3>
+      <div className="mx-auto px-8 my-5 w-full flex flex-wrap items-center">
+        <h3 className="text-black mx-4 text-lg font-medium">
+          {t("stayIncludes")}
+        </h3>
         <div
-          className={`grid grid-cols-2 justify-start md:grid-cols-${amenities.length} gap-2 `}
+          className={`grid grid-cols-2 justify-start md:grid-cols-${
+            amenities.length / 2
+          } gap-2 `}
         >
           {amenities.map((amenity, i) => (
             <h5
               key={i}
-              className="flex justify-center items-center text-gray-400 text-base font-normal"
+              className="flex justify-start items-center text-gray-500 text-base font-normal"
             >
               <FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
               <span>{amenity[locale]}</span>

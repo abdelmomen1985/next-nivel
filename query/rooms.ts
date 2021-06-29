@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
-import { LAYOUT_FRAGMENT } from './fragments/layout';
-import { AMENITIES_FRAGMENT } from './fragments/amenities';
+import { gql } from "@apollo/client";
+import { AMENITIES_FRAGMENT } from "./fragments/amenities";
+import { LAYOUT_FRAGMENT } from "./fragments/layout";
 
 export const ROOM_FIELDS = `
       id
@@ -27,8 +27,8 @@ export const Room4RatesFields = `
 				slug
 				accessibility
 				area
-				decription_ar
-				decription_en
+				description_ar
+				description_en
 `;
 export const RateFields = `
 		base_price
@@ -86,14 +86,14 @@ export const ROOMS_AGGREGATE = gql`
 `;
 
 export const ROOM_AMENITIES = gql`
-	${AMENITIES_FRAGMENT}
-	query roomAmenities($room_id: JSON!) {
-		roomAmenities(where: { room: { id: $room_id } }) {
-			count
-			unit
-			amenitiy {
-				...AmenityFragment
-			}
-		}
-	}
+  ${AMENITIES_FRAGMENT}
+  query roomAmenities($room_id: JSON!) {
+    roomAmenities(where: { room: { id: $room_id } }) {
+      count
+      unit
+      amenitiy {
+        ...AmenityFragment
+      }
+    }
+  }
 `;

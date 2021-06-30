@@ -90,11 +90,7 @@ export default function AuthModal(props: any) {
 						</h3>
 					</div>
 					<div className="modal-body">
-						{newUserState ? (
-							<SignUp setLoginModal={props.setLoginModal} />
-						) : (
-							<Login setLoginModal={props.setLoginModal} />
-						)}
+						{newUserState ? <SignUp /> : <Login />}
 					</div>
 				</div>
 			</div>

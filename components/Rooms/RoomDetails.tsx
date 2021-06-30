@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from './../../context/AppContext';
+import Markdown from 'markdown-to-jsx';
+import React, { useContext, useState } from 'react';
 //@ts-ignore
 import { Slide } from 'react-slideshow-image';
-import { RoomType } from '../../types/rooms';
+import { AppContext } from './../../context/AppContext';
 import useTranslation from './../../hooks/useTranslation';
 
 const RoomDetails = ({
@@ -19,6 +19,7 @@ const RoomDetails = ({
 	remoteUrl: string;
 }) => {
 	const { t, locale } = useTranslation();
+	console.log(roomDetails);
 	const { isMobile } = useContext(AppContext);
 	const [basePrice, setBasePrice] = useState<any>(undefined);
 	const [packagePrices, setPackagePrices] = useState<any>(undefined);
@@ -63,7 +64,11 @@ const RoomDetails = ({
 				)}
 			</div>
 			<div className="mx-2 px-3 py-2 ">
-				<p>{roomDetails?.RelWithStrapiRoom[`description_${locale}`]}</p>
+				<Markdown>
+					{roomDetails?.RelWithStrapiRoom[`description_${locale}`]}
+				</Markdown>
+
+				{/** 
 				{purpose === 'view' ? (
 					<button className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold">
 						{t('checkRates')}
@@ -78,16 +83,17 @@ const RoomDetails = ({
 					>
 						{t('bookFrom')} {roomDetails?.base_price} {t('sar')}
 					</button>
-				)}
-				<hr />
-				<div className="my-3 px-2">
-					<h5 className="text-black text-xl font-medium">
+        )}
+        */}
+				<div className="h-full my-1 px-2">
+					<h5 className="text-primary-dark text-center my-1 text-xl font-medium">
 						{t('roomHighlights')}
 					</h5>
+					<hr />
 					<ul
-						className="my-2 list-disc mx-5 flex justify-start items-start flex-col"
+						className="list-disc mx-5 flex justify-start items-start flex-col"
 						style={{
-							maxHeight: '180px',
+							height: '50vh',
 							overflowY: 'auto',
 						}}
 					>

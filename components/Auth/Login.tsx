@@ -13,21 +13,23 @@ export default function Login(props: any) {
 	const router = useRouter();
 	const { locale } = useTranslation();
 	const { register, handleSubmit, errors } = useForm();
+	const { setLoginModal } = useContext(AppContext);
 	const [fetchUserData, { data: userData }] = useLazyQuery(GET_USER_BY_ID, {
 		onCompleted() {
 			console.log(userData.visitors_by_pk);
 			setUser({ ...userData.visitors_by_pk });
-			props.setLoginModal(false);
-			return router.push(`/${locale}/profile/wishlist`);
+			setLoginModal(false);
+			return router.push(`/${locale}/profile`);
 		},
 		onError(error) {
 			console.log(error);
 		},
 	});
 	const onLogin = async (data: any) => {
-		const email = data.email;
-		const password = data.password;
-
+		// const email = data.email;
+		// const password = data.password;
+		const { email, password } = data;
+		console.log(email, password);
 		await fetch('/api/sessions', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -55,7 +57,7 @@ export default function Login(props: any) {
 				}
 			})
 			.catch((err) => {
-				console.log(err.json());
+				console.log(err);
 			});
 	};
 	return (

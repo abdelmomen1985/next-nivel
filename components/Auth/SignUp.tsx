@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { NEW_USER } from '../../query/user';
+import { AppContext } from './../../context/AppContext';
 
 export default function SignUp(props: any) {
 	const { register, handleSubmit, getValues, errors } = useForm();
 	const [newUserData, setNewUserData] = useState<any>({});
 	const [addUser] = useMutation(NEW_USER);
+	const { setLoginModal } = useContext(AppContext);
 	const onRegister = async (data: any) => {
 		console.log(data);
 		console.log(data.firstName + ' ' + data.lastName);
 		setNewUserData(data);
 		console.log(newUserData);
-		props.setLoginModal(false);
+		setLoginModal(false);
 		await addUser({
 			variables: {
 				name: data.firstName + ' ' + data.lastName,
-				username: data.email,
+				email: data.email,
 				password: data.password,
 			},
 		});

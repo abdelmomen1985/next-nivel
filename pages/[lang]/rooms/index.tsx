@@ -1,27 +1,21 @@
+import { useLazyQuery } from '@apollo/client';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import clsx from 'clsx';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import RoomDetails from '../../../components/Rooms/RoomDetails';
 import { getLocalizationProps } from '../../../context/LangContext';
-import { accessible, suites } from '../../../data/rooms';
-import {
-	LOAD_ROOMS,
-	LOAD_ROOMS_BY_RATES,
-	ROOM_AMENITIES,
-} from '../../../query/rooms';
+import { getRemoteSchemaUrl } from '../../../data/remoteSchemaUrl';
+import { LOAD_ROOMS_BY_RATES, ROOM_AMENITIES } from '../../../query/rooms';
+import { LayoutType } from '../../../types/layout';
 import { RoomType } from '../../../types/rooms';
 import CustomModal from './../../../components/common/CustomModal/CustomModal';
 import RoomCard from './../../../components/Rooms/RoomCard';
 import { AppContext } from './../../../context/AppContext';
 import useTranslation from './../../../hooks/useTranslation';
+import Layout from './../../../Layouts/Layout';
 import { initializeApollo } from './../../../lib/apolloClient';
 import styles from './rooms.module.scss';
-import Layout from './../../../Layouts/Layout';
-import { LayoutType } from '../../../types/layout';
-import { getRemoteSchemaUrl } from '../../../data/remoteSchemaUrl';
-import { useLazyQuery, useQuery } from '@apollo/client';
 
 const RoomsPage = ({
 	roomsData,
@@ -126,7 +120,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 	const remoteSchemaUrl = await getRemoteSchemaUrl();
 	const client = initializeApollo();
 	const resp = await client.query({ query: LOAD_ROOMS_BY_RATES });
-	console.log(resp?.data);
+	console.log(resp?.data?.room_rates);
 	return {
 		props: {
 			localization,

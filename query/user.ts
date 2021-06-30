@@ -3,16 +3,16 @@ import { gql } from '@apollo/client';
 export const USER_FIELDS = `
 id
 name
-username
+
 email
 ext_data
 media
 `;
 
 export const NEW_USER = gql`
-	mutation sign_up($name: String, $username: String, $password: String) {
-		insert_users(
-			objects: [{ name: $name, username: $username, passwired: $password }]
+	mutation sign_up($name: String, $email: String, $password: String) {
+		insert_visitors(
+			objects: [{ name: $name, email: $email, passwired: $password }]
 		) {
 			affected_rows
 		}
@@ -23,7 +23,6 @@ export const UPDATE_USER = gql`
 mutation updateUserData
 (
   $id: uuid!,
-  $username: String,
   $password: String,
   $name: String
   ){
@@ -31,7 +30,6 @@ mutation updateUserData
    _set: 
   {
     id: $id,
-    username:$username,
     passwired: $password,
     name: $name
   }) {

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-import { LAYOUT_FRAGMENT } from './fragments/layout';
 import { AMENITIES_FRAGMENT } from './fragments/amenities';
+import { LAYOUT_FRAGMENT } from './fragments/layout';
 
 export const ROOM_FIELDS = `
       id
@@ -27,8 +27,8 @@ export const Room4RatesFields = `
 				slug
 				accessibility
 				area
-				decription_ar
-				decription_en
+				description_ar
+				description_en
 `;
 export const RateFields = `
 		base_price

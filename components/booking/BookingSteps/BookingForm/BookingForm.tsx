@@ -16,7 +16,7 @@ import useTranslation from './../../../../hooks/useTranslation';
 import { months } from '../../../../utils/12months';
 
 const years = getNextTenYears();
-const BookingForm = () => {
+const BookingForm = ({ addBooking }: { addBooking: (data: any) => void }) => {
 	const { t, locale } = useTranslation();
 	const { register, reset, errors, handleSubmit } = useForm({
 		mode: 'onTouched',
@@ -26,7 +26,8 @@ const BookingForm = () => {
 	});
 	const [showGuest, setShowGuest] = useState<boolean>(false);
 	const bookingFormHandler = (data: any) => {
-		console.log(data);
+		// console.log(data);
+		addBooking(data);
 	};
 	return (
 		<div className="w-full my-5 px-2">
@@ -50,11 +51,14 @@ const BookingForm = () => {
 							valueAsNumber: true,
 						})}
 						name="cardNo"
+						style={{
+							padding: '8.5px 16px 8.5px 122px',
+						}}
 					/>
 				</div>
 				{errors.cardNo && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.cardNo?.message}
+						{errors?.cardNo?.message[locale!]}
 					</p>
 				)}
 				<div className="grid grid-cols-2 gap-2 items-center w-full md:w-2/3">
@@ -85,12 +89,12 @@ const BookingForm = () => {
 				</div>
 				{errors.cardMonth && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.cardMonth?.message}
+						{errors.cardMonth?.message[locale]}
 					</p>
 				)}
 				{errors.cardYear && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.cardYear?.message}
+						{errors.cardYear?.message[locale]}
 					</p>
 				)}
 				<h3 className="flex flex-wrap justify-start items-center mt-5 mb-1">
@@ -106,7 +110,7 @@ const BookingForm = () => {
 				</div>
 				{errors.firstName && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.firstName?.message}
+						{errors.firstName?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -117,7 +121,7 @@ const BookingForm = () => {
 				</div>
 				{errors.lastName && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.lastName?.message}
+						{errors.lastName?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -128,7 +132,7 @@ const BookingForm = () => {
 				</div>
 				{errors.email && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.email?.message}
+						{errors.email?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -139,7 +143,7 @@ const BookingForm = () => {
 				</div>
 				{errors.phone && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.phone?.message}
+						{errors.phone?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -150,7 +154,7 @@ const BookingForm = () => {
 				</div>
 				{errors.country && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.country?.message}
+						{errors.country?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -161,7 +165,7 @@ const BookingForm = () => {
 				</div>
 				{errors.address && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.address?.message}
+						{errors.address?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -179,11 +183,17 @@ const BookingForm = () => {
 					<label className="capitalize" htmlFor="zip">
 						{t('zip')}
 					</label>
-					<input type="text" name="zip" ref={register} />
+					<input
+						type="number"
+						name="zip"
+						ref={register({
+							valueAsNumber: true,
+						})}
+					/>
 				</div>
 				{errors.zip && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.zip?.message}
+						{errors.zip?.message[locale]}
 					</p>
 				)}
 				<div className={clsx(styles.formGroup, 'w-full md:w-2/3')}>
@@ -194,10 +204,11 @@ const BookingForm = () => {
 				</div>
 				{errors.city && (
 					<p className="text-red-600 text-base  font-normal my-1">
-						{errors.city?.message}
+						{errors.city?.message[locale]}
 					</p>
 				)}
 				<button
+					type="button"
 					onClick={() => setShowGuest((prev) => !prev)}
 					className="text-primary-dark my-5 bg-transparent text-lg font-medium"
 				>

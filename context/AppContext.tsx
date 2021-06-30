@@ -22,12 +22,9 @@ export const AppContext = createContext<StateType>(initialState);
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
 	const deviceSize = useWindowSize();
-
-	const [state, dispatch] = useReducer(AppReducer, initialState);
 	const router = useRouter();
 	const { locale } = useTranslation();
-	const [loginModal, setLoginModal] = useState(false);
-
+	const [state, dispatch] = useReducer(AppReducer, initialState);
 	const [fetchUserData, { data: userData }] = useLazyQuery(GET_USER_BY_ID, {
 		onCompleted() {
 			console.log('onCompleted setUser', { ...userData.visitors_by_pk });
@@ -80,6 +77,9 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
 			payload: user,
 		});
 	};
+
+	const [loginModal, setLoginModal] = useState(false);
+
 	const contextValues: StateType = {
 		...state,
 		isMobile: deviceSize?.width! < 768,

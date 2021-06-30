@@ -116,6 +116,7 @@ const common = {
 	readMore: 'read more',
 	sar: 'SAR',
 	workingHrs: 'working hours',
+	signOut: 'Sign Out',
 };
 
 export default common;

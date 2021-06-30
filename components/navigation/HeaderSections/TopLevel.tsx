@@ -26,7 +26,9 @@ const TopLevel = ({
 }) => {
 	const { locale, t } = useTranslation();
 	const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-	const { isMobile, isTablet, setLoginModal } = useContext(AppContext);
+	const { isMobile, isTablet, setLoginModal, user, setUser } = useContext(
+		AppContext
+	);
 	const userMenuRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		document.addEventListener('click', handleClick);
@@ -40,7 +42,13 @@ const TopLevel = ({
 		}
 		setOpenUserMenu(false);
 	};
-
+	const signOutHandler = async () => {
+		const response = await fetch('/api/sessions', {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+		});
+		if (response.status === 204) setUser(undefined);
+	};
 	// console.log(isTablet);
 	return (
 		<div className="flex flex-wrap justify-between lg:justify-between items-center my-2 mx-2 md:mx-5 px-1 md:px-2">
@@ -68,18 +76,34 @@ const TopLevel = ({
 						) : (
 							<span>|</span>
 						)}
-						<button
-							onClick={() => {
-								setIsRegister(true);
-								setLoginModal(true);
-							}}
-							className={clsx(
-								isMobile || isTablet ? 'my-2' : 'my-0',
-								'mx-3 font-medium text-primary-dark'
-							)}
-						>
-							{t('join')}
-						</button>
+						{!user ? (
+							<button
+								onClick={() => {
+									setIsRegister(true);
+									setLoginModal(true);
+								}}
+								className={clsx(
+									isMobile || isTablet ? 'my-2' : 'my-0',
+									'mx-3 font-medium text-primary-dark'
+								)}
+							>
+								{t('join')}
+							</button>
+						) : (
+							<ActiveLink
+								href={`/${locale}/profile`}
+								activeClassName={styles.active}
+							>
+								<a
+									className={clsx(
+										isMobile || isTablet ? 'my-2' : 'my-0',
+										'mx-3 font-medium text-primary-dark'
+									)}
+								>
+									{user?.name}
+								</a>
+							</ActiveLink>
+						)}
 						{/* </ActiveLink> */}
 						{isMobile ? (
 							<hr
@@ -89,26 +113,53 @@ const TopLevel = ({
 						) : (
 							<span>|</span>
 						)}
-						<button
-							onClick={() => {
-								setIsRegister(false);
-								setLoginModal(true);
-							}}
-							className={clsx(
-								isMobile || isTablet ? 'my-2' : 'my-0',
-								'mx-3 font-medium text-primary-dark'
-							)}
-						>
-							{t('signIn')}
-						</button>
+						{user ? (
+							<button
+								onClick={signOutHandler}
+								className={clsx(
+									isMobile || isTablet ? 'my-2' : 'my-0',
+									'mx-3 font-medium text-primary-dark'
+								)}
+							>
+								{t('signOut')}
+							</button>
+						) : (
+							<button
+								onClick={() => {
+									setIsRegister(false);
+									setLoginModal(true);
+								}}
+								className={clsx(
+									isMobile || isTablet ? 'my-2' : 'my-0',
+									'mx-3 font-medium text-primary-dark'
+								)}
+							>
+								{t('signIn')}
+							</button>
+						)}
 					</div>
-					<FontAwesomeIcon
-						icon={faUserCircle}
-						className="text-primary-light text-3xl mx-1 mt-1 cursor-pointer"
+					<button
 						onClick={() => setOpenUserMenu(true)}
-					/>
+						className="bg-transparent border-none mx-1 cursor-pointer"
+					>
+						{user && user.media && user?.media?.profile_img ? (
+							<img
+								src={user?.media?.profile_img?.secure_url}
+								style={{
+									width: '50px',
+									height: '50px',
+									borderRadius: '50%',
+								}}
+							/>
+						) : (
+							<FontAwesomeIcon
+								icon={faUserCircle}
+								className="text-primary-light text-3xl "
+							/>
+						)}
+					</button>
 				</div>
-				{(isMobile || isTablet) && (
+				{isMobile && (
 					<FontAwesomeIcon
 						icon={openNav ? faTimes : faBars}
 						className="text-primary-dark text-3xl mx-1 mt-1 cursor-pointer"

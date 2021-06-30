@@ -28,11 +28,11 @@ const Header = ({
 		};
 	}, []);
 	const changeNavPosition = () => {
-		if (window.scrollY > 100) {
-			setIsFixed(true);
-		} else {
-			setIsFixed(false);
-		}
+		// if (window.scrollY > 100) {
+		// 	setIsFixed(true);
+		// } else {
+		// 	setIsFixed(false);
+		// }
 	};
 
 	useEffect(() => {

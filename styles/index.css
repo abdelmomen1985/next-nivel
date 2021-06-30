@@ -98,8 +98,7 @@ button:focus {
 
 /* Chrome, Safari, Edge, Opera */
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -155,4 +154,19 @@ input[type="number"] {
 .rc-steps-icon-dot {
   background-color: var(--primary-dark-color) !important;
   /* display: none !important; */
+}
+
+.responsiveTable tbody tr td.pivoted {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  text-align: right !important;
+  margin-right: 5px;
+}
+
+.responsiveTable td .tdBefore {
+  width: calc(50% - 5px) !important;
+}
+
+.fa-star, .fa-star-o {
+  color: gold !important;
 }

@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
+import { LAYOUT_FRAGMENT } from './fragments/layout';
 
 export const USER_FIELDS = `
 id
 name
-
 email
 ext_data
 media
@@ -24,14 +24,14 @@ mutation updateUserData
 (
   $id: uuid!,
   $password: String,
-  $name: String
+  $email: String,
   ){
   update_visitors_by_pk(pk_columns: {id: $id},
    _set: 
   {
     id: $id,
     passwired: $password,
-    name: $name
+    email: $email
   }) {
     ${USER_FIELDS} 
   }
@@ -62,8 +62,34 @@ mutation updateUserData
 export const GET_USER_BY_ID = gql`
   query visitors_by_pk($id: uuid! ){
     visitors_by_pk (id: $id) {
-      ${USER_FIELDS}
-       
+      ${USER_FIELDS}    
     }      
   }
+`;
+
+export const GET_USER_BOOKINGS_BY_USER_ID = gql`
+	${LAYOUT_FRAGMENT}
+	query visitorBookings($visitor_id: uuid!) {
+		bookings(where: { visitor_id: { _eq: $visitor_id } }) {
+			check_in
+			check_out
+			client_data
+			room_rate {
+				base_price
+				rate {
+					title
+				}
+			}
+			id
+			StrpRoomBooking {
+				id
+				name
+			}
+			visitor_id
+			visitor_rating_data
+		}
+		layout {
+			...LayoutFragment
+		}
+	}
 `;

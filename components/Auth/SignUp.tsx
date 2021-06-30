@@ -191,7 +191,7 @@ export default function SignUp(props: any) {
 				type="submit"
 				className="my-5 mx-auto block btn-primary-light text-white text-center py-3 px-8 w-full rounded-md"
 			>
-				Sign In
+				Sign Up
 			</button>
 		</form>
 	);

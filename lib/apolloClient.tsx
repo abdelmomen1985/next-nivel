@@ -55,5 +55,6 @@ export function useApollo(initialState: any) {
 		() => initializeApollo(initialState),
 		[initialState]
 	);
+
 	return store;
 }

@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import React, { useContext, useState } from "react";
 import RoomDetails from "../../../components/Rooms/RoomDetails";
 import { getLocalizationProps } from "../../../context/LangContext";
@@ -115,7 +115,7 @@ const RoomsPage = ({
 
 export default RoomsPage;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getAnyProps = async (ctx: any) => {
   const localization = getLocalizationProps(ctx, "common");
   const remoteSchemaUrl = await getRemoteSchemaUrl();
   const client = initializeApollo();
@@ -129,9 +129,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   };
 };
+/*
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: ["en", "ar"].map((lang) => ({ params: { lang } })),
+    paths: ["ar", "en"].map((lang) => ({ params: { lang } })),
     fallback: false,
   };
+};
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return await getAnyProps(ctx);
+};
+*/
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return await getAnyProps(ctx);
 };

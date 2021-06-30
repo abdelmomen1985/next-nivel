@@ -21,5 +21,12 @@ export async function getRemoteSchemaUrl() {
       ""
     );
   }
+  console.log("remoteSchemaUrl", remoteSchemaUrl);
+  // Convert http to https
+  if (remoteSchemaUrl.includes("http://"))
+    remoteSchemaUrl = remoteSchemaUrl.replace(
+      "http://",
+      "https://adyyagkqbq.cloudimg.io/v7/"
+    );
   return remoteSchemaUrl;
 }

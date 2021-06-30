@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import AmenitiesSection from "../../components/Home/AmenitiesSection";
 import Dining from "../../components/Home/Dining";
 import HeroSection from "../../components/Home/HeroSection";
@@ -69,8 +69,9 @@ const HomePage = ({
     </Layout>
   );
 };
+export default HomePage;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+const getAnyProps = async (ctx: any) => {
   const localization = getLocalizationProps(ctx, "common");
   // GET remote schema url
   const remoteSchemaUrl = await getRemoteSchemaUrl();
@@ -89,11 +90,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   };
 };
-
+/*
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: ["ar", "en"].map((lang) => ({ params: { lang } })),
     fallback: false,
   };
 };
-export default HomePage;
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return await getAnyProps(ctx);
+};
+*/
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return await getAnyProps(ctx);
+};

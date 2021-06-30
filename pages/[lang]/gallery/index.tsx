@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import React, { useContext, useState } from "react";
 //@ts-ignore
 import { Slide } from "react-slideshow-image";
@@ -99,10 +99,9 @@ const GalleryPage = ({
     </Layout>
   );
 };
-
 export default GalleryPage;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+const getAnyProps = async (ctx: any) => {
   const localization = getLocalizationProps(ctx, "common");
   const client = initializeApollo();
   const resp = await client.query({ query: LOAD_GALLERY });
@@ -116,9 +115,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   };
 };
+/*
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: ["en", "ar"].map((lang) => ({ params: { lang } })),
+    paths: ["ar", "en"].map((lang) => ({ params: { lang } })),
     fallback: false,
   };
+};
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return await getAnyProps(ctx);
+};
+*/
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return await getAnyProps(ctx);
 };

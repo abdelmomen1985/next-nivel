@@ -1,7 +1,7 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import React, { useState } from "react";
 import { getLocalizationProps } from "../../../context/LangContext";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
@@ -266,7 +266,7 @@ const MeetingsPage = ({
 
 export default MeetingsPage;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getAnyProps = async (ctx: any) => {
   const localization = getLocalizationProps(ctx, "common");
   const remoteSchemaUrl = await getRemoteSchemaUrl();
   const client = initializeApollo();
@@ -280,9 +280,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   };
 };
+/*
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: ["en", "ar"].map((lang) => ({ params: { lang } })),
+    paths: ["ar", "en"].map((lang) => ({ params: { lang } })),
     fallback: false,
   };
+};
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return await getAnyProps(ctx);
+};
+*/
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return await getAnyProps(ctx);
 };

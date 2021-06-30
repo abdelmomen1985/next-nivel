@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useEffect } from 'react';
 import useTranslation from './../../../hooks/useTranslation';
 import BookingForm from './BookingForm/BookingForm';
+import { cleanObjects } from './../../../utils/cleanObjects';
+import { AppContext } from './../../../context/AppContext';
+import { useMutation } from '@apollo/client';
+import { ADD_BOOKING } from './../../../query/booking';
+import { toast } from 'react-toastify';
 
 const ThirdBookingSteps = ({
 	selectedRoom,
@@ -13,10 +18,27 @@ const ThirdBookingSteps = ({
 	selectedPackage: any;
 }) => {
 	const { t, locale } = useTranslation();
+	const { user } = useContext(AppContext);
 	const [totalPrice, setTotalPrice] = useState<number>(0);
 	const [nightsCount, setNightsCount] = useState<number>(0);
 	const [totalTax, setTotalTax] = useState<number>(0);
 	const [showPriceDetails, setShowPriceDetails] = useState(false);
+	const [newBooking] = useMutation(ADD_BOOKING, {
+		onCompleted() {
+			const successMessage = {
+				en: 'you have booked your visit successfully',
+				ar: 'تم حجز زيارتك القادمة بنجاح',
+			};
+			toast.success(successMessage[locale], {
+				rtl: locale === 'ar' ? true : false,
+			});
+		},
+		onError(err) {
+			toast.success(err?.message, {
+				rtl: locale === 'ar' ? true : false,
+			});
+		},
+	});
 	let tax = 15.75;
 	let vat = 5.0;
 	useEffect(() => {
@@ -48,6 +70,23 @@ const ThirdBookingSteps = ({
 		};
 		calcTotal();
 	}, [selectedPackage, filterValues]);
+
+	const addBooking = async (data: any) => {
+		let cleanData = await cleanObjects(data);
+		let bookingQueryVars = {
+			booking_rate: selectedPackage?.id,
+			check_in: filterValues?.currentDateRange?.startDate,
+			check_out: filterValues?.currentDateRange?.endDate,
+			client_data: { ...cleanData },
+			strp_room_id: selectedRoom?.id,
+			visitor_id: user?.id,
+		};
+		console.log(bookingQueryVars);
+		newBooking({
+			variables: { ...bookingQueryVars },
+		});
+	};
+
 	return (
 		<section className="mx-auto md:mx-8 w-full my-2">
 			<div
@@ -126,7 +165,7 @@ const ThirdBookingSteps = ({
 					</>
 				)}
 			</div>
-			<BookingForm />
+			<BookingForm addBooking={addBooking} />
 		</section>
 	);
 };

@@ -68,23 +68,6 @@ const RoomDetails = ({
           {roomDetails?.RelWithStrapiRoom[`description_${locale}`]}
         </Markdown>
 
-        {/** 
-				{purpose === 'view' ? (
-					<button className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold">
-						{t('checkRates')}
-					</button>
-				) : (
-					<button
-						onClick={(e) => {
-							e.stopPropagation();
-							pickRoomHandler(roomDetails);
-						}}
-						className="btn-primary-light my-3 py-5 w-2/4 text-xl font-semibold"
-					>
-						{t('bookFrom')} {roomDetails?.base_price} {t('sar')}
-					</button>
-        )}
-        */}
         <div className="h-full my-1 px-2">
           <h5 className="text-primary-dark text-center my-1 text-xl font-medium">
             {t("roomHighlights")}

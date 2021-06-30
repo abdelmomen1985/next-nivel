@@ -1,0 +1,24 @@
+.locationDataList {
+  li {
+    margin: 5px auto;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+
+    &:first-of-type {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-dark-color);
+    }
+
+    a {
+      color: var(--primary-light-color);
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--primary-dark-color);
+
+      }
+    }
+  }
+}

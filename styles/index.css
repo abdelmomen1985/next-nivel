@@ -1,3 +1,172 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  body {
+    font-family: "Montserrat", "Cairo", sans-serif;
+    --primary-light-color: #d4b561;
+    --primary-dark-color: #8a6b3e;
+    --gray-light-color: #e3e3e3;
+    --gray-medium-color: #b5bec4;
+    --gray-dark-color: #5f686e;
+    --secondary-light-color: #d8ba8e;
+    --secondary-dark-color: #ad926b;
+  }
+}
+
+@layer utilities {
+  .bg-primary-light {
+    background-color: var(--primary-light-color);
+  }
+  .bg-outline-primary-light {
+    background-color: transparent;
+    border: 1px solid var(--primary-light-color);
+  }
+  .text-primary-light {
+    color: var(--primary-light-color);
+  }
+  .bg-primary-dark {
+    background-color: var(--primary-dark-color);
+  }
+  .bg-outline-primary-dark {
+    background-color: transparent;
+    border: 1px solid var(--primary-dark-color);
+  }
+  .text-primary-dark {
+    color: var(--primary-dark-color);
+  }
+  .bg-gray-light {
+    background-color: var(--gray-light-color);
+  }
+  .text-gray-light {
+    color: var(--gray-light-color);
+  }
+  .bg-gray-medium {
+    background-color: var(--gray-medium-color);
+  }
+  .text-gray-medium {
+    color: var(--gray-medium-color);
+  }
+  .bg-gray-dark {
+    background-color: var(--gray-dark-color);
+  }
+  .text-gray-dark {
+    color: var(--gray-dark-color);
+  }
+  .bg-secondary-light {
+    background-color: var(--secondary-light-color);
+  }
+  .text-secondary-light {
+    color: var(--secondary-light-color);
+  }
+  .bg-secondary-dark {
+    background-color: var(--secondary-dark-color);
+  }
+  .text-secondary-dark {
+    color: var(--secondary-dark-color);
+  }
+  .font-montserrat {
+    font-family: "Montserrat", sans-serif;
+  }
+  .font-cairo {
+    font-family: "Cairo", sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary-light {
+    @apply bg-primary-light text-white py-3 px-5 rounded-md shadow-md;
+  }
+  .btn-primary-dark {
+    @apply bg-primary-dark text-white py-3 px-5 rounded-md shadow-md;
+  }
+  .btn-outline-primary-light {
+    @apply bg-outline-primary-light text-primary-light py-3 px-5 rounded-md shadow-md;
+  }
+  .btn-outline-primary-dark {
+    @apply bg-outline-primary-dark text-primary-dark py-3 px-5 rounded-md shadow-md;
+  }
+}
+
+button {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.react-slideshow-container {
+  direction: ltr !important;
+}
+
+.react-slideshow-container .default-nav {
+  width: 50px;
+  height: 50px;
+  background: transparent !important;
+}
+
+.react-slideshow-container .default-nav:last-of-type {
+  margin-left: -50px;
+}
+
+.react-slideshow-container .default-nav:first-of-type {
+  margin-right: -50px;
+}
+
+.react-slideshow-container .default-nav svg {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  font-weight: 800;
+}
+
+.rc-steps {
+  direction: ltr !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  background-color: var(--primary-dark-color) !important;
+  border-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon {
+  border-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: var(--primary-dark-color) !important;
+}
+
+.rc-steps-icon-dot {
+  background-color: var(--primary-dark-color) !important;
+  /* display: none !important; */
+}
+
+.responsiveTable tbody tr td.pivoted {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  text-align: right !important;
+  margin-right: 5px;
+}
+
+.responsiveTable td .tdBefore {
+  width: calc(50% - 5px) !important;
+}
+
+.fa-star, .fa-star-o {
+  color: gold !important;
+}

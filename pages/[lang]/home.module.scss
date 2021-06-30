@@ -1,0 +1,37 @@
+.homeSectionContainer {
+  width: 100%;
+  margin: 0;
+  padding: 3rem 10px;
+  background-color: #fff;
+
+  &:nth-of-type(odd) {
+    background-color: var(--gray-light-color);
+
+    .homeSection {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .homeSection {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    max-width: 95%;
+
+    img {
+      width: 45%;
+      height: 80%;
+    }
+
+    @media screen and (max-width: 768px) {
+      margin: 1rem auto;
+      flex-wrap: wrap;
+
+      img {
+        width: 95%;
+      }
+    }
+  }
+}

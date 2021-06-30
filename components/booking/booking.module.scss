@@ -1,0 +1,37 @@
+.formGroup {
+  position: relative;
+  margin: 20px 0;
+
+
+  @media screen and (max-width: 760px) {
+    margin: 20px auto;
+  }
+
+  label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-transform: capitalize;
+  }
+
+  input,
+  select {
+    border: none;
+    margin: 0 5px;
+    padding: 10px 5px;
+    border: 1px solid #c4c4c4;
+    cursor: pointer;
+    width: 100%;
+    height: 52px;
+    padding: 8.5px 16px 8.5px 115px;
+
+    &:focus {
+      border: 2px solid #000;
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 97%;
+    }
+  }
+}

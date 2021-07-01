@@ -103,5 +103,23 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 */
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return await getAnyProps(ctx);
+  const localization = getLocalizationProps(ctx, "common");
+  console.log("in lang index");
+  // GET remote schema url
+  const remoteSchemaUrl = await getRemoteSchemaUrl();
+  const client = initializeApollo();
+  const resp = await client.query({ query: HOME_PAGE });
+
+  return {
+    props: {
+      localization,
+      home: resp?.data.homepage,
+      layout: { ...resp?.data.layout, remoteSchemaUrl },
+      amenities: resp?.data?.amenities,
+      homeSections: resp?.data?.homepage?.home_sections,
+      rooms: resp?.data?.strpRooms,
+      remoteSchemaUrl: remoteSchemaUrl,
+    },
+  };
+  //return await getAnyProps(ctx);
 };

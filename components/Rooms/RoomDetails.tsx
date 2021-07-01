@@ -1,5 +1,5 @@
 import Markdown from "markdown-to-jsx";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 //@ts-ignore
 import { Slide } from "react-slideshow-image";
 import { AppContext } from "./../../context/AppContext";
@@ -7,22 +7,21 @@ import useTranslation from "./../../hooks/useTranslation";
 
 const RoomDetails = ({
   roomDetails,
-  purpose = "view",
-  pickRoomHandler,
+
   roomAmenities,
   remoteUrl,
 }: {
   roomDetails: any;
   purpose?: string;
-  pickRoomHandler: (room: any) => void;
+
   roomAmenities: any[];
   remoteUrl: string;
 }) => {
   const { t, locale } = useTranslation();
-  console.log(roomDetails);
+
   const { isMobile } = useContext(AppContext);
-  const [basePrice, setBasePrice] = useState<any>(undefined);
-  const [packagePrices, setPackagePrices] = useState<any>(undefined);
+  // const [basePrice, setBasePrice] = useState<any>(undefined);
+  // const [packagePrices, setPackagePrices] = useState<any>(undefined);
   // useEffect(() => {
   // 	console.log('within', roomDetails);
   // 	let packages = [];

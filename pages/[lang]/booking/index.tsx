@@ -162,6 +162,7 @@ const BookingPage = ({
       },
     });
   };
+
   const pickPackageHandler = (selectedPack: any) => {
     setSelectedPackage(selectedPack);
     setCurrentStep(3);
@@ -267,7 +268,7 @@ const BookingPage = ({
         }}
       >
         <RoomDetails
-          pickRoomHandler={pickRoomHandler}
+          //pickRoomHandler={pickRoomHandler}
           purpose="booking"
           roomDetails={roomDetails!}
           roomAmenities={roomAmenitiesState}

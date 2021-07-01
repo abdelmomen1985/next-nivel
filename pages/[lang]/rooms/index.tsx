@@ -26,11 +26,10 @@ const RoomsPage = ({
 }) => {
   const { t } = useTranslation();
   const { isMobile, isTablet } = useContext(AppContext);
-  const [currentRooms, setCurrentRooms] = useState<any[]>([...roomsData]);
-  const [activeTab, setActiveTab] = useState(1);
+  const [currentRooms] = useState<any[]>([...roomsData]);
   const [roomDetails, setRoomDetails] = useState<any>(undefined);
   const [openModal, setOpenModal] = useState(false);
-  const [roomAmenitiesState, setRoomAmenitiesState] = useState([]);
+  const [roomAmenitiesState, setRoomAmenitiesState] = useState<any[]>([]);
   const [fetchRoomAmenities, { data: roomAmenitiesData }] = useLazyQuery(
     ROOM_AMENITIES,
     {
@@ -44,19 +43,17 @@ const RoomsPage = ({
       },
     }
   );
-  const pickRoomHandler = (room: any) => {
-    console.log(room);
-  };
+
   const selectRoomHandler = (room: any) => {
     setRoomDetails({ ...room });
     setRoomAmenitiesState([]);
-    setOpenModal(true);
-    console.log(room?.RelWithStrapiRoom?.id);
+
     fetchRoomAmenities({
       variables: {
         room_id: room?.RelWithStrapiRoom?.id,
       },
     });
+    setOpenModal(true);
   };
 
   return (
@@ -102,8 +99,6 @@ const RoomsPage = ({
         }}
       >
         <RoomDetails
-          pickRoomHandler={pickRoomHandler}
-          setRoomDetails={setRoomDetails}
           roomDetails={roomDetails}
           roomAmenities={roomAmenitiesState}
           remoteUrl={layout?.remoteSchemaUrl}
@@ -120,7 +115,7 @@ export const getAnyProps = async (ctx: any) => {
   const remoteSchemaUrl = await getRemoteSchemaUrl();
   const client = initializeApollo();
   const resp = await client.query({ query: LOAD_ROOMS_BY_RATES });
-  console.log(resp?.data?.room_rates);
+
   return {
     props: {
       localization,

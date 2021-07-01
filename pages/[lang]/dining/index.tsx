@@ -1,6 +1,6 @@
-import Markdown from "markdown-to-jsx";
 import { GetServerSideProps } from "next";
 import React, { useContext, useState } from "react";
+import CustomMD from "../../../components/common/CustomMD";
 import { getLocalizationProps } from "../../../context/LangContext";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
 import { initializeApollo } from "../../../lib/apolloClient";
@@ -95,7 +95,7 @@ const DiningPage = ({
             </h3>
             <div>
               {restDetails && (
-                <Markdown
+                <CustomMD
                   options={{
                     overrides: {
                       li: {
@@ -105,9 +105,8 @@ const DiningPage = ({
                       },
                     },
                   }}
-                >
-                  {restDetails[`working_hrs_${locale}`]}
-                </Markdown>
+                  markdown={restDetails[`working_hrs_${locale}`]}
+                />
               )}
             </div>
           </div>

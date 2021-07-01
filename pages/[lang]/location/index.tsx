@@ -1,6 +1,6 @@
-import Markdown from "markdown-to-jsx";
 import { GetServerSideProps } from "next";
 import React from "react";
+import CustomMD from "../../../components/common/CustomMD";
 import Location from "../../../components/location/Location";
 import { getLocalizationProps } from "../../../context/LangContext";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
@@ -23,7 +23,7 @@ const LocationPage = ({
     <Layout layout={layout}>
       <Location coordinates={location.coordinates} />
       <div className="mx-auto md:mx-5 my-4 text-center">
-        <Markdown
+        <CustomMD
           options={{
             overrides: {
               p: {
@@ -38,9 +38,8 @@ const LocationPage = ({
               },
             },
           }}
-        >
-          {location[`description_${locale}`]}
-        </Markdown>
+          markdown={location[`description_${locale}`]}
+        />
       </div>
     </Layout>
   );

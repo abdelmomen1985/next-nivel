@@ -1,7 +1,7 @@
-import Markdown from "markdown-to-jsx";
 import React, { useContext } from "react";
 //@ts-ignore
 import { Slide } from "react-slideshow-image";
+import CustomMD from "../common/CustomMD";
 import { AppContext } from "./../../context/AppContext";
 import useTranslation from "./../../hooks/useTranslation";
 
@@ -63,9 +63,9 @@ const RoomDetails = ({
         )}
       </div>
       <div className="mx-2 px-3 py-2 ">
-        <Markdown>
-          {roomDetails?.RelWithStrapiRoom[`description_${locale}`]}
-        </Markdown>
+        <CustomMD
+          markdown={roomDetails?.RelWithStrapiRoom[`description_${locale}`]}
+        />
 
         <div className="h-full my-1 px-2">
           <h5 className="text-primary-dark text-center my-1 text-xl font-medium">

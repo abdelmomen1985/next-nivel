@@ -1,7 +1,7 @@
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Markdown from "markdown-to-jsx";
 import React, { useState } from "react";
+import CustomMD from "../common/CustomMD";
 import useTranslation from "./../../hooks/useTranslation";
 import CustomModal from "./../common/CustomModal/CustomModal";
 
@@ -36,7 +36,7 @@ const ExpectSection = ({ home }: { home: any }) => {
           }}
         >
           <div className="text-center my-3">
-            <Markdown
+            <CustomMD
               options={{
                 overrides: {
                   h3: {
@@ -47,9 +47,8 @@ const ExpectSection = ({ home }: { home: any }) => {
                   },
                 },
               }}
-            >
-              {home[`covid_modal_${locale}`]}
-            </Markdown>
+              markdown={home[`covid_modal_${locale}`]}
+            />
           </div>
         </CustomModal>
       </section>

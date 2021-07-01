@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
 import { GetServerSideProps } from "next";
 import Steps, { Step } from "rc-steps";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import BookingFilters from "../../../components/booking/BookingFilters";
 // import styles from "./rooms.module.scss";
 import FirstBookingStep from "../../../components/booking/BookingSteps/FirstBookingStep";
@@ -84,6 +84,7 @@ const BookingPage = ({
       },
     }
   );
+  /*
   useEffect(() => {
     let localDefaultFilters = sessionStorage.getItem("filterValues");
     if (localDefaultFilters) {
@@ -112,6 +113,7 @@ const BookingPage = ({
       variables,
     });
   }, [filterValues]);
+  */
   const editStayHandler = () => {
     setShowEdit(true);
     setCurrentStep(1);
@@ -205,6 +207,7 @@ const BookingPage = ({
                   setSpecialRatesCount={setSpecialRatesCount}
                 />
               )}
+
               <BookingFilters
                 filterValues={filterValues}
                 updateFilters={setFilterValues}

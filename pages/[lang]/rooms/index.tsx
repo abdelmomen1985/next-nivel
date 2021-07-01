@@ -24,7 +24,7 @@ const RoomsPage = ({
   roomsData: RoomType[];
   layout: LayoutType;
 }) => {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const { isMobile, isTablet } = useContext(AppContext);
   const [currentRooms, setCurrentRooms] = useState<any[]>([...roomsData]);
   const [activeTab, setActiveTab] = useState(1);

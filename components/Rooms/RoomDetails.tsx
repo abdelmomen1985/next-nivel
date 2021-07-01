@@ -95,11 +95,9 @@ const RoomDetails = ({
                     }}
                   />
                   <span className="mx-2 text-sm">
-                    {amenity?.count && <span>{amenity?.count} &times;</span>}
                     {amenity?.amenitiy?.name[locale]}{" "}
-                    {amenity?.unit &&
-                      `(
-										${amenity?.unit})`}
+                    {amenity?.count && <span>{amenity?.count} &times;</span>}
+                    {amenity?.unit && amenity?.unit}
                   </span>
                 </li>
               ))}

@@ -1,0 +1,17 @@
+POST https://nivel-backend.hasura.app/v1/metadata
+Content-Type: application/json
+x-hasura-admin-secret: wYFunZN3WCnepXxE7REG8TNLdm9s0jLfyPaypDIrw5YcierwwRpRQOUowjekZEwi
+
+{
+    "type": "update_remote_schema",
+    "args": {
+        "name": "strapiCMS",
+        "definition": {
+            "url": "http://3.143.169.64:1337/graphql",
+            "headers": [{"name": "X-Server-Request-From", "value": "Hasura"}],
+            "forward_client_headers": false,
+            "timeout_seconds": 60
+        },
+        "comment": "some optional comment"
+    }
+}

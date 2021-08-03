@@ -7,9 +7,8 @@ import { DateRange } from 'react-date-range';
 import { useForm } from 'react-hook-form';
 import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
+import { today, tomorrow } from '../../../utils/getDates';
 
-const today = new Date();
-const tomorrow = new Date(today.setDate(today.getDate() + 1));
 const singleRoom = {
 	adultsCount: 1,
 	childCount: 0,

@@ -37,6 +37,15 @@
   }
 }
 
+.dropDownMenu {
+  position: absolute;
+  right: 0.5rem;
+  top: 2rem;
+  background: #fff;
+  padding: 5px;
+  z-index: 1024;
+}
+
 .navLinks {
   flex-direction: row;
 
@@ -225,4 +234,8 @@
     bottom: 7px;
     right: 2px;
   }
+}
+
+.errorInput {
+  border: 1px solid red;
 }

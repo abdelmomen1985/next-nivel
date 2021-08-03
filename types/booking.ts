@@ -1,5 +1,6 @@
 export type BookingType = {
 	check_in: Date;
+	reservation_code: number | string;
 	room_rate: {
 		base_price: number;
 		rate: {
@@ -10,9 +11,9 @@ export type BookingType = {
 		};
 	};
 	check_out: Date;
-	client_data: unknown;
+	client_data: any;
 	id: string;
-	strp_room_id: string;
+	strp_room_id: string | number;
 	StrpRoomBooking: {
 		id: number;
 		name: {

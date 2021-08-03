@@ -5,17 +5,21 @@ import BookingForm from './BookingForm/BookingForm';
 import { cleanObjects } from './../../../utils/cleanObjects';
 import { AppContext } from './../../../context/AppContext';
 import { useMutation } from '@apollo/client';
-import { ADD_BOOKING } from './../../../query/booking';
+import { ADD_BOOKING, UPDATE_BOOKING } from './../../../query/booking';
 import { toast } from 'react-toastify';
 
 const ThirdBookingSteps = ({
 	selectedRoom,
 	filterValues,
 	selectedPackage,
+	userData,
+	bookingId,
 }: {
 	selectedRoom: any;
 	filterValues: any;
 	selectedPackage: any;
+	userData: any;
+	bookingId?: string;
 }) => {
 	const { t, locale } = useTranslation();
 	const { user } = useContext(AppContext);
@@ -28,6 +32,22 @@ const ThirdBookingSteps = ({
 			const successMessage = {
 				en: 'you have booked your visit successfully',
 				ar: 'تم حجز زيارتك القادمة بنجاح',
+			};
+			toast.success(successMessage[locale], {
+				rtl: locale === 'ar' ? true : false,
+			});
+		},
+		onError(err) {
+			toast.success(err?.message, {
+				rtl: locale === 'ar' ? true : false,
+			});
+		},
+	});
+	const [updateBooking] = useMutation(UPDATE_BOOKING, {
+		onCompleted() {
+			const successMessage = {
+				en: 'you have updated your visit successfully',
+				ar: 'تم تعديل حجز زيارتك القادمة بنجاح',
 			};
 			toast.success(successMessage[locale], {
 				rtl: locale === 'ar' ? true : false,
@@ -71,7 +91,7 @@ const ThirdBookingSteps = ({
 		calcTotal();
 	}, [selectedPackage, filterValues]);
 
-	const addBooking = async (data: any) => {
+	const addBooking = async (data: any, type: string) => {
 		let cleanData = await cleanObjects(data);
 		let bookingQueryVars = {
 			booking_rate: selectedPackage?.id,
@@ -82,9 +102,16 @@ const ThirdBookingSteps = ({
 			visitor_id: user?.id,
 		};
 		console.log(bookingQueryVars);
-		newBooking({
-			variables: { ...bookingQueryVars },
-		});
+		if (type === 'create') {
+			newBooking({
+				variables: { ...bookingQueryVars },
+			});
+		}
+		if (type === 'update') {
+			updateBooking({
+				variables: { ...bookingQueryVars, bookingId },
+			});
+		}
 	};
 
 	return (
@@ -165,7 +192,7 @@ const ThirdBookingSteps = ({
 					</>
 				)}
 			</div>
-			<BookingForm addBooking={addBooking} />
+			<BookingForm userData={userData} addBooking={addBooking} />
 		</section>
 	);
 };

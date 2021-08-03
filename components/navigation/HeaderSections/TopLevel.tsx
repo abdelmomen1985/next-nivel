@@ -13,6 +13,38 @@ import { AppContext } from './../../../context/AppContext';
 import useTranslation from './../../../hooks/useTranslation';
 import ActiveLink from './../ActiveLink';
 import LocaleSwitch from './LocaleSwitch';
+import { useForm } from 'react-hook-form';
+
+const EditStay = () => {
+	const { register, reset, errors, handleSubmit } = useForm({
+		mode: 'onTouched',
+	});
+	const editStayHandler = (data: any) => {
+		console.log(data);
+	};
+	return (
+		<form
+			className="flex justify-center items-center my-2"
+			onSubmit={handleSubmit(editStayHandler)}
+		>
+			<input
+				placeholder="Enter your reservation code"
+				className={clsx(
+					'rounded px-2 py-1 ',
+					errors?.res_code ? styles.errorInput : ' '
+				)}
+				name="res_code"
+				ref={register({
+					required: true,
+				})}
+			/>
+			<button className="rounded px-2 py-1  bg-primary-light text-white">
+				Edit
+			</button>
+		</form>
+	);
+};
+
 const TopLevel = ({
 	setOpenNav,
 	openNav,
@@ -26,9 +58,9 @@ const TopLevel = ({
 }) => {
 	const { locale, t } = useTranslation();
 	const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-	const { isMobile, isTablet, setLoginModal, user, setUser } = useContext(
-		AppContext
-	);
+	const [editStay, setEditStay] = useState<boolean>(false);
+	const { isMobile, isTablet, setLoginModal, user, setUser } =
+		useContext(AppContext);
 	const userMenuRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		document.addEventListener('click', handleClick);
@@ -41,6 +73,7 @@ const TopLevel = ({
 			return;
 		}
 		setOpenUserMenu(false);
+		setEditStay(false);
 	};
 	const signOutHandler = async () => {
 		const response = await fetch('/api/sessions', {
@@ -60,7 +93,10 @@ const TopLevel = ({
 				/>
 			</Link>
 			<div className="flex justify-center items-center">
-				<div ref={userMenuRef} className="flex justify-center items-center">
+				<div
+					ref={userMenuRef}
+					className="flex justify-center items-center relative"
+				>
 					<div
 						className={clsx(
 							styles.userMenu,
@@ -137,6 +173,19 @@ const TopLevel = ({
 								{t('signIn')}
 							</button>
 						)}
+
+						{!user && isMobile && (
+							<>
+								<hr
+									className="mx-auto my-2 w-1/2 bg-primary-dark border-transparent"
+									style={{ height: '2px' }}
+								/>
+								<button className="" onClick={() => setEditStay(true)}>
+									Edit Stay
+								</button>
+								{editStay && <EditStay />}
+							</>
+						)}
 					</div>
 					<button
 						onClick={() => setOpenUserMenu(true)}
@@ -158,6 +207,14 @@ const TopLevel = ({
 							/>
 						)}
 					</button>
+					{!isMobile && openUserMenu && (
+						<div className={styles.dropDownMenu}>
+							<button className="" onClick={() => setEditStay(true)}>
+								Edit Stay
+							</button>
+							{editStay && <EditStay />}
+						</div>
+					)}
 				</div>
 				{isMobile && (
 					<FontAwesomeIcon

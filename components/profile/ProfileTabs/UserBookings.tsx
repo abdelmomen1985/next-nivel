@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Rating from 'react-rating';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { BookingType } from '../../../types/booking';
@@ -15,6 +16,7 @@ const UserBookings = ({
 	bookings: BookingType[];
 	setBookings: (bookings: BookingType[]) => void;
 }) => {
+	const router = useRouter();
 	const { locale, t } = useTranslation();
 	const [selectedBooking, setSelectedBooking] = useState<BookingType>({});
 	const [openModal, setOpenModal] = useState<boolean>(false);
@@ -79,6 +81,15 @@ const UserBookings = ({
 			},
 		});
 	};
+	const editBookingHandler = (booking: BookingType) => {
+		console.log(booking.reservation_code);
+		router.push({
+			pathname: `/${locale}/booking`,
+			query: {
+				res_code: booking?.reservation_code,
+			},
+		});
+	};
 	return (
 		<>
 			{bookings.length > 0 ? (
@@ -93,8 +104,10 @@ const UserBookings = ({
 							<Th>Check In</Th>
 							<Th>Check Out</Th>
 							<Th>Price</Th>
+							{/* <Th>reservation code</Th> */}
 							<Th>Package Name</Th>
 							<Th>User Rating</Th>
+							<Th></Th>
 							<Th></Th>
 						</Tr>
 					</Thead>
@@ -105,6 +118,7 @@ const UserBookings = ({
 								<Th>{booking?.check_in}</Th>
 								<Th>{booking?.check_out}</Th>
 								<Th>{booking?.room_rate?.base_price}</Th>
+								{/* <Th>{booking?.reservation_code}</Th> */}
 								<Th>{booking?.room_rate?.rate?.title[locale]}</Th>
 								{booking?.visitor_rating_data?.rating ? (
 									<Th>{booking?.visitor_rating_data?.rating} / 5</Th>
@@ -117,6 +131,14 @@ const UserBookings = ({
 										className="w-10/12 py-3 px-6 mx-auto text-white bg-primary-light text-lg font-medium"
 									>
 										Rate Now
+									</button>
+								</Th>
+								<Th>
+									<button
+										onClick={() => editBookingHandler(booking)}
+										className="w-10/12 py-3 px-6 mx-auto text-primary-light bg-outline-primary-light text-lg font-medium"
+									>
+										Edit Stay
 									</button>
 								</Th>
 							</Tr>

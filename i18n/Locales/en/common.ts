@@ -109,6 +109,7 @@ const common = {
 	addGuestDisc:
 		'This reservation is in your name. To allow another guest to check in, add their name below.',
 	bookReservation: 'book reservation',
+	updateReservation: 'update reservation',
 	changeRoom: 'Change Room',
 	selectRate: 'Select a Rate',
 	paymentGuestDetails: 'Payment and Guest Details',

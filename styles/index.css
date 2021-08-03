@@ -170,3 +170,8 @@ input[type="number"] {
 .fa-star, .fa-star-o {
   color: gold !important;
 }
+
+.rs-container button {
+  width: 50px;
+  height: 50px;
+}

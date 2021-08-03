@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
@@ -16,23 +16,50 @@ import useTranslation from './../../../../hooks/useTranslation';
 import { months } from '../../../../utils/12months';
 
 const years = getNextTenYears();
-const BookingForm = ({ addBooking }: { addBooking: (data: any) => void }) => {
+const BookingForm = ({
+	addBooking,
+	userData,
+}: {
+	addBooking: (data: any, type: string) => void;
+	userData: any;
+}) => {
 	const { t, locale } = useTranslation();
-	const { register, reset, errors, handleSubmit } = useForm({
+	const { register, reset, errors, handleSubmit, setValue } = useForm({
 		mode: 'onTouched',
 		reValidateMode: 'onBlur',
 		//@ts-ignore
 		resolver: yupResolver(bookingValidation),
 	});
 	const [showGuest, setShowGuest] = useState<boolean>(false);
+	useEffect(() => {
+		if (!userData) return;
+		setValue('cardNo', userData?.cardNo);
+		setValue('cardMonth', userData?.cardMonth);
+		setValue('cardYear', userData?.cardYear);
+		setValue('address', userData?.address);
+		setValue('city', userData?.city);
+		setValue('country', userData?.country);
+		setValue('email', userData?.email);
+		setValue('firstName', userData?.firstName);
+		setValue('lastName', userData?.lastName);
+		setValue('phone', userData?.phone);
+		setValue('zip', userData?.zip);
+	}, [userData]);
 	const bookingFormHandler = (data: any) => {
 		// console.log(data);
-		addBooking(data);
+		addBooking(data, 'create');
+	};
+	const updateReservationHandler = (data: any) => {
+		addBooking(data, 'update');
 	};
 	return (
 		<div className="w-full my-5 px-2">
 			<h3>{t('allFields')}</h3>
-			<form onSubmit={handleSubmit(bookingFormHandler)}>
+			<form
+				onSubmit={handleSubmit(
+					userData ? updateReservationHandler : bookingFormHandler
+				)}
+			>
 				<h3 className="flex flex-wrap justify-start items-start my-5">
 					<img
 						src="/images/icons/stroke/credit-card.svg"
@@ -257,7 +284,7 @@ const BookingForm = ({ addBooking }: { addBooking: (data: any) => void }) => {
 					className="btn-primary-dark w-full md:w-1/2 px-10 py-5  text-white text-lg font-bold block"
 					type="submit"
 				>
-					{t('bookReservation')}
+					{userData ? t('updateReservation') : t('bookReservation')}
 				</button>
 			</form>
 		</div>

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import { LAYOUT_FRAGMENT } from './fragments/layout';
+import { BOOKING_FRAGMENT } from './booking';
 
 export const USER_FIELDS = `
 id
@@ -69,24 +70,10 @@ export const GET_USER_BY_ID = gql`
 
 export const GET_USER_BOOKINGS_BY_USER_ID = gql`
 	${LAYOUT_FRAGMENT}
+	${BOOKING_FRAGMENT}
 	query visitorBookings($visitor_id: uuid!) {
 		bookings(where: { visitor_id: { _eq: $visitor_id } }) {
-			check_in
-			check_out
-			client_data
-			room_rate {
-				base_price
-				rate {
-					title
-				}
-			}
-			id
-			StrpRoomBooking {
-				id
-				name
-			}
-			visitor_id
-			visitor_rating_data
+			...BookingFields
 		}
 		layout {
 			...LayoutFragment

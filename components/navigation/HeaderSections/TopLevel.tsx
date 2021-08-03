@@ -14,13 +14,20 @@ import useTranslation from './../../../hooks/useTranslation';
 import ActiveLink from './../ActiveLink';
 import LocaleSwitch from './LocaleSwitch';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 const EditStay = () => {
+	const { t, locale } = useTranslation();
+	const router = useRouter();
 	const { register, reset, errors, handleSubmit } = useForm({
 		mode: 'onTouched',
 	});
 	const editStayHandler = (data: any) => {
 		console.log(data);
+		router.push({
+			pathname: `/${locale}/booking`,
+			query: { res_code: data?.res_code },
+		});
 	};
 	return (
 		<form

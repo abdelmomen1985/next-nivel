@@ -13,7 +13,7 @@ import { LayoutType } from '../../types/layout';
 const TheFooter = ({ layout }: { layout: LayoutType }) => {
 	const { locale } = useTranslation();
 	return (
-		<footer className="w-full bg-gray-light px-5 py-10 mt-0 mb-0">
+		<footer className="w-full bg-gray-light px-5 py-10 mt-12 mb-0">
 			<div className="flex justify-center">
 				<img
 					src={layout?.remoteSchemaUrl + layout?.footer_logo_en?.url}

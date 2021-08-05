@@ -7,21 +7,26 @@ import { AppContext } from './../../../context/AppContext';
 import { useMutation } from '@apollo/client';
 import { ADD_BOOKING, UPDATE_BOOKING } from './../../../query/booking';
 import { toast } from 'react-toastify';
-
+import { useRouter } from 'next/router';
 const ThirdBookingSteps = ({
 	selectedRoom,
 	filterValues,
 	selectedPackage,
 	userData,
 	bookingId,
+	selectedRooms,
+	selectedPackages,
 }: {
 	selectedRoom: any;
 	filterValues: any;
 	selectedPackage: any;
 	userData: any;
 	bookingId?: string;
+	selectedRooms: any;
+	selectedPackages: any;
 }) => {
 	const { t, locale } = useTranslation();
+	const router = useRouter();
 	const { user } = useContext(AppContext);
 	const [totalPrice, setTotalPrice] = useState<number>(0);
 	const [nightsCount, setNightsCount] = useState<number>(0);
@@ -36,6 +41,8 @@ const ThirdBookingSteps = ({
 			toast.success(successMessage[locale], {
 				rtl: locale === 'ar' ? true : false,
 			});
+			sessionStorage.removeItem('filterValues');
+			router.push(`/${locale}/profile`);
 		},
 		onError(err) {
 			toast.success(err?.message, {
@@ -93,23 +100,48 @@ const ThirdBookingSteps = ({
 
 	const addBooking = async (data: any, type: string) => {
 		let cleanData = await cleanObjects(data);
-		let bookingQueryVars = {
-			booking_rate: selectedPackage?.id,
-			check_in: filterValues?.currentDateRange?.startDate,
-			check_out: filterValues?.currentDateRange?.endDate,
-			client_data: { ...cleanData },
-			strp_room_id: selectedRoom?.id,
-			visitor_id: user?.id,
-		};
-		console.log(bookingQueryVars);
-		if (type === 'create') {
-			newBooking({
-				variables: { ...bookingQueryVars },
-			});
-		}
-		if (type === 'update') {
-			updateBooking({
-				variables: { ...bookingQueryVars, bookingId },
+		if (filterValues.roomDetails.length === 1) {
+			let bookingQueryVars = {
+				booking_rate: selectedPackage?.id,
+				check_in: filterValues?.currentDateRange?.startDate,
+				check_out: filterValues?.currentDateRange?.endDate,
+				ext_data: {
+					adults_count: filterValues?.roomDetails[0].adultsCount,
+					child_count: filterValues?.roomDetails[0].childCount,
+				},
+				client_data: { ...cleanData },
+				strp_room_id: selectedRoom?.id,
+				visitor_id: user?.id,
+			};
+
+			if (type === 'update') {
+				updateBooking({
+					variables: { ...bookingQueryVars, bookingId },
+				});
+				return;
+			}
+			if (type === 'create') {
+				newBooking({
+					variables: { ...bookingQueryVars },
+				});
+			}
+		} else if (filterValues.roomDetails.length > 1) {
+			selectedRooms.forEach((room: any, i: number) => {
+				let bookingQueryVars = {
+					booking_rate: selectedPackages[i]?.id,
+					check_in: filterValues?.currentDateRange?.startDate,
+					check_out: filterValues?.currentDateRange?.endDate,
+					client_data: { ...cleanData },
+					strp_room_id: room?.id,
+					visitor_id: user?.id,
+					ext_data: {
+						adults_count: room.adultsCount,
+						child_count: room.childCount,
+					},
+				};
+				newBooking({
+					variables: { ...bookingQueryVars },
+				});
 			});
 		}
 	};

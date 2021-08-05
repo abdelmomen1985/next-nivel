@@ -97,7 +97,7 @@ const BookingFilters = ({
 	];
 	return (
 		<>
-			<div className="mx-auto px-8 my-5 w-full flex flex-wrap items-center">
+			<div className="mx-auto px-8 my-5 w-full flex flex-wrap items-start">
 				<h3 className="text-black mx-4 text-lg font-medium">
 					{t('stayIncludes')}
 				</h3>
@@ -109,7 +109,7 @@ const BookingFilters = ({
 					{amenities.map((amenity, i) => (
 						<h5
 							key={i}
-							className="flex justify-start items-center text-gray-500 text-base font-normal"
+							className="flex justify-start items-center text-gray-500 text-base font-normal capitalize"
 						>
 							<FontAwesomeIcon icon={faCheck} className="mx-1 font-thin" />
 							<span>{amenity[locale]}</span>
@@ -414,7 +414,7 @@ const BookingFilters = ({
 						onChange={(e) => setCheckAccessibility(e.target.checked)}
 					/>
 					<label
-						className="text-base md:text-base text-primary-dark font-medium "
+						className="text-base md:text-base text-primary-dark font-medium capitalize"
 						htmlFor="accessibility"
 					>
 						{t('accessibleRooms')}

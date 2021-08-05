@@ -30,6 +30,7 @@ export const ADD_BOOKING = gql`
 		$client_data: jsonb!
 		$strp_room_id: Int!
 		$visitor_id: uuid
+		$ext_data: jsonb
 	) {
 		insert_bookings_one(
 			object: {
@@ -39,6 +40,7 @@ export const ADD_BOOKING = gql`
 				client_data: $client_data
 				strp_room_id: $strp_room_id
 				visitor_id: $visitor_id
+				ext_data: $ext_data
 			}
 		) {
 			id

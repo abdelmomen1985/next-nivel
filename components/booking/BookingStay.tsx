@@ -115,7 +115,7 @@ const BookingStay = ({
 				>
 					{t('editStay')}
 				</button>
-				{currentStep > 1 && (
+				{currentStep > 1 && filterValues?.roomDetails.length === 1 && (
 					<Steps direction="vertical" size="default" current={currentStep - 1}>
 						<Step
 							title={selectedRoom.name[locale]}

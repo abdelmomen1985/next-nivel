@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
 import { GetServerSideProps } from 'next';
 import Steps, { Step } from 'rc-steps';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import BookingFilters from '../../../components/booking/BookingFilters';
 // import styles from "./rooms.module.scss";
 import FirstBookingStep from '../../../components/booking/BookingSteps/FirstBookingStep';
@@ -27,6 +27,8 @@ import {
 	ROOM_AMENITIES,
 } from './../../../query/rooms';
 import { today, tomorrow } from '../../../utils/getDates';
+import BookingRooms from './../../../components/booking/BookingSteps/BookingRooms';
+import RoomsSteps from './../../../components/booking/BookingSteps/RoomsSteps';
 
 const filtersDefaultValues = {
 	AARPRate: false,
@@ -57,8 +59,10 @@ const BookingPage = ({
 	singleBooking: BookingType;
 }) => {
 	const { t, locale } = useTranslation();
+	const firstRender = useRef(true);
 	const { isMobile } = useContext(AppContext);
 	const [currentRooms, setCurrentRooms] = useState<any[]>([...roomsData]);
+	const [currentRoom, setCurrentRoom] = useState<number>(0);
 	const [roomDetails, setRoomDetails] = useState<any>(undefined);
 	const [openModal, setOpenModal] = useState(false);
 	const [filterValues, setFilterValues] = useState<any>(filtersDefaultValues);
@@ -67,14 +71,17 @@ const BookingPage = ({
 		ar: 'اختر غرفة',
 		en: 'Select a room',
 	});
+	const [selectedRooms, setSelectedRooms] = useState<any[]>([]);
 	const [selectedRoom, setSelectedRoom] = useState<any>(undefined);
 	const [showEdit, setShowEdit] = useState(() =>
 		singleBooking ? true : false
 	);
-	const [selectedPackage, setSelectedPackage] = useState(undefined);
+	const [selectedPackage, setSelectedPackage] = useState<any>(undefined);
+	const [selectedPackages, setSelectedPackages] = useState<any>([]);
 	const [specialRatesCount, setSpecialRatesCount] = useState<number>(0);
 	const [roomAmenitiesState, setRoomAmenitiesState] = useState([]);
 	const [userData, setUserData] = useState<any>(undefined);
+	const [isPayable, setIsPayable] = useState<boolean>(false);
 
 	const [filterRooms, { data: filteredRooms }] = useLazyQuery(ROOMS_AGGREGATE, {
 		onCompleted() {
@@ -101,17 +108,52 @@ const BookingPage = ({
 		LOAD_ROOM_RATES,
 		{
 			onCompleted() {
-				setSelectedRoom((prev: any) => ({
-					...prev,
-					packagePrices: [...packagePrices.room_rates],
-				}));
+				if (filterValues?.roomDetails.length === 1) {
+					setSelectedRoom((prev: any) => ({
+						...prev,
+						packagePrices: [...packagePrices.room_rates],
+					}));
+				} else if (filterValues?.roomDetails.length > 1) {
+					let newSelectedRooms = [...selectedRooms];
+					newSelectedRooms[currentRoom] = {
+						...newSelectedRooms[currentRoom],
+						packagePrices: [...packagePrices.room_rates],
+					};
+					setSelectedRooms([...newSelectedRooms]);
+				}
 				setCurrentStep(2);
 			},
 			onError(err) {
 				console.log(err);
 			},
+			fetchPolicy: 'no-cache',
 		}
 	);
+	useEffect(() => {
+		if (singleBooking) return;
+		let localDefaultFilters = sessionStorage.getItem('filterValues');
+		if (localDefaultFilters) {
+			let newDefaultFilters: any = JSON.parse(localDefaultFilters);
+			let finalDefaultFilters = {
+				...newDefaultFilters,
+				currentDateRange: {
+					startDate: new Date(newDefaultFilters?.currentDateRange?.startDate),
+					endDate: new Date(newDefaultFilters?.currentDateRange?.endDate),
+					key: newDefaultFilters?.currentDateRange?.key,
+				},
+			};
+			setFilterValues(finalDefaultFilters);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (singleBooking) return;
+		setSelectedRooms([...filterValues?.roomDetails]);
+		setSelectedPackages([]);
+		setCurrentRoom(0);
+		setCurrentStep(1);
+	}, [filterValues]);
+
 	useEffect(() => {
 		if (singleBooking) {
 			console.log(singleBooking);
@@ -124,22 +166,24 @@ const BookingPage = ({
 			setUserData({ ...singleBooking?.client_data });
 		}
 	}, [singleBooking]);
+
+	useEffect(() => {
+		if (firstRender.current) {
+			console.log('leaving');
+			firstRender.current = false;
+			return;
+		}
+		if (
+			selectedPackages.length === selectedRooms.length &&
+			selectedRooms[selectedRooms.length - 1].name
+		) {
+			setIsPayable(true);
+		} else {
+			setIsPayable(false);
+		}
+	}, [selectedPackages]);
+
 	/*
-  useEffect(() => {
-    let localDefaultFilters = sessionStorage.getItem("filterValues");
-    if (localDefaultFilters) {
-      let newDefaultFilters: any = JSON.parse(localDefaultFilters);
-      let finalDefaultFilters = {
-        ...newDefaultFilters,
-        currentDateRange: {
-          startDate: new Date(newDefaultFilters?.currentDateRange?.startDate),
-          endDate: new Date(newDefaultFilters?.currentDateRange?.endDate),
-          key: newDefaultFilters?.currentDateRange?.key,
-        },
-      };
-      setFilterValues(finalDefaultFilters);
-    }
-  }, []);
   useEffect(() => {
     let variables = {} as any;
     if (filterValues?.accessibility) {
@@ -181,12 +225,21 @@ const BookingPage = ({
 				},
 			},
 		};
-		setSelectedRoom({ ...pickedRoom });
 		fetchRoomRates({
 			variables: {
 				room_id: room?.RelWithStrapiRoom?.id,
 			},
 		});
+		if (filterValues?.roomDetails.length === 1) {
+			setSelectedRoom({ ...pickedRoom });
+		} else if (filterValues?.roomDetails.length > 1) {
+			let newSelectedRooms = [...selectedRooms];
+			newSelectedRooms[currentRoom] = {
+				...newSelectedRooms[currentRoom],
+				...pickedRoom,
+			};
+			setSelectedRooms([...newSelectedRooms]);
+		}
 		setStepTitle({
 			ar: 'اختر السعر ',
 			en: 'Select a rate',
@@ -201,13 +254,35 @@ const BookingPage = ({
 			},
 		});
 	};
-	const pickPackageHandler = (selectedPack: any) => {
-		setSelectedPackage(selectedPack);
+	const lastStepMove = () => {
 		setCurrentStep(3);
 		setStepTitle({
 			ar: 'بيانات السداد والضيوف',
 			en: 'Payment and Guest Details',
 		});
+	};
+	const pickPackageHandler = (selectedPack: any) => {
+		if (filterValues?.roomDetails.length === 1) {
+			setSelectedPackage(selectedPack);
+			lastStepMove();
+		} else if (filterValues?.roomDetails.length > 1) {
+			let newSelectedPackages = [...selectedPackages];
+			newSelectedPackages[currentRoom] = {
+				...newSelectedPackages[currentRoom],
+				...selectedPack,
+			};
+			setSelectedPackages([...newSelectedPackages]);
+			setCurrentRoom((prev) => prev + 1);
+			if (currentRoom === selectedRooms.length - 1) {
+				lastStepMove();
+				return;
+			}
+			setCurrentStep(1);
+		}
+	};
+	const changeRoom = (roomNumber: number) => {
+		setCurrentRoom(roomNumber);
+		setCurrentStep(1);
 	};
 	return (
 		<Layout withFilters={false} layout={layout}>
@@ -221,7 +296,7 @@ const BookingPage = ({
 							{stepTitle[locale]}
 						</h3>
 					</div>
-					{!isMobile && (
+					{!isMobile && filterValues?.roomDetails.length === 1 && (
 						<Steps
 							progressDot
 							status="process"
@@ -233,6 +308,17 @@ const BookingPage = ({
 							<Step title=" " description=" " />
 							<Step title=" " description=" " />
 						</Steps>
+					)}
+
+					{!isMobile && filterValues?.roomDetails?.length > 1 && (
+						<RoomsSteps
+							changeRoom={changeRoom}
+							rooms={selectedRooms}
+							currentRoom={currentRoom}
+							moveToPay={lastStepMove}
+							isPayable={isPayable}
+							currentStep={currentStep}
+						/>
 					)}
 					{currentStep === 1 && (
 						<div>
@@ -257,7 +343,11 @@ const BookingPage = ({
 					)}
 					{currentStep === 2 && (
 						<SecondBookingStep
-							selectedRoom={selectedRoom}
+							selectedRoom={
+								selectedRooms?.length === 1
+									? selectedRoom
+									: selectedRooms[currentRoom]
+							}
 							filterValues={filterValues}
 							pickPackageHandler={pickPackageHandler}
 						/>
@@ -269,26 +359,41 @@ const BookingPage = ({
 							selectedPackage={selectedPackage}
 							userData={userData}
 							bookingId={singleBooking?.id}
+							selectedRooms={selectedRooms}
+							selectedPackages={selectedPackages}
+						/>
+					)}
+					{currentStep === 1 && (
+						<FirstBookingStep
+							pickRoomHandler={pickRoomHandler}
+							currentRooms={currentRooms}
+							selectRoom={selectRoomHandler}
+							remoteUrl={layout?.remoteSchemaUrl}
 						/>
 					)}
 				</div>
-				<BookingStay
-					editStayHandler={editStayHandler}
-					filterValues={filterValues}
-					currentStep={currentStep}
-					selectedRoom={selectedRoom}
-					setCurrentStep={setCurrentStep}
-					remoteUrl={layout?.remoteSchemaUrl}
-				/>
+				<div>
+					<BookingStay
+						editStayHandler={editStayHandler}
+						filterValues={filterValues}
+						currentStep={currentStep}
+						selectedRoom={selectedRoom}
+						setCurrentStep={setCurrentStep}
+						remoteUrl={layout?.remoteSchemaUrl}
+					/>
+					{filterValues?.roomDetails.length > 1 && (
+						<BookingRooms
+							rooms={selectedRooms}
+							currentRoom={currentRoom}
+							selectedPackages={selectedPackages}
+							changeRoom={changeRoom}
+							moveToPay={lastStepMove}
+							isPayable={isPayable}
+							currentStep={currentStep}
+						/>
+					)}
+				</div>
 			</div>
-			{currentStep === 1 && (
-				<FirstBookingStep
-					pickRoomHandler={pickRoomHandler}
-					currentRooms={currentRooms}
-					selectRoom={selectRoomHandler}
-					remoteUrl={layout?.remoteSchemaUrl}
-				/>
-			)}
 
 			<CustomModal
 				closeWithin={true}
@@ -308,7 +413,6 @@ const BookingPage = ({
 				}}
 			>
 				<RoomDetails
-					//pickRoomHandler={pickRoomHandler}
 					purpose="booking"
 					roomDetails={roomDetails!}
 					roomAmenities={roomAmenitiesState}

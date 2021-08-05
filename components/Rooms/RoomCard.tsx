@@ -51,7 +51,7 @@ const RoomCard = ({
 			}}
 			className={clsx(
 				styles.roomCard,
-				'border border-gray-400 my-3 md:my-5 mx-auto w-11/12 cursor-pointer pb-6 md:pb-0'
+				'border border-gray-400 my-3 md:my-8 mx-auto w-11/12 h-full cursor-pointer pb-6 md:pb-0'
 			)}
 		>
 			<img

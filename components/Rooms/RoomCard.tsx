@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import useTranslation from './../../hooks/useTranslation';
 import styles from './roomCard.module.scss';
+import { useSpeech } from './../../hooks/useSpeech';
 const RoomCard = ({
 	room,
 	selectRoom,
@@ -17,6 +18,7 @@ const RoomCard = ({
 	remoteUrl: string;
 }) => {
 	const { t, locale } = useTranslation();
+	const { speechHandler } = useSpeech();
 	const [src, setSrc] = useState<any>();
 	// const [basePrice, setBasePrice] = useState<any>(undefined);
 	// const [packagePrices, setPackagePrices] = useState<any>(undefined);
@@ -60,15 +62,26 @@ const RoomCard = ({
 				className="w-full h-2/3"
 			/>
 			<div className="mt-1 py-2 px-2">
-				<h2 className="text-xl my-4 font-semibold text-primary-dark text-center capitalize">
+				<h2
+					onMouseEnter={() =>
+						speechHandler(room?.RelWithStrapiRoom?.name[locale])
+					}
+					className="text-xl my-4 font-semibold text-primary-dark text-center capitalize"
+				>
 					{room?.RelWithStrapiRoom?.name[locale]}
 				</h2>
 				{purpose === 'view' ? (
-					<button className="btn-primary-light text-white py-3 text-base md:text-xl font-semibold  px-5 w-11/12 mx-auto block">
+					<button
+						onMouseEnter={() => speechHandler(t('roomDetails'))}
+						className="btn-primary-light text-white py-3 text-base md:text-xl font-semibold  px-5 w-11/12 mx-auto block"
+					>
 						{t('roomDetails')}
 					</button>
 				) : (
 					<button
+						onMouseEnter={() =>
+							speechHandler(`${t('bookFrom')} ${room?.base_price} ${t('sar')}`)
+						}
 						onClick={(e) => {
 							e.stopPropagation();
 							pickRoomHandler(room);

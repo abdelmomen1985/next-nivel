@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from '../navigation/navigation.module.scss';
 import useTranslation from './../../hooks/useTranslation';
+import { useSpeech } from './../../hooks/useSpeech';
 
 const BookingFilters = ({
 	updateFilters,
@@ -25,6 +26,7 @@ const BookingFilters = ({
 	const [checkAccessibility, setCheckAccessibility] = useState(false);
 	const specialRateRef = useRef<HTMLDivElement>(null);
 	const roomTypeRef = useRef<HTMLDivElement>(null);
+	const { speechHandler } = useSpeech();
 	const handleClick = (e: any) => {
 		if (specialRateRef?.current?.contains(e.target)) {
 			return;
@@ -98,7 +100,10 @@ const BookingFilters = ({
 	return (
 		<>
 			<div className="mx-auto px-8 my-5 w-full flex flex-wrap items-start">
-				<h3 className="text-black mx-4 text-lg font-medium">
+				<h3
+					onMouseEnter={() => speechHandler(t('stayIncludes'))}
+					className="text-black mx-4 text-lg font-medium"
+				>
 					{t('stayIncludes')}
 				</h3>
 				<div
@@ -108,6 +113,7 @@ const BookingFilters = ({
 				>
 					{amenities.map((amenity, i) => (
 						<h5
+							onMouseEnter={() => speechHandler(amenity[locale])}
 							key={i}
 							className="flex justify-start items-center text-gray-500 text-base font-normal capitalize"
 						>
@@ -123,6 +129,7 @@ const BookingFilters = ({
 			>
 				<div className="mx-2 relative">
 					<button
+						onMouseEnter={() => speechHandler(t('roomFilters'))}
 						onClick={() => setShowRoomTypes(true)}
 						className="btn-outline-primary-dark text-base md:text-base"
 						type="button"
@@ -143,6 +150,7 @@ const BookingFilters = ({
 					>
 						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
 							<h5
+								onMouseEnter={() => speechHandler(t('all'))}
 								onClick={() => setSelectedRoomType('all')}
 								className={clsx(
 									selectedRoomType === 'all' ? styles.selectedRoom : ' ',
@@ -152,6 +160,7 @@ const BookingFilters = ({
 								{t('all')}
 							</h5>
 							<h5
+								onMouseEnter={() => speechHandler(`1 ${t('bed')}`)}
 								onClick={() => setSelectedRoomType('1bed')}
 								className={clsx(
 									selectedRoomType === '1bed' ? styles.selectedRoom : ' ',
@@ -161,6 +170,7 @@ const BookingFilters = ({
 								1 {t('bed')}
 							</h5>
 							<h5
+								onMouseEnter={() => speechHandler(`2 ${t('beds')}`)}
 								onClick={() => setSelectedRoomType('2beds')}
 								className={clsx(
 									selectedRoomType === '2beds' ? styles.selectedRoom : ' ',
@@ -170,6 +180,7 @@ const BookingFilters = ({
 								2 {t('bed')}
 							</h5>
 							<h5
+								onMouseEnter={() => speechHandler(t('suite'))}
 								onClick={() => setSelectedRoomType('suite')}
 								className={clsx(
 									selectedRoomType === 'suite' ? styles.selectedRoom : ' ',
@@ -181,6 +192,7 @@ const BookingFilters = ({
 						</div>
 						<div className="flex justify-end items-center my-t mb-0 mr-2">
 							<button
+								onMouseEnter={() => speechHandler(t('close'))}
 								type="button"
 								onClick={() => setShowRoomTypes(false)}
 								className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
@@ -192,6 +204,9 @@ const BookingFilters = ({
 				</div>
 				<div className="mx-2 relative">
 					<button
+						onMouseEnter={() =>
+							speechHandler(`${specialRatesCount} ${t('specialRates')}`)
+						}
 						onClick={() => setShowSpecialRate(true)}
 						className="btn-outline-primary-dark text-base md:text-base"
 						type="button"
@@ -226,6 +241,7 @@ const BookingFilters = ({
 									name="usePoints"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('Use Points')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="usePoints"
 								>
@@ -248,6 +264,7 @@ const BookingFilters = ({
 									name="travelAgents"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('Agents')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="travelAgents"
 								>
@@ -270,6 +287,7 @@ const BookingFilters = ({
 									name="aaaRate"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('AAA Rate')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="aaaRate"
 								>
@@ -294,6 +312,7 @@ const BookingFilters = ({
 									name="AARPRate"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('AARP Rate')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="AARPRate"
 								>
@@ -316,6 +335,7 @@ const BookingFilters = ({
 									name="seniorRate"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('Senior Rate')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="seniorRate"
 								>
@@ -338,16 +358,18 @@ const BookingFilters = ({
 									name="governmentRates"
 								/>
 								<label
+									onMouseEnter={() => speechHandler('Government Rates')}
 									className="text-sm md:text-base text-primary-dark font-medium"
 									htmlFor="governmentRates"
 								>
-									Gov.Rates
+									Gov. Rates
 								</label>
 							</div>
 						</div>
 						<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
 							<div className="flex flex-col justify-start">
 								<label
+									onMouseEnter={() => speechHandler('Promotion Code')}
 									className="text-base text-primary-dark font-medium"
 									htmlFor="promotionCode"
 								>
@@ -362,6 +384,7 @@ const BookingFilters = ({
 							</div>
 							<div className="flex flex-col justify-start">
 								<label
+									onMouseEnter={() => speechHandler('Group Code')}
 									className="text-base text-primary-dark font-medium"
 									htmlFor="groupCode"
 								>
@@ -376,10 +399,11 @@ const BookingFilters = ({
 							</div>
 							<div className="flex flex-col justify-start">
 								<label
+									onMouseEnter={() => speechHandler('Corp. Account')}
 									className="text-base text-primary-dark font-medium"
 									htmlFor="corporateAccount"
 								>
-									Corp.Account
+									Corp. Account
 								</label>
 								<input
 									type="text"
@@ -391,6 +415,7 @@ const BookingFilters = ({
 						</div>
 						<div className="flex justify-end items-center my-t mb-0 mr-2">
 							<button
+								onMouseEnter={() => speechHandler(t('close'))}
 								type="button"
 								onClick={() => setShowSpecialRate(false)}
 								className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
@@ -414,6 +439,7 @@ const BookingFilters = ({
 						onChange={(e) => setCheckAccessibility(e.target.checked)}
 					/>
 					<label
+						onMouseEnter={() => speechHandler(t('accessibleRooms'))}
 						className="text-base md:text-base text-primary-dark font-medium capitalize"
 						htmlFor="accessibility"
 					>
@@ -421,6 +447,7 @@ const BookingFilters = ({
 					</label>
 				</div>
 				<button
+					onMouseEnter={() => speechHandler(t('update'))}
 					type="submit"
 					className="btn-primary-light mx-2 py-3 px-8 text-white capitalize text-base md:text-base"
 				>

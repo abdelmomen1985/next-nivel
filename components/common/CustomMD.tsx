@@ -1,11 +1,17 @@
-import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
-import React from "react";
+import Markdown, { MarkdownToJSX } from 'markdown-to-jsx';
+import React from 'react';
+import { useSpeech } from './../../hooks/useSpeech';
 export default function CustomMD({
-  markdown,
-  options,
+	markdown,
+	options,
 }: {
-  markdown: string | undefined;
-  options?: MarkdownToJSX.Options;
+	markdown: string | undefined;
+	options?: MarkdownToJSX.Options;
 }) {
-  return <Markdown options={options}>{markdown ?? ""}</Markdown>;
+	const { speechHandler } = useSpeech();
+	return (
+		<div onMouseEnter={() => speechHandler(markdown ?? '')}>
+			<Markdown options={options}>{markdown ?? ''}</Markdown>
+		</div>
+	);
 }

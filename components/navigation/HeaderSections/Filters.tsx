@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
 import { today, tomorrow } from '../../../utils/getDates';
+import { useSpeech } from './../../../hooks/useSpeech';
 
 const singleRoom = {
 	adultsCount: 1,
@@ -52,6 +53,7 @@ const Filters = ({
 		reValidateMode: 'onBlur',
 	});
 	const { t, locale } = useTranslation();
+	const { speechHandler } = useSpeech();
 	const router = useRouter();
 	const datePickerRef = useRef<HTMLDivElement>(null);
 	const specialRateRef = useRef<HTMLDivElement>(null);
@@ -225,10 +227,14 @@ const Filters = ({
 		>
 			{title === 'booking' && (
 				<div className="w-full mx-8 flex justify-between items-start mb-4">
-					<h3 className="text-2xl text-primary-dark font-semibold">
+					<h3
+						onMouseEnter={() => speechHandler(t('editStay'))}
+						className="text-2xl text-primary-dark font-semibold"
+					>
 						{t('editStay')}
 					</h3>
 					<button
+						onMouseEnter={() => speechHandler(t('close'))}
 						onClick={hideFilters!}
 						type="button"
 						className="bg-transparent border-none"
@@ -251,18 +257,54 @@ const Filters = ({
 						className="flex justify-center items-center cursor-pointer"
 						onClick={() => setShowDatePicker(true)}
 					>
-						<span className="mx-1 text-5xl font-bold">
+						<span
+							onMouseEnter={() =>
+								speechHandler(
+									currentDateRange?.startDate.toLocaleDateString(
+										currentLocale,
+										{
+											day: 'numeric',
+										}
+									)
+								)
+							}
+							className="mx-1 text-5xl font-bold"
+						>
 							{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
 								day: 'numeric',
 							})}
 						</span>
 						<div>
-							<span className="block text-lg my-0 text-black font-semibold">
+							<span
+								onMouseEnter={() =>
+									speechHandler(
+										currentDateRange?.startDate.toLocaleDateString(
+											currentLocale,
+											{
+												month: 'short',
+											}
+										)
+									)
+								}
+								className="block text-lg my-0 text-black font-semibold"
+							>
 								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
 									month: 'short',
 								})}
 							</span>
-							<span className="block text-lg my-0 text-black font-normal">
+							<span
+								onMouseEnter={() =>
+									speechHandler(
+										currentDateRange?.startDate.toLocaleDateString(
+											currentLocale,
+											{
+												weekday: 'short',
+											}
+										)
+									)
+								}
+								className="block text-lg my-0 text-black font-normal"
+							>
 								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
 									weekday: 'short',
 								})}
@@ -273,18 +315,51 @@ const Filters = ({
 						className="flex justify-center items-center cursor-pointer"
 						onClick={() => setShowDatePicker(true)}
 					>
-						<span className="mx-1 text-5xl font-bold">
+						<span
+							onMouseEnter={() =>
+								speechHandler(
+									currentDateRange?.endDate.toLocaleDateString(currentLocale, {
+										day: 'numeric',
+									})
+								)
+							}
+							className="mx-1 text-5xl font-bold"
+						>
 							{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
 								day: 'numeric',
 							})}
 						</span>
 						<div>
-							<span className="block text-lg my-0 text-black font-semibold">
+							<span
+								onMouseEnter={() =>
+									speechHandler(
+										currentDateRange?.endDate.toLocaleDateString(
+											currentLocale,
+											{
+												month: 'short',
+											}
+										)
+									)
+								}
+								className="block text-lg my-0 text-black font-semibold"
+							>
 								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
 									month: 'short',
 								})}
 							</span>
-							<span className="block text-lg my-0 text-black font-normal">
+							<span
+								onMouseEnter={() =>
+									speechHandler(
+										currentDateRange?.endDate.toLocaleDateString(
+											currentLocale,
+											{
+												weekday: 'short',
+											}
+										)
+									)
+								}
+								className="block text-lg my-0 text-black font-normal"
+							>
 								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
 									weekday: 'short',
 								})}
@@ -311,6 +386,13 @@ const Filters = ({
 				<div className="grid grid-cols-2 gap-1">
 					<div className="mx-2 relative">
 						<button
+							onMouseEnter={() =>
+								speechHandler(
+									`${roomCount} ${t('rooms')}, ${totalGuestCount} ${t(
+										'guests'
+									)}`
+								)
+							}
 							onClick={() => setShowRooms(true)}
 							className="btn-outline-primary-dark text-xs md:text-base my-4 md:my-0"
 							type="button"
@@ -327,11 +409,22 @@ const Filters = ({
 								ref={datePickerRef}
 							>
 								<div className="grid grid-cols-3 gap-2 items-center my-3">
-									<h5 className="text-lg font-medium">{t('rooms')}</h5>
-									<h5 className="text-center text-lg font-medium">
+									<h5
+										onMouseEnter={() => speechHandler(t('rooms'))}
+										className="text-lg font-medium"
+									>
+										{t('rooms')}
+									</h5>
+									<h5
+										onMouseEnter={() => speechHandler(t('adults'))}
+										className="text-center text-lg font-medium"
+									>
 										{t('adults')}
 									</h5>
-									<h5 className="text-center text-lg font-medium">
+									<h5
+										onMouseEnter={() => speechHandler(t('kids'))}
+										className="text-center text-lg font-medium"
+									>
 										{t('kids')}
 									</h5>
 								</div>
@@ -350,7 +443,12 @@ const Filters = ({
 													&times;
 												</button>
 											)}{' '}
-											<h3 className="text-center text-lg font-medium mx-2">
+											<h3
+												onMouseEnter={() =>
+													speechHandler(`${t('room')} ${i + 1}`)
+												}
+												className="text-center text-lg font-medium mx-2"
+											>
 												{t('room')} {i + 1}
 											</h3>
 										</div>
@@ -363,7 +461,10 @@ const Filters = ({
 											>
 												&minus;
 											</button>
-											<h5 className="text-center text-lg font-medium mx-1">
+											<h5
+												onMouseEnter={() => speechHandler(room.adultsCount)}
+												className="text-center text-lg font-medium mx-1"
+											>
 												{room.adultsCount}
 											</h5>
 											<button
@@ -397,6 +498,7 @@ const Filters = ({
 									</div>
 								))}
 								<button
+									onMouseEnter={() => speechHandler(t('addRoom'))}
 									type="button"
 									onClick={() =>
 										setRoomDetails((prev) => [...prev, { ...singleRoom }])
@@ -413,6 +515,7 @@ const Filters = ({
 
 								<div className="flex justify-end items-center my-t mb-0 mr-2">
 									<button
+										onMouseEnter={() => speechHandler(t('close'))}
 										type="button"
 										onClick={() => setShowRooms(false)}
 										className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
@@ -425,6 +528,9 @@ const Filters = ({
 					</div>
 					<div className="mx-2 relative">
 						<button
+							onMouseEnter={() =>
+								speechHandler(`${specialRatesCount} ${t('specialRates')}`)
+							}
 							onClick={() => setShowSpecialRate(true)}
 							className="btn-outline-primary-dark text-xs md:text-base my-4 md:my-0 relative"
 							type="button"
@@ -459,6 +565,7 @@ const Filters = ({
 										name="usePoints"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('Use Points')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="usePoints"
 									>
@@ -481,6 +588,7 @@ const Filters = ({
 										name="travelAgents"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('Agents')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="travelAgents"
 									>
@@ -503,6 +611,7 @@ const Filters = ({
 										name="aaaRate"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('AAA Rate')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="aaaRate"
 									>
@@ -527,6 +636,7 @@ const Filters = ({
 										name="AARPRate"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('AARP Rate')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="AARPRate"
 									>
@@ -549,6 +659,7 @@ const Filters = ({
 										name="seniorRate"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('Senior Rate')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="seniorRate"
 									>
@@ -571,16 +682,18 @@ const Filters = ({
 										name="governmentRates"
 									/>
 									<label
+										onMouseEnter={() => speechHandler('Gov. Rates')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="governmentRates"
 									>
-										Gov.Rates
+										Gov. Rates
 									</label>
 								</div>
 							</div>
 							<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
 								<div className="flex flex-col justify-start">
 									<label
+										onMouseEnter={() => speechHandler('Promotion Code')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="promotionCode"
 									>
@@ -595,6 +708,7 @@ const Filters = ({
 								</div>
 								<div className="flex flex-col justify-start">
 									<label
+										onMouseEnter={() => speechHandler('Group Code')}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="groupCode"
 									>
@@ -609,10 +723,11 @@ const Filters = ({
 								</div>
 								<div className="flex flex-col justify-start">
 									<label
+										onMouseEnter={() => speechHandler(`Corp. Account`)}
 										className="text-sm md:text-base text-primary-dark font-medium"
 										htmlFor="corporateAccount"
 									>
-										Corp.Account
+										Corp. Account
 									</label>
 									<input
 										type="text"
@@ -624,6 +739,7 @@ const Filters = ({
 							</div>
 							<div className="flex justify-end items-center my-t mb-0 mr-2">
 								<button
+									onMouseEnter={() => speechHandler(t('close'))}
 									type="button"
 									onClick={() => setShowSpecialRate(false)}
 									className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
@@ -637,6 +753,11 @@ const Filters = ({
 
 				{
 					<button
+						onMouseEnter={() =>
+							speechHandler(
+								title === 'header' ? t('checkRoomsRates') : t('update')
+							)
+						}
 						type="submit"
 						className="btn-primary-light mx-2 py-3 px-8 text-white capitalize"
 					>

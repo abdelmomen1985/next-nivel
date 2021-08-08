@@ -29,6 +29,7 @@ import {
 import { today, tomorrow } from '../../../utils/getDates';
 import BookingRooms from './../../../components/booking/BookingSteps/BookingRooms';
 import RoomsSteps from './../../../components/booking/BookingSteps/RoomsSteps';
+import { useSpeech } from './../../../hooks/useSpeech';
 
 const filtersDefaultValues = {
 	AARPRate: false,
@@ -82,7 +83,7 @@ const BookingPage = ({
 	const [roomAmenitiesState, setRoomAmenitiesState] = useState([]);
 	const [userData, setUserData] = useState<any>(undefined);
 	const [isPayable, setIsPayable] = useState<boolean>(false);
-
+	const { speechHandler } = useSpeech();
 	const [filterRooms, { data: filteredRooms }] = useLazyQuery(ROOMS_AGGREGATE, {
 		onCompleted() {
 			console.log(filteredRooms?.rooms_aggregate?.nodes);
@@ -289,10 +290,18 @@ const BookingPage = ({
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-2 lg:gap-4">
 				<div className="col-span-2 order-last md:order-none">
 					<div className="mt-8">
-						<h5 className="mx-4 md:mx-12 text-lg font-medium text-primary-light my-1 capitalize">
+						<h5
+							onMouseEnter={() =>
+								speechHandler(`${t('step')} ${currentStep} ${t('of')} 3`)
+							}
+							className="mx-4 md:mx-12 text-lg font-medium text-primary-light my-1 capitalize"
+						>
 							{t('step')} {currentStep} {t('of')} 3
 						</h5>
-						<h3 className="mx-4 md:mx-12 text-xl font-bold text-primary-dark mt-1 mb-3">
+						<h3
+							onMouseEnter={() => speechHandler(stepTitle[locale])}
+							className="mx-4 md:mx-12 text-xl font-bold text-primary-dark mt-1 mb-3"
+						>
 							{stepTitle[locale]}
 						</h3>
 					</div>

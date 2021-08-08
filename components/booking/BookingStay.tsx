@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/useTranslation';
 import Steps, { Step } from 'rc-steps';
+import { useSpeech } from './../../hooks/useSpeech';
 
 const BookingStay = ({
 	filterValues,
@@ -18,6 +19,7 @@ const BookingStay = ({
 	remoteUrl: string;
 }) => {
 	const { t, locale } = useTranslation();
+	const { speechHandler } = useSpeech();
 	const [childCount, setChildCount] = useState(0);
 	const [adultCount, setAdultCount] = useState(0);
 	const [nightsCount, setNightsCount] = useState(0);
@@ -70,7 +72,30 @@ const BookingStay = ({
 				/>
 				{filterValues && (
 					<>
-						<h3>
+						<h3
+							onMouseEnter={() =>
+								speechHandler(
+									`${filterValues?.currentDateRange?.startDate?.toLocaleDateString(
+										currentLocale,
+										{
+											day: 'numeric',
+											month: 'short',
+										}
+									)} - ${filterValues?.currentDateRange?.endDate?.toLocaleDateString(
+										currentLocale,
+										{
+											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
+										}
+									)} (
+										${nightsCount === 0 && t('dayOnly')}
+										${nightsCount === 1 && nightsCount + ' ' + t('night')}
+							${nightsCount > 1 && nightsCount + ' ' + t('nights')}
+									)`
+								)
+							}
+						>
 							{filterValues?.currentDateRange?.startDate?.toLocaleDateString(
 								currentLocale,
 								{
@@ -91,18 +116,30 @@ const BookingStay = ({
 							{nightsCount === 1 && `${nightsCount} ${t('night')}`}
 							{nightsCount > 1 && `${nightsCount} ${t('nights')}`})
 						</h3>
-						<h5>
-							<span>
+						<h5 onMouseEnter={() => speechHandler(``)}>
+							<span
+								onMouseEnter={() =>
+									speechHandler(`${filterValues?.roomCount} ${t('rooms')}`)
+								}
+							>
 								{filterValues?.roomCount} {t('rooms')}
 							</span>
 							{adultCount > 0 && (
-								<span>
+								<span
+									onMouseEnter={() =>
+										speechHandler(`${t('comma')} ${adultCount} ${t('adults')}`)
+									}
+								>
 									{t('comma')} {adultCount} {t('adults')}
 								</span>
 							)}
 
 							{childCount > 0 && (
-								<span>
+								<span
+									onMouseEnter={() =>
+										speechHandler(`${t('comma')} ${childCount} ${t('kids')}`)
+									}
+								>
 									{t('comma')} {childCount} {t('kids')}
 								</span>
 							)}
@@ -110,6 +147,7 @@ const BookingStay = ({
 					</>
 				)}
 				<button
+					onMouseEnter={() => speechHandler(t('editStay'))}
 					onClick={editStayHandler}
 					className="btn-transparent text-lg underline my-1 text-primary-dark cursor-pointer"
 				>

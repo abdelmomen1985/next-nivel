@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
+import Multiselect from 'multiselect-react-dropdown';
 
 import styles from '../../booking.module.scss';
 import { getNextTenYears } from '../../../../utils/getNextTenYears';
@@ -20,9 +21,11 @@ const years = getNextTenYears();
 const BookingForm = ({
 	addBooking,
 	userData,
+	specialRequests,
 }: {
 	addBooking: (data: any, type: string) => void;
 	userData: any;
+	specialRequests: string[];
 }) => {
 	const { t, locale } = useTranslation();
 	const { speechHandler } = useSpeech();
@@ -33,6 +36,8 @@ const BookingForm = ({
 		resolver: yupResolver(bookingValidation),
 	});
 	const [showGuest, setShowGuest] = useState<boolean>(false);
+	const [selectedSpecialReqs, setSelectedSpecialReqs] = useState<string[]>([]);
+
 	useEffect(() => {
 		if (!userData) return;
 		setValue('cardNo', userData?.cardNo);
@@ -49,10 +54,16 @@ const BookingForm = ({
 	}, [userData]);
 	const bookingFormHandler = (data: any) => {
 		// console.log(data);
-		addBooking(data, 'create');
+		addBooking(
+			{ ...data, special_requests: [...selectedSpecialReqs] },
+			'create'
+		);
 	};
 	const updateReservationHandler = (data: any) => {
-		addBooking(data, 'update');
+		addBooking(
+			{ ...data, special_requests: [...selectedSpecialReqs] },
+			'update'
+		);
 	};
 	return (
 		<div className="w-full my-5 px-2">
@@ -333,6 +344,43 @@ const BookingForm = ({
 						{errors.city?.message[locale]}
 					</p>
 				)}
+				<div className={'w-full md:w-2/3'}>
+					<label
+						onMouseEnter={() => speechHandler(`Special Requests`)}
+						className="capitalize"
+						htmlFor="city"
+					>
+						Special Requests
+					</label>
+					<Multiselect
+						options={specialRequests}
+						selectedValues={selectedSpecialReqs}
+						isObject={false}
+						closeOnSelect={false}
+						closeIcon="circle2"
+						onSelect={(selectedList: string[], selectedItem: string) =>
+							setSelectedSpecialReqs((prev: string[]) => [
+								...prev,
+								selectedItem,
+							])
+						}
+						placeholder=""
+						onRemove={(selectedList: string[], selectedItem: string) =>
+							setSelectedSpecialReqs((prev: string[]) =>
+								prev.filter((req: string) => req !== selectedItem)
+							)
+						}
+						style={{
+							chips: {
+								background: '#d4b561',
+								whiteSpace: 'break-spaces',
+							},
+							multiselectContainer: {
+								color: '#8a6b3e',
+							},
+						}}
+					/>
+				</div>
 				<button
 					onMouseEnter={() => speechHandler(t('addGuestNames'))}
 					type="button"

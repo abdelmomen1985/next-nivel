@@ -18,7 +18,7 @@ export function useSpeech() {
 	}, [locale]);
 
 	const speechHandler = (text: string) => {
-		speak({ text, voice: voices[currentVoiceIndex] });
+		// speak({ text, voice: voices[currentVoiceIndex] });
 	};
 	return { speechHandler };
 }

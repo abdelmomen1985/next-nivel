@@ -31,6 +31,7 @@ export const ADD_BOOKING = gql`
 		$strp_room_id: Int!
 		$visitor_id: uuid
 		$ext_data: jsonb
+		$special_requests: jsonb
 	) {
 		insert_bookings_one(
 			object: {
@@ -41,6 +42,7 @@ export const ADD_BOOKING = gql`
 				strp_room_id: $strp_room_id
 				visitor_id: $visitor_id
 				ext_data: $ext_data
+				special_requests: $special_requests
 			}
 		) {
 			id
@@ -57,6 +59,7 @@ export const UPDATE_BOOKING = gql`
 		$client_data: jsonb!
 		$strp_room_id: Int!
 		$visitor_id: uuid
+		$special_requests: jsonb
 	) {
 		update_bookings_by_pk(
 			pk_columns: { id: $bookingId }
@@ -67,6 +70,7 @@ export const UPDATE_BOOKING = gql`
 				client_data: $client_data
 				strp_room_id: $strp_room_id
 				visitor_id: $visitor_id
+				special_requests: $special_requests
 			}
 		) {
 			id
@@ -92,6 +96,16 @@ export const GET_SINGLE_BOOKING = gql`
 			nodes {
 				...BookingFields
 			}
+		}
+	}
+`;
+
+export const GET_SPECIAL_REQUESTS = gql`
+	query specialRequest {
+		specialRequest {
+			values_ar
+			values_en
+			id
 		}
 	}
 `;

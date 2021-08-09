@@ -17,6 +17,7 @@ const ThirdBookingSteps = ({
 	bookingId,
 	selectedRooms,
 	selectedPackages,
+	specialRequests,
 }: {
 	selectedRoom: any;
 	filterValues: any;
@@ -25,6 +26,7 @@ const ThirdBookingSteps = ({
 	bookingId?: string;
 	selectedRooms: any;
 	selectedPackages: any;
+	specialRequests: string[];
 }) => {
 	const { t, locale } = useTranslation();
 	const router = useRouter();
@@ -47,7 +49,7 @@ const ThirdBookingSteps = ({
 			router.push(`/${locale}/profile`);
 		},
 		onError(err) {
-			toast.success(err?.message, {
+			toast.error(err?.message, {
 				rtl: locale === 'ar' ? true : false,
 			});
 		},
@@ -63,7 +65,7 @@ const ThirdBookingSteps = ({
 			});
 		},
 		onError(err) {
-			toast.success(err?.message, {
+			toast.error(err?.message, {
 				rtl: locale === 'ar' ? true : false,
 			});
 		},
@@ -100,8 +102,13 @@ const ThirdBookingSteps = ({
 		calcTotal();
 	}, [selectedPackage, filterValues]);
 	const addBooking = async (data: any, type: string) => {
+		console.log('data', data);
+		let special_requests = [...data.special_requests];
+		delete data?.special_requests;
 		let cleanData = await cleanObjects(data);
+		console.log(special_requests);
 		if (filterValues.roomDetails.length === 1) {
+			console.log(special_requests.length);
 			let bookingQueryVars = {
 				booking_rate: selectedPackage?.id,
 				check_in: filterValues?.currentDateRange?.startDate,
@@ -109,12 +116,14 @@ const ThirdBookingSteps = ({
 				ext_data: {
 					adults_count: filterValues?.roomDetails[0].adultsCount,
 					child_count: filterValues?.roomDetails[0].childCount,
+					child_ages: filterValues?.roomDetails[0].childrenAges,
 				},
 				client_data: { ...cleanData },
 				strp_room_id: selectedRoom?.id,
 				visitor_id: user?.id,
+				special_requests: special_requests.length > 0 ? special_requests : null,
 			};
-
+			console.log(bookingQueryVars);
 			if (type === 'update') {
 				updateBooking({
 					variables: { ...bookingQueryVars, bookingId },
@@ -138,7 +147,10 @@ const ThirdBookingSteps = ({
 					ext_data: {
 						adults_count: room.adultsCount,
 						child_count: room.childCount,
+						child_ages: room.childrenAges,
 					},
+					special_requests:
+						special_requests.length > 0 ? special_requests : null,
 				};
 				newBooking({
 					variables: { ...bookingQueryVars },
@@ -280,7 +292,11 @@ const ThirdBookingSteps = ({
 					</>
 				)}
 			</div>
-			<BookingForm userData={userData} addBooking={addBooking} />
+			<BookingForm
+				specialRequests={specialRequests}
+				userData={userData}
+				addBooking={addBooking}
+			/>
 		</section>
 	);
 };

@@ -3,17 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { DateRange } from 'react-date-range';
 import { useForm } from 'react-hook-form';
 import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
 import { today, tomorrow } from '../../../utils/getDates';
 import { useSpeech } from './../../../hooks/useSpeech';
+import DatePickerFilter from './DatePickerFilter';
+import RoomsFilters from './RoomsFilters';
+import SpecialFilters from './SpecialFilters';
+import { v4 as uuidv4 } from 'uuid';
 
-const singleRoom = {
-	adultsCount: 1,
-	childCount: 0,
-};
 const filtersDefaultValues = {
 	AARPRate: false,
 	aaaRate: false,
@@ -70,9 +69,7 @@ const Filters = ({
 	const [totalGuestCount, setTotalGuestCount] = useState(
 		filterValues?.totalGuestCount
 	);
-	const [currentLocale, setCurrentLocale] = useState(
-		locale === 'en' ? 'en-GB' : 'ar-EG'
-	);
+
 	const [roomDetails, setRoomDetails] = useState([
 		...filterValues?.roomDetails,
 	]);
@@ -89,47 +86,7 @@ const Filters = ({
 		setShowRooms(false);
 		setShowSpecialRate(false);
 	};
-	const removeRoomHandler = (roomIndex: number) => {
-		setRoomDetails((prev) =>
-			prev.filter((_room, index) => index !== roomIndex)
-		);
-	};
-	const incrementGuestsHandler = (type: string, roomIndex: number) => {
-		let roomDets = [...roomDetails];
-		let newRoomDetails = roomDets.map((room, index) => {
-			if (index === roomIndex) {
-				switch (type) {
-					case 'kid':
-						return { ...room, childCount: room.childCount + 1 };
-					case 'adult':
-						return { ...room, adultsCount: room.adultsCount + 1 };
-					default:
-						return room;
-				}
-			} else {
-				return room;
-			}
-		});
-		setRoomDetails(newRoomDetails);
-	};
-	const decrementGuestsHandler = (type: string, roomIndex: number) => {
-		let roomDets = [...roomDetails];
-		let newRoomDetails = roomDets.map((room, index) => {
-			if (index === roomIndex) {
-				switch (type) {
-					case 'kid':
-						return { ...room, childCount: room.childCount - 1 };
-					case 'adult':
-						return { ...room, adultsCount: room.adultsCount - 1 };
-					default:
-						return room;
-				}
-			} else {
-				return room;
-			}
-		});
-		setRoomDetails(newRoomDetails);
-	};
+
 	const checkRoomsHandler = async (data: any) => {
 		let searchData = {
 			...data,
@@ -170,6 +127,7 @@ const Filters = ({
 		newFilters[label] = value;
 		updateFilters((prev: any) => ({ ...prev, ...newFilters }));
 	};
+
 	useEffect(() => {
 		let roomDets = [...roomDetails];
 		let newRoomCount = roomDets.length;
@@ -191,11 +149,17 @@ const Filters = ({
 			endDate: new Date(filterValues?.currentDateRange?.endDate),
 			key: filterValues?.currentDateRange?.key,
 		};
+		const newRoomDetails = filterValues?.roomDetails.map((room: any) => {
+			if (room?.childrenAges && room?.childrenAges.length > 0) {
+				return { ...room, id: uuidv4() };
+			} else {
+				return { ...room, childrenAges: [], id: uuidv4() };
+			}
+		});
 		setCurrentDateRange({ ...loadedDateRange });
 		setInitialDateRange([filterValues?.currentDateRange]);
-		setRoomDetails(filterValues?.roomDetails);
 		setRoomCount(filterValues?.roomCount);
-		setRoomDetails([...filterValues?.roomDetails]);
+		setRoomDetails([...newRoomDetails]);
 		setTotalGuestCount(filterValues?.guestCount);
 		setValue('AARPRate', filterValues?.AARPRate);
 		setValue('aaaRate', filterValues?.aaaRate);
@@ -207,9 +171,7 @@ const Filters = ({
 		setValue('groupCode', filterValues?.groupCode);
 		setValue('promotionCode', filterValues?.promotionCode);
 	}, [filterValues]);
-	useEffect(() => {
-		locale === 'en' ? setCurrentLocale('en-GB') : setCurrentLocale('ar-EG');
-	}, [locale]);
+
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClick);
 		return () => {
@@ -252,503 +214,33 @@ const Filters = ({
 				)}
 				className="w-full flex flex-wrap justify-center items-center my-3"
 			>
-				<div className={styles.dateContainer}>
-					<h3
-						className="flex justify-center items-center cursor-pointer"
-						onClick={() => setShowDatePicker(true)}
-					>
-						<span
-							onMouseEnter={() =>
-								speechHandler(
-									currentDateRange?.startDate.toLocaleDateString(
-										currentLocale,
-										{
-											day: 'numeric',
-										}
-									)
-								)
-							}
-							className="mx-1 text-5xl font-bold"
-						>
-							{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
-								day: 'numeric',
-							})}
-						</span>
-						<div>
-							<span
-								onMouseEnter={() =>
-									speechHandler(
-										currentDateRange?.startDate.toLocaleDateString(
-											currentLocale,
-											{
-												month: 'short',
-											}
-										)
-									)
-								}
-								className="block text-lg my-0 text-black font-semibold"
-							>
-								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
-									month: 'short',
-								})}
-							</span>
-							<span
-								onMouseEnter={() =>
-									speechHandler(
-										currentDateRange?.startDate.toLocaleDateString(
-											currentLocale,
-											{
-												weekday: 'short',
-											}
-										)
-									)
-								}
-								className="block text-lg my-0 text-black font-normal"
-							>
-								{currentDateRange?.startDate.toLocaleDateString(currentLocale, {
-									weekday: 'short',
-								})}
-							</span>
-						</div>
-					</h3>
-					<h3
-						className="flex justify-center items-center cursor-pointer"
-						onClick={() => setShowDatePicker(true)}
-					>
-						<span
-							onMouseEnter={() =>
-								speechHandler(
-									currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-										day: 'numeric',
-									})
-								)
-							}
-							className="mx-1 text-5xl font-bold"
-						>
-							{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-								day: 'numeric',
-							})}
-						</span>
-						<div>
-							<span
-								onMouseEnter={() =>
-									speechHandler(
-										currentDateRange?.endDate.toLocaleDateString(
-											currentLocale,
-											{
-												month: 'short',
-											}
-										)
-									)
-								}
-								className="block text-lg my-0 text-black font-semibold"
-							>
-								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-									month: 'short',
-								})}
-							</span>
-							<span
-								onMouseEnter={() =>
-									speechHandler(
-										currentDateRange?.endDate.toLocaleDateString(
-											currentLocale,
-											{
-												weekday: 'short',
-											}
-										)
-									)
-								}
-								className="block text-lg my-0 text-black font-normal"
-							>
-								{currentDateRange?.endDate.toLocaleDateString(currentLocale, {
-									weekday: 'short',
-								})}
-							</span>
-						</div>
-					</h3>
-					{showDatePicker && (
-						<div className={styles.datePickerContainer} ref={datePickerRef}>
-							<DateRange
-								onChange={(item) => {
-									setInitialDateRange([item?.selection]);
-									setCurrentDateRange({ ...item?.selection });
-								}}
-								moveRangeOnFirstSelection={false}
-								ranges={initalDateRange}
-								editableDateInputs={false}
-								minDate={new Date()}
-								showPreview={false}
-								showDateDisplay={false}
-							/>
-						</div>
-					)}
-				</div>
+				<DatePickerFilter
+					setShowDatePicker={setShowDatePicker}
+					currentDateRange={currentDateRange}
+					showDatePicker={showDatePicker}
+					datePickerRef={datePickerRef}
+					setInitialDateRange={setInitialDateRange}
+					setCurrentDateRange={setCurrentDateRange}
+					initalDateRange={initalDateRange}
+				/>
 				<div className="grid grid-cols-2 gap-1">
-					<div className="mx-2 relative">
-						<button
-							onMouseEnter={() =>
-								speechHandler(
-									`${roomCount} ${t('rooms')}, ${totalGuestCount} ${t(
-										'guests'
-									)}`
-								)
-							}
-							onClick={() => setShowRooms(true)}
-							className="btn-outline-primary-dark text-xs md:text-base my-4 md:my-0"
-							type="button"
-						>
-							{roomCount} {t('rooms')}, {totalGuestCount} {t('guests')}
-						</button>
-						{showRooms && (
-							<div
-								className={clsx(
-									styles.datePickerContainer,
-									styles.roomDetailsContainer,
-									'shadow-xl border-2'
-								)}
-								ref={datePickerRef}
-							>
-								<div className="grid grid-cols-3 gap-2 items-center my-3">
-									<h5
-										onMouseEnter={() => speechHandler(t('rooms'))}
-										className="text-lg font-medium"
-									>
-										{t('rooms')}
-									</h5>
-									<h5
-										onMouseEnter={() => speechHandler(t('adults'))}
-										className="text-center text-lg font-medium"
-									>
-										{t('adults')}
-									</h5>
-									<h5
-										onMouseEnter={() => speechHandler(t('kids'))}
-										className="text-center text-lg font-medium"
-									>
-										{t('kids')}
-									</h5>
-								</div>
-								{roomDetails.map((room, i) => (
-									<div
-										key={i}
-										className="grid grid-cols-3 gap-2 items-center my-4 border-b pb-3"
-									>
-										<div className="flex justify-start items-center">
-											{roomDetails.length > 1 && (
-												<button
-													type="button"
-													onClick={() => removeRoomHandler(i)}
-													className="w-8 h-8 rounded-full border border-gray-400 text-2xl mx-2"
-												>
-													&times;
-												</button>
-											)}{' '}
-											<h3
-												onMouseEnter={() =>
-													speechHandler(`${t('room')} ${i + 1}`)
-												}
-												className="text-center text-lg font-medium mx-2"
-											>
-												{t('room')} {i + 1}
-											</h3>
-										</div>
-										<div className="flex justify-between items-center mx-3">
-											<button
-												type="button"
-												disabled={room.adultsCount === 1}
-												onClick={() => decrementGuestsHandler('adult', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
-											>
-												&minus;
-											</button>
-											<h5
-												onMouseEnter={() => speechHandler(room.adultsCount)}
-												className="text-center text-lg font-medium mx-1"
-											>
-												{room.adultsCount}
-											</h5>
-											<button
-												type="button"
-												onClick={() => incrementGuestsHandler('adult', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
-											>
-												&#43;
-											</button>
-										</div>
-										<div className="flex justify-between items-center mx-3">
-											<button
-												type="button"
-												disabled={room.childCount === 0}
-												onClick={() => decrementGuestsHandler('kid', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
-											>
-												&minus;
-											</button>
-											<h5 className="text-center text-lg font-medium mx-1">
-												{room.childCount}
-											</h5>
-											<button
-												type="button"
-												onClick={() => incrementGuestsHandler('kid', i)}
-												className="w-8 h-8 rounded-full border border-gray-400 text-lg mx-1"
-											>
-												&#43;
-											</button>
-										</div>
-									</div>
-								))}
-								<button
-									onMouseEnter={() => speechHandler(t('addRoom'))}
-									type="button"
-									onClick={() =>
-										setRoomDetails((prev) => [...prev, { ...singleRoom }])
-									}
-									className="flex justify-start items-center my-4 border-none bg-transparent"
-								>
-									<i className="w-8 h-8 rounded-full border border-gray-400 text-2xl mx-2">
-										&#43;
-									</i>
-									<h3 className="text-center text-lg font-normal">
-										{t('addRoom')}
-									</h3>
-								</button>
-
-								<div className="flex justify-end items-center my-t mb-0 mr-2">
-									<button
-										onMouseEnter={() => speechHandler(t('close'))}
-										type="button"
-										onClick={() => setShowRooms(false)}
-										className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
-									>
-										{t('close')}
-									</button>
-								</div>
-							</div>
-						)}
-					</div>
-					<div className="mx-2 relative">
-						<button
-							onMouseEnter={() =>
-								speechHandler(`${specialRatesCount} ${t('specialRates')}`)
-							}
-							onClick={() => setShowSpecialRate(true)}
-							className="btn-outline-primary-dark text-xs md:text-base my-4 md:my-0 relative"
-							type="button"
-						>
-							{specialRatesCount! > 0 && (
-								<span className={styles.notification}>{specialRatesCount}</span>
-							)}
-							{t('specialRates')}
-						</button>
-						<div
-							className={clsx(
-								showSpecialRate ? styles.datePickerContainer : 'hidden',
-								styles.specialRatesContainer,
-								'shadow-xl border-2'
-							)}
-							ref={specialRateRef}
-						>
-							<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('usePoints', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="usePoints"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('Use Points')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="usePoints"
-									>
-										Use Points
-									</label>
-								</div>
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('travelAgents', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="travelAgents"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('Agents')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="travelAgents"
-									>
-										Agents
-									</label>
-								</div>
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('aaaRate', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="aaaRate"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('AAA Rate')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="aaaRate"
-									>
-										AAA Rate
-									</label>
-								</div>
-							</div>
-							<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('AARPRate', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="AARPRate"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('AARP Rate')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="AARPRate"
-									>
-										AARP Rate
-									</label>
-								</div>
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('seniorRate', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="seniorRate"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('Senior Rate')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="seniorRate"
-									>
-										Senior Rate
-									</label>
-								</div>
-								<div
-									className={clsx(
-										styles.formGroup,
-										'flex justify-start items-center mx-1'
-									)}
-								>
-									<input
-										type="checkbox"
-										onChange={(e: any) =>
-											handleFilterChange('governmentRates', e.target.checked)
-										}
-										className="mx-1"
-										ref={register}
-										name="governmentRates"
-									/>
-									<label
-										onMouseEnter={() => speechHandler('Gov. Rates')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="governmentRates"
-									>
-										Gov. Rates
-									</label>
-								</div>
-							</div>
-							<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
-								<div className="flex flex-col justify-start">
-									<label
-										onMouseEnter={() => speechHandler('Promotion Code')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="promotionCode"
-									>
-										Promotion Code
-									</label>
-									<input
-										type="text"
-										className="border border-gray-300 w-11/12 py-3"
-										ref={register}
-										name="promotionCode"
-									/>
-								</div>
-								<div className="flex flex-col justify-start">
-									<label
-										onMouseEnter={() => speechHandler('Group Code')}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="groupCode"
-									>
-										Group Code
-									</label>
-									<input
-										type="text"
-										className="border border-gray-300 w-11/12 py-3"
-										ref={register}
-										name="groupCode"
-									/>
-								</div>
-								<div className="flex flex-col justify-start">
-									<label
-										onMouseEnter={() => speechHandler(`Corp. Account`)}
-										className="text-sm md:text-base text-primary-dark font-medium"
-										htmlFor="corporateAccount"
-									>
-										Corp. Account
-									</label>
-									<input
-										type="text"
-										className="border border-gray-300 w-11/12 py-3"
-										ref={register}
-										name="corporateAccount"
-									/>
-								</div>
-							</div>
-							<div className="flex justify-end items-center my-t mb-0 mr-2">
-								<button
-									onMouseEnter={() => speechHandler(t('close'))}
-									type="button"
-									onClick={() => setShowSpecialRate(false)}
-									className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
-								>
-									{t('close')}
-								</button>
-							</div>
-						</div>
-					</div>
+					<RoomsFilters
+						roomCount={roomCount}
+						totalGuestCount={totalGuestCount}
+						setShowRooms={setShowRooms}
+						showRooms={showRooms}
+						datePickerRef={datePickerRef}
+						roomDetails={roomDetails}
+						setRoomDetails={setRoomDetails}
+					/>
+					<SpecialFilters
+						specialRatesCount={specialRatesCount}
+						setShowSpecialRate={setShowSpecialRate}
+						showSpecialRate={showSpecialRate}
+						specialRateRef={specialRateRef}
+						handleFilterChange={handleFilterChange}
+						register={register}
+					/>
 				</div>
 
 				{

@@ -10,7 +10,10 @@ import RoomDetails from '../../../components/Rooms/RoomDetails';
 import { getLocalizationProps } from '../../../context/LangContext';
 import { getRemoteSchemaUrl } from '../../../data/remoteSchemaUrl';
 import Layout from '../../../Layouts/Layout';
-import { GET_SINGLE_BOOKING } from '../../../query/booking';
+import {
+	GET_SINGLE_BOOKING,
+	GET_SPECIAL_REQUESTS,
+} from '../../../query/booking';
 import { BookingType } from '../../../types/booking';
 import { LayoutType } from '../../../types/layout';
 import BookingStay from './../../../components/booking/BookingStay';
@@ -54,10 +57,12 @@ const BookingPage = ({
 	roomsData,
 	layout,
 	singleBooking,
+	specialRequests,
 }: {
 	roomsData: any[];
 	layout: LayoutType;
 	singleBooking: BookingType;
+	specialRequests: string[];
 }) => {
 	const { t, locale } = useTranslation();
 	const firstRender = useRef(true);
@@ -370,6 +375,7 @@ const BookingPage = ({
 							bookingId={singleBooking?.id}
 							selectedRooms={selectedRooms}
 							selectedPackages={selectedPackages}
+							specialRequests={specialRequests}
 						/>
 					)}
 					{currentStep === 1 && (
@@ -456,12 +462,18 @@ export const getAnyProps = async (ctx: any) => {
 	const remoteSchemaUrl = await getRemoteSchemaUrl();
 	const client = initializeApollo();
 	const resp = await client.query({ query: LOAD_ROOMS_BY_RATES });
+	const response = await client.query({ query: GET_SPECIAL_REQUESTS });
+	console.log('local', resp?.data, response?.data);
+	// const specialRequests =
 	return {
 		props: {
 			localization,
 			roomsData: resp?.data?.room_rates,
 			layout: { ...resp?.data?.layout, remoteSchemaUrl },
 			singleBooking: singleBooking ? singleBooking : null,
+			specialRequests: [
+				...response.data.specialRequest[`values_${localization.locale}`],
+			],
 		},
 	};
 };

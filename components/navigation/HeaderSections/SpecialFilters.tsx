@@ -1,18 +1,31 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
 import { useSpeech } from './../../../hooks/useSpeech';
 import clsx from 'clsx';
 const SpecialFilters = ({
 	specialRatesCount,
-	setShowSpecialRate,
-	showSpecialRate,
-	specialRateRef,
 	handleFilterChange,
 	register,
 }: any) => {
 	const { t, locale } = useTranslation();
 	const { speechHandler } = useSpeech();
+	const [showSpecialRate, setShowSpecialRate] = useState(false);
+
+	const specialRateRef = useRef<HTMLDivElement>(null);
+
+	const handleClick = (e: any) => {
+		if (specialRateRef?.current?.contains(e.target)) {
+			return;
+		}
+		setShowSpecialRate(false);
+	};
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClick);
+		return () => {
+			document.removeEventListener('mousedown', handleClick);
+		};
+	}, []);
 	return (
 		<div className="mx-2 relative">
 			<button

@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import styles from './profile.module.scss';
+import { useSpeech } from './../../hooks/useSpeech';
 const ProfileTabs = ({
 	children,
 	currentTap,
@@ -16,12 +17,14 @@ const ProfileTabs = ({
 	currentTap: number;
 	setCurrentTap: (arg: number) => void;
 }) => {
+	const { speechHandler } = useSpeech();
 	return (
 		<section className="w-full">
 			<div className="mt-16 mb-10 mx-auto w-4/5 bg-outline-primary-light">
 				<div className="w-full bg-primary-light text-white flex justify-evenly items-center px-10 py-4">
 					<button
 						onClick={() => setCurrentTap(1)}
+						onMouseEnter={() => speechHandler('Account Settings')}
 						className={clsx(
 							currentTap === 1 ? 'text-opacity-100' : 'text-opacity-50',
 							currentTap === 1 ? styles.activeTab : ' ',
@@ -35,6 +38,7 @@ const ProfileTabs = ({
 						<span className="capitalize">Account Settings</span>
 					</button>
 					<button
+						onMouseEnter={() => speechHandler('User Bookings')}
 						onClick={() => setCurrentTap(2)}
 						className={clsx(
 							currentTap === 2 ? 'text-opacity-100' : 'text-opacity-50',
@@ -49,6 +53,7 @@ const ProfileTabs = ({
 						<span className="capitalize">User Bookings</span>
 					</button>
 					<button
+						onMouseEnter={() => speechHandler('Personal Info')}
 						onClick={() => setCurrentTap(3)}
 						className={clsx(
 							currentTap === 3 ? 'text-opacity-100' : 'text-opacity-50',

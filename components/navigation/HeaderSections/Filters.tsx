@@ -4,9 +4,8 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import styles from '../navigation.module.scss';
 import useTranslation from './../../../hooks/useTranslation';
-import { today, tomorrow } from '../../../utils/getDates';
+import { tomorrow } from '../../../utils/getDates';
 import { useSpeech } from './../../../hooks/useSpeech';
 import DatePickerFilter from './DatePickerFilter';
 import RoomsFilters from './RoomsFilters';
@@ -55,7 +54,6 @@ const Filters = ({
 	const { speechHandler } = useSpeech();
 	const router = useRouter();
 	const datePickerRef = useRef<HTMLDivElement>(null);
-	const specialRateRef = useRef<HTMLDivElement>(null);
 	const [initalDateRange, setInitialDateRange] = useState([
 		filterValues?.currentDateRange,
 	]);
@@ -64,7 +62,6 @@ const Filters = ({
 	});
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [showRooms, setShowRooms] = useState(false);
-	const [showSpecialRate, setShowSpecialRate] = useState(false);
 	const [roomCount, setRoomCount] = useState(filterValues?.roomCount);
 	const [totalGuestCount, setTotalGuestCount] = useState(
 		filterValues?.totalGuestCount
@@ -77,14 +74,10 @@ const Filters = ({
 		if (datePickerRef.current?.contains(e.target)) {
 			console.log('inside');
 			return;
-		} else if (specialRateRef?.current?.contains(e.target)) {
-			console.log('inside special');
-			return;
 		}
 		console.log('outside');
 		setShowDatePicker(false);
 		setShowRooms(false);
-		setShowSpecialRate(false);
 	};
 
 	const checkRoomsHandler = async (data: any) => {
@@ -235,9 +228,6 @@ const Filters = ({
 					/>
 					<SpecialFilters
 						specialRatesCount={specialRatesCount}
-						setShowSpecialRate={setShowSpecialRate}
-						showSpecialRate={showSpecialRate}
-						specialRateRef={specialRateRef}
 						handleFilterChange={handleFilterChange}
 						register={register}
 					/>

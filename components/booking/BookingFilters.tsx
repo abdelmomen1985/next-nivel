@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import styles from '../navigation/navigation.module.scss';
 import useTranslation from './../../hooks/useTranslation';
 import { useSpeech } from './../../hooks/useSpeech';
+import SpecialFilters from '../navigation/HeaderSections/SpecialFilters';
+import RoomTypesFilter from './BookingSteps/RoomTypesFilter';
 
 const BookingFilters = ({
 	updateFilters,
@@ -20,29 +22,10 @@ const BookingFilters = ({
 }) => {
 	const { t, locale } = useTranslation();
 	const { errors, register, reset, handleSubmit, setValue } = useForm();
-	const [showSpecialRate, setShowSpecialRate] = useState(false);
-	const [showRoomTypes, setShowRoomTypes] = useState(false);
 	const [selectedRoomType, setSelectedRoomType] = useState('all');
 	const [checkAccessibility, setCheckAccessibility] = useState(false);
-	const specialRateRef = useRef<HTMLDivElement>(null);
-	const roomTypeRef = useRef<HTMLDivElement>(null);
 	const { speechHandler } = useSpeech();
-	const handleClick = (e: any) => {
-		if (specialRateRef?.current?.contains(e.target)) {
-			return;
-		}
-		if (roomTypeRef?.current?.contains(e.target)) {
-			return;
-		}
-		setShowRoomTypes(false);
-		setShowSpecialRate(false);
-	};
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClick);
-		return () => {
-			document.removeEventListener('mousedown', handleClick);
-		};
-	}, []);
+
 	useEffect(() => {
 		if (filterValues?.selectedRoomType) {
 			setSelectedRoomType(filterValues?.selectedRoomType);
@@ -127,304 +110,15 @@ const BookingFilters = ({
 				onSubmit={handleSubmit(updateFiltersHandler)}
 				className="w-full grid grid-cols-2 gap-1 md:flex md:flex-wrap md:justify-start md:items-center my-3 mx-auto px-8"
 			>
-				<div className="mx-2 relative">
-					<button
-						onMouseEnter={() => speechHandler(t('roomFilters'))}
-						onClick={() => setShowRoomTypes(true)}
-						className="btn-outline-primary-dark text-base md:text-base"
-						type="button"
-					>
-						{t('roomFilters')}
-					</button>
-					<div
-						className={
-							showRoomTypes
-								? clsx(
-										styles.datePickerContainer,
-										// styles.roomDetailsContainer,
-										'bg-white px-4 py-2 border-gray-200 shadow-xl border-2'
-								  )
-								: 'hidden'
-						}
-						ref={roomTypeRef}
-					>
-						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-							<h5
-								onMouseEnter={() => speechHandler(t('all'))}
-								onClick={() => setSelectedRoomType('all')}
-								className={clsx(
-									selectedRoomType === 'all' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-sm md:text-base font-medium cursor-pointer border border-gray-300'
-								)}
-							>
-								{t('all')}
-							</h5>
-							<h5
-								onMouseEnter={() => speechHandler(`1 ${t('bed')}`)}
-								onClick={() => setSelectedRoomType('1bed')}
-								className={clsx(
-									selectedRoomType === '1bed' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-sm md:text-base font-medium cursor-pointer border border-gray-300'
-								)}
-							>
-								1 {t('bed')}
-							</h5>
-							<h5
-								onMouseEnter={() => speechHandler(`2 ${t('beds')}`)}
-								onClick={() => setSelectedRoomType('2beds')}
-								className={clsx(
-									selectedRoomType === '2beds' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-sm md:text-base font-medium cursor-pointer border border-gray-300'
-								)}
-							>
-								2 {t('bed')}
-							</h5>
-							<h5
-								onMouseEnter={() => speechHandler(t('suite'))}
-								onClick={() => setSelectedRoomType('suite')}
-								className={clsx(
-									selectedRoomType === 'suite' ? styles.selectedRoom : ' ',
-									' capitalize p-5 text-center text-primary-light text-sm md:text-base font-medium cursor-pointer border border-gray-300'
-								)}
-							>
-								{t('suite')}
-							</h5>
-						</div>
-						<div className="flex justify-end items-center my-t mb-0 mr-2">
-							<button
-								onMouseEnter={() => speechHandler(t('close'))}
-								type="button"
-								onClick={() => setShowRoomTypes(false)}
-								className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
-							>
-								{t('close')}
-							</button>
-						</div>
-					</div>
-				</div>
-				<div className="mx-2 relative">
-					<button
-						onMouseEnter={() =>
-							speechHandler(`${specialRatesCount} ${t('specialRates')}`)
-						}
-						onClick={() => setShowSpecialRate(true)}
-						className="btn-outline-primary-dark text-base md:text-base"
-						type="button"
-					>
-						{specialRatesCount! > 0 && (
-							<span className={styles.notification}>{specialRatesCount}</span>
-						)}
-						{t('specialRates')}
-					</button>
-					<div
-						className={clsx(
-							showSpecialRate ? styles.datePickerContainer : 'hidden',
-							styles.specialRatesBookingContainer,
-							'shadow-xl border-2'
-						)}
-						ref={specialRateRef}
-					>
-						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('usePoints', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="usePoints"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('Use Points')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="usePoints"
-								>
-									Use Points
-								</label>
-							</div>
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('travelAgents', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="travelAgents"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('Agents')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="travelAgents"
-								>
-									Agents
-								</label>
-							</div>
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('aaaRate', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="aaaRate"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('AAA Rate')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="aaaRate"
-								>
-									AAA Rate
-								</label>
-							</div>
-						</div>
-						<div className="grid grid-cols-3 gap-1 items-center my-2 mx-1">
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('AARPRate', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="AARPRate"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('AARP Rate')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="AARPRate"
-								>
-									AARP Rate
-								</label>
-							</div>
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('seniorRate', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="seniorRate"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('Senior Rate')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="seniorRate"
-								>
-									Senior Rate
-								</label>
-							</div>
-							<div
-								className={clsx(
-									styles.formGroup,
-									'flex justify-start items-center mx-1'
-								)}
-							>
-								<input
-									type="checkbox"
-									onChange={(e: any) =>
-										handleFilterChange('governmentRates', e.target.checked)
-									}
-									className="mx-1"
-									ref={register}
-									name="governmentRates"
-								/>
-								<label
-									onMouseEnter={() => speechHandler('Government Rates')}
-									className="text-sm md:text-base text-primary-dark font-medium"
-									htmlFor="governmentRates"
-								>
-									Gov. Rates
-								</label>
-							</div>
-						</div>
-						<div className="grid grid-cols-3 gap-2 items-center my-2 mx-1">
-							<div className="flex flex-col justify-start">
-								<label
-									onMouseEnter={() => speechHandler('Promotion Code')}
-									className="text-base text-primary-dark font-medium"
-									htmlFor="promotionCode"
-								>
-									Promotion Code
-								</label>
-								<input
-									type="text"
-									className="border border-gray-300 w-11/12 py-3"
-									ref={register}
-									name="promotionCode"
-								/>
-							</div>
-							<div className="flex flex-col justify-start">
-								<label
-									onMouseEnter={() => speechHandler('Group Code')}
-									className="text-base text-primary-dark font-medium"
-									htmlFor="groupCode"
-								>
-									Group Code
-								</label>
-								<input
-									type="text"
-									className="border border-gray-300 w-11/12 py-3"
-									ref={register}
-									name="groupCode"
-								/>
-							</div>
-							<div className="flex flex-col justify-start">
-								<label
-									onMouseEnter={() => speechHandler('Corp. Account')}
-									className="text-base text-primary-dark font-medium"
-									htmlFor="corporateAccount"
-								>
-									Corp. Account
-								</label>
-								<input
-									type="text"
-									className="border border-gray-300 w-11/12 py-3"
-									ref={register}
-									name="corporateAccount"
-								/>
-							</div>
-						</div>
-						<div className="flex justify-end items-center my-t mb-0 mr-2">
-							<button
-								onMouseEnter={() => speechHandler(t('close'))}
-								type="button"
-								onClick={() => setShowSpecialRate(false)}
-								className="bg-transparent text-gray-dark text-lg font-medium cursor-pointer"
-							>
-								{t('close')}
-							</button>
-						</div>
-					</div>
-				</div>
+				<RoomTypesFilter
+					setSelectedRoomType={setSelectedRoomType}
+					selectedRoomType={selectedRoomType}
+				/>
+				<SpecialFilters
+					specialRatesCount={specialRatesCount}
+					handleFilterChange={handleFilterChange}
+					register={register}
+				/>
 				<div
 					className={clsx(
 						styles.formGroup,

@@ -115,6 +115,8 @@
 }
 
 .roomDetailsContainer {
+  overflow-y: scroll;
+  max-height: 50vh;
 
   @media screen and (max-width:767px) {
     width: 320px;
@@ -238,4 +240,9 @@
 
 .errorInput {
   border: 1px solid red;
+}
+
+.socialMediaLink {
+  @apply text-lg font-medium my-3 flex justify-start items-center cursor-pointer;
+  color: var(--primary-light-color);
 }

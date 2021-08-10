@@ -13,6 +13,8 @@ import { initializeApollo } from './../../../lib/apolloClient';
 import { LOAD_GALLERY } from './../../../query/gallery';
 import styles from './gallery.module.scss';
 import { useSpeech } from './../../../hooks/useSpeech';
+import GalleryCategory from './../../../components/Gallery/GalleryCategory';
+import GalleryDetails from './../../../components/Gallery/GalleryDetails';
 
 const GalleryPage = ({
 	galleryCats,
@@ -37,26 +39,13 @@ const GalleryPage = ({
 			<hr className="my-10 w-full" />
 			<div className={styles.galleryContainer}>
 				{galleryCats.map((cat: any) => (
-					<figure
-						onClick={() => {
-							setGalleryDetails(cat);
-							setOpenModal(true);
-						}}
-						key={cat.id}
-						className={styles.categoryContainer}
-					>
-						<img src={cat.media.images[0].url} alt={cat.title[locale]} />
-						<figcaption>
-							<h2 onMouseEnter={() => speechHandler(cat.title[locale])}>
-								{cat.title[locale]}
-							</h2>
-							{cat.description && (
-								<p onMouseEnter={() => speechHandler(cat.description[locale])}>
-									{cat.description[locale]}
-								</p>
-							)}
-						</figcaption>
-					</figure>
+					<GalleryCategory
+						cat={cat}
+						setGalleryDetails={setGalleryDetails}
+						setOpenModal={setOpenModal}
+						styles={styles}
+						key={cat?.id}
+					/>
 				))}
 			</div>
 			<CustomModal
@@ -76,41 +65,7 @@ const GalleryPage = ({
 					setGalleryDetails(undefined);
 				}}
 			>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-5 my-1 items-center">
-					<div className="">
-						{galleryDetails?.media?.images &&
-						galleryDetails?.media?.images?.length > 0 ? (
-							<Slide
-								easing="ease-in"
-								transitionDuration={500}
-								arrows={isMobile ? false : true}
-								autoplay={false}
-							>
-								{galleryDetails?.media?.images.map((img: any, i: number) => (
-									<img src={img?.url} key={i} className="w-full h-full" />
-								))}
-							</Slide>
-						) : (
-							<img src="https://i.imgur.com/bDujVXa.jpg" />
-						)}
-					</div>
-					<div>
-						<h3
-							onMouseEnter={() => speechHandler(galleryDetails?.title[locale])}
-							className="text-primary-dark text-lg font-medium my-2"
-						>
-							{galleryDetails?.title[locale]}
-						</h3>
-						<p
-							onMouseEnter={() =>
-								speechHandler(galleryDetails?.description[locale])
-							}
-							className="text-black text-base font-normal"
-						>
-							{galleryDetails?.description[locale]}
-						</p>
-					</div>
-				</div>
+				<GalleryDetails galleryDetails={galleryDetails} />
 			</CustomModal>
 		</Layout>
 	);

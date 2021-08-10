@@ -18,6 +18,7 @@ export function useSpeech() {
 	}, [locale]);
 
 	const speechHandler = (text: string) => {
+		console.log('text', text);
 		// speak({ text, voice: voices[currentVoiceIndex] });
 	};
 	return { speechHandler };

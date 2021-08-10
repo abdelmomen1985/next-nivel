@@ -37,10 +37,10 @@ const BookingRooms = ({
 		<div className="bg-white border border-black rounded-md shadow-sm">
 			<div className="py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black">
 				<h3
-					onMouseEnter={() => speechHandler(`Reservation summary`)}
+					onMouseEnter={() => speechHandler(t('reservationSummary'))}
 					className="text-base font-semibold"
 				>
-					Reservation summary
+					{t('reservationSummary')}
 				</h3>
 			</div>
 			{rooms &&
@@ -89,11 +89,11 @@ const BookingRooms = ({
 									{room?.name[locale]}
 								</h5>
 								<button
-									onMouseEnter={() => speechHandler(`Change room`)}
+									onMouseEnter={() => speechHandler(t('changeRoom'))}
 									onClick={() => changeRoom(i)}
 									className="bg-transparent underline text-primary-dark font-normal text-lg my-1"
 								>
-									Change room
+									{t('changeRoom')}
 								</button>
 							</>
 						)}
@@ -131,10 +131,10 @@ const BookingRooms = ({
 			<div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black my-5">
 				<div className="flex justify-between items-start my-2">
 					<h5
-						onMouseEnter={() => speechHandler(`Total room charges`)}
+						onMouseEnter={() => speechHandler(t('totalRoomCharges'))}
 						className="text-base font-normal"
 					>
-						Total room charges
+						{t('totalRoomCharges')}
 					</h5>
 					<h5
 						onMouseEnter={() => speechHandler(`${totalPrice} ${t('sar')}`)}
@@ -145,10 +145,10 @@ const BookingRooms = ({
 				</div>
 				<div className="flex justify-between items-start my-2">
 					<h5
-						onMouseEnter={() => speechHandler(`Total taxes`)}
+						onMouseEnter={() => speechHandler(t('totalTaxes'))}
 						className="text-base font-normal"
 					>
-						Total taxes
+						{t('totalTaxes')}
 					</h5>
 					<h5
 						onMouseEnter={() => speechHandler(`126 ${t('sar')}`)}
@@ -160,10 +160,10 @@ const BookingRooms = ({
 			</div>
 			<div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b flex justify-between items-start border-black my-5">
 				<h5
-					onMouseEnter={() => speechHandler(`Total for stay:`)}
+					onMouseEnter={() => speechHandler(t('total4Stay'))}
 					className="text-lg font-medium"
 				>
-					Total for stay:
+					{t('total4Stay')}:
 				</h5>
 				<h5
 					onMouseEnter={() => speechHandler(`${totalPrice + 126} ${t('sar')}`)}
@@ -173,12 +173,12 @@ const BookingRooms = ({
 				</h5>
 			</div>
 			<button
-				onMouseEnter={() => speechHandler('Continue To Payment')}
+				onMouseEnter={() => speechHandler(t('continueToPayment'))}
 				disabled={!isPayable || currentStep === 3}
 				className={styles.paymentBtn}
 				onClick={() => moveToPay()}
 			>
-				Continue To Payment
+				{t('continueToPayment')}
 			</button>
 		</div>
 	);

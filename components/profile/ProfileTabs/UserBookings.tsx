@@ -8,6 +8,7 @@ import useTranslation from './../../../hooks/useTranslation';
 import { useMutation } from '@apollo/client';
 import { RATE_BOOKING } from '../../../query/booking';
 import { toast } from 'react-toastify';
+import { useSpeech } from './../../../hooks/useSpeech';
 
 const UserBookings = ({
 	bookings,
@@ -23,6 +24,7 @@ const UserBookings = ({
 	const [ratingComment, setRatingComment] = useState<string | undefined>(
 		undefined
 	);
+	const { speechHandler } = useSpeech();
 	const [rateBooking, { data }] = useMutation(RATE_BOOKING, {
 		onCompleted() {
 			let newRating = {
@@ -100,13 +102,25 @@ const UserBookings = ({
 				>
 					<Thead>
 						<Tr>
-							<Th>Room Name</Th>
-							<Th>Check In</Th>
-							<Th>Check Out</Th>
-							<Th>Price</Th>
+							<Th onMouseEnter={() => speechHandler('Room Name')}>
+								{t('roomName')}
+							</Th>
+							<Th onMouseEnter={() => speechHandler(t('checkIn'))}>
+								{t('checkIn')}
+							</Th>
+							<Th onMouseEnter={() => speechHandler(t('checkOut'))}>
+								{t('checkOut')}
+							</Th>
+							<Th onMouseEnter={() => speechHandler(t('price'))}>
+								{t('price')}
+							</Th>
 							{/* <Th>reservation code</Th> */}
-							<Th>Package Name</Th>
-							<Th>User Rating</Th>
+							<Th onMouseEnter={() => speechHandler(t('pkgName'))}>
+								{t('pkgName')}
+							</Th>
+							<Th onMouseEnter={() => speechHandler(t('userRating'))}>
+								{t('userRating')}
+							</Th>
 							<Th></Th>
 							<Th></Th>
 						</Tr>
@@ -114,31 +128,67 @@ const UserBookings = ({
 					<Tbody>
 						{bookings.map((booking: BookingType) => (
 							<Tr key={booking.id}>
-								<Th>{booking?.StrpRoomBooking?.name[locale]}</Th>
-								<Th>{booking?.check_in}</Th>
-								<Th>{booking?.check_out}</Th>
-								<Th>{booking?.room_rate?.base_price}</Th>
+								<Th
+									onMouseEnter={() =>
+										speechHandler(booking?.StrpRoomBooking?.name[locale])
+									}
+								>
+									{booking?.StrpRoomBooking?.name[locale]}
+								</Th>
+								<Th
+									onMouseEnter={() => speechHandler(String(booking?.check_in))}
+								>
+									{booking?.check_in}
+								</Th>
+								<Th
+									onMouseEnter={() => speechHandler(String(booking?.check_out))}
+								>
+									{booking?.check_out}
+								</Th>
+								<Th
+									onMouseEnter={() =>
+										speechHandler(String(booking?.room_rate?.base_price))
+									}
+								>
+									{booking?.room_rate?.base_price}
+								</Th>
 								{/* <Th>{booking?.reservation_code}</Th> */}
-								<Th>{booking?.room_rate?.rate?.title[locale]}</Th>
+								<Th
+									onMouseEnter={() =>
+										speechHandler(booking?.room_rate?.rate?.title[locale])
+									}
+								>
+									{booking?.room_rate?.rate?.title[locale]}
+								</Th>
 								{booking?.visitor_rating_data?.rating ? (
-									<Th>{booking?.visitor_rating_data?.rating} / 5</Th>
+									<Th
+										onMouseEnter={() =>
+											speechHandler(
+												`${booking?.visitor_rating_data?.rating} / 5`
+											)
+										}
+									>
+										{booking?.visitor_rating_data?.rating} / 5
+									</Th>
 								) : (
 									<Th></Th>
 								)}
 								<Th>
 									<button
+										onMouseEnter={() => speechHandler(t('rateNow'))}
 										onClick={() => startRatingProcessHandler(booking)}
 										className="w-10/12 py-3 px-6 mx-auto text-white bg-primary-light text-lg font-medium"
 									>
-										Rate Now
+										{t('rateNow')}
 									</button>
 								</Th>
 								<Th>
 									<button
+										onMouseEnter={() => speechHandler(t('editStay'))}
 										onClick={() => editBookingHandler(booking)}
 										className="w-10/12 py-3 px-6 mx-auto text-primary-light bg-outline-primary-light text-lg font-medium"
 									>
-										Edit Stay
+										{t('editStay')}
 									</button>
 								</Th>
 							</Tr>
@@ -146,8 +196,11 @@ const UserBookings = ({
 					</Tbody>
 				</Table>
 			) : (
-				<div className="mx-auto my-10 px-5 py-5 text-center text-primary-dark text-2xl font-semibold">
-					No bookings yet for this user
+				<div
+					onMouseEnter={() => speechHandler(t('noBookingsYet'))}
+					className="mx-auto my-10 px-5 py-5 text-center text-primary-dark text-2xl font-semibold"
+				>
+					{t('noBookingsYet')}
 				</div>
 			)}
 
@@ -181,11 +234,12 @@ const UserBookings = ({
 					></textarea>
 
 					<button
+						onMouseEnter={() => speechHandler(t('rateUrVisit'))}
 						disabled={ratingRate === 0}
 						onClick={addRateHandler}
 						className="btn-primary-light text-white px-6 py-3 block mx-auto my-4 text-xl font-medium"
 					>
-						Rate your Visit
+						{t('rateUrVisit')}
 					</button>
 				</div>
 			</CustomModal>

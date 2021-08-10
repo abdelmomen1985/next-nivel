@@ -23,8 +23,8 @@ const RoomsSteps = ({
 	return (
 		<>
 			<div className="my-1 w-11/12 flex justify-between items-center mx-auto border-o border-t border-b border-black py-6 ">
-				<h5 onMouseEnter={() => speechHandler('Update Your Room')}>
-					Update Your Room
+				<h5 onMouseEnter={() => speechHandler(t('updateUrRoom'))}>
+					{t(updateUrRoom)}
 				</h5>
 				<h5
 					onMouseEnter={() =>
@@ -58,9 +58,9 @@ const RoomsSteps = ({
 					)}
 					disabled={!isPayable || currentStep === 3}
 					onClick={() => moveToPay()}
-					onMouseEnter={() => speechHandler('payment')}
+					onMouseEnter={() => speechHandler(t('payment'))}
 				>
-					payment
+					{t('payment')}
 				</button>
 			</div>
 		</>

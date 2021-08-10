@@ -1,17 +1,21 @@
-import {
-	faFacebook,
-	faSnapchat,
-	faTwitter,
-	faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
+import { useState } from 'react';
+import Image from 'next/image';
+import { useQuery } from '@apollo/client';
 import Link from 'next/link';
-import React from 'react';
+import { GET_SOCIAL_MEDIA } from '../../query/socialMedia';
 import useTranslation from '../../hooks/useTranslation';
 import { LayoutType } from '../../types/layout';
+import styles from './navigation.module.scss';
 const TheFooter = ({ layout }: { layout: LayoutType }) => {
-	const { locale } = useTranslation();
+	const { locale, t } = useTranslation();
+	const [socialMediaLinks, setSocialMediaLinks] = useState<any>([]);
+	const { data, loading } = useQuery(GET_SOCIAL_MEDIA, {
+		onCompleted() {
+			setSocialMediaLinks([...data.socialMediaLinks]);
+		},
+	});
+
 	return (
 		<footer className="w-full bg-gray-light px-5 py-10 mt-12 mb-0">
 			<div className="flex justify-center">
@@ -36,6 +40,7 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
 					<h3 className="text-primary-dark text-xl font-semibold capitalize">
 						important links
 					</h3>
+
 					<Link href="/about">
 						<a className="text-gray-dark text-lg font-medium block my-3">
 							About
@@ -59,24 +64,19 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
 				</div>
 				<div className="ml-0 md:ml-6">
 					<h3 className="text-primary-dark text-xl font-semibold capitalize">
-						Our Social Media
+						{t('ourSocialMedia')}
 					</h3>
-					<a className="text-primary-light text-lg font-medium block my-3">
-						<FontAwesomeIcon icon={faFacebook} className="" />{' '}
-						<span className="p-2">Facebook</span>
-					</a>
-					<a className="text-primary-light text-lg font-medium block my-3">
-						<FontAwesomeIcon icon={faTwitter} className="" />
-						<span className="p-2">Twitter</span>
-					</a>
-					<a className="text-primary-light text-lg font-medium block my-3">
-						<FontAwesomeIcon icon={faSnapchat} className="" />
-						<span className="p-2">Snapchat</span>
-					</a>
-					<a className="text-primary-light text-lg font-medium block my-3">
-						<FontAwesomeIcon icon={faYoutube} className="" />
-						<span className="p-2">Youtube</span>
-					</a>
+					{socialMediaLinks.length > 0 &&
+						socialMediaLinks.map((mediaLink: any) => (
+							<a className={styles.socialMediaLink}>
+								<Image
+									src={layout?.remoteSchemaUrl + mediaLink?.icon?.url}
+									width={mediaLink?.icon?.width}
+									height={mediaLink?.icon?.height}
+								/>
+								<span className="p-2">{mediaLink[`name_${locale}`]}</span>
+							</a>
+						))}
 				</div>
 			</div>
 		</footer>

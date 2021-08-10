@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { AppContext } from '../../../context/AppContext';
 import { toast } from 'react-toastify';
 import useTranslation from './../../../hooks/useTranslation';
+import { useSpeech } from './../../../hooks/useSpeech';
 
 const PersonalInfo = () => {
 	const { register, handleSubmit } = useForm({
@@ -16,6 +17,7 @@ const PersonalInfo = () => {
 		reValidateMode: 'onBlur',
 	});
 	const { t, locale } = useTranslation();
+	const { speechHandler } = useSpeech();
 	const [updateUserHandler] = useMutation(UPDATE_USER_DATA);
 	const { updateUser, user } = useContext(AppContext);
 	const [profileImg, setProfileImg] = useState<undefined | string>(
@@ -80,8 +82,11 @@ const PersonalInfo = () => {
 	};
 	return (
 		<section className="w-2/4 mx-auto">
-			<h3 className="py-4 text-2xl font-semibold text-black">
-				Personal Information
+			<h3
+				onMouseEnter={() => speechHandler(t('personalInfo'))}
+				className="py-4 text-2xl font-semibold text-black"
+			>
+				{t('personalInfo')}
 			</h3>
 			<form className="my-5" onSubmit={handleSubmit(editUserInfoHandler)}>
 				<div className="my-5 relative">
@@ -95,8 +100,11 @@ const PersonalInfo = () => {
 						}}
 						ref={register}
 					/>
-					<small className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25">
-						User Full Name
+					<small
+						onMouseEnter={() => speechHandler(t('userFullName'))}
+						className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25"
+					>
+						{t('userFullName')}
 					</small>
 				</div>
 				<div className="my-5 relative flex justify-between flex-start">
@@ -128,8 +136,12 @@ const PersonalInfo = () => {
 							className={styles.customFileInput}
 						/>
 						<label htmlFor="photo" className={styles.customFileLabel}>
-							<div>Choose File</div>
-							<span>Profile Picture</span>
+							<div onMouseEnter={() => speechHandler(t('chooseFile'))}>
+								{t('chooseFile')}
+							</div>
+							<span onMouseEnter={() => speechHandler(t('profilePic'))}>
+								{t('profilePic')}
+							</span>
 						</label>
 					</div>
 				</div>
@@ -143,11 +155,21 @@ const PersonalInfo = () => {
 						ref={register}
 					>
 						<option value=""></option>
-						<option value="male">Male</option>
-						<option value="female">Female</option>
+						<option onMouseEnter={() => speechHandler(t('male'))} value="male">
+							{t('male')}
+						</option>
+						<option
+							onMouseEnter={() => speechHandler(t('female'))}
+							value="female"
+						>
+							{t('female')}
+						</option>
 					</select>
-					<small className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25">
-						User's Gender
+					<small
+						onMouseEnter={() => speechHandler(t('userGender'))}
+						className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25"
+					>
+						{t('userGender')}
 					</small>
 				</div>
 				<div className="my-5 relative">
@@ -160,21 +182,45 @@ const PersonalInfo = () => {
 						}}
 						ref={register}
 					>
-						<option value="single">Single</option>
-						<option value="engaged">Engaged</option>
-						<option value="married">Married</option>
-						<option value="other">Other / Rather not say</option>
+						<option
+							onMouseEnter={() => speechHandler(t('single'))}
+							value="single"
+						>
+							{t('single')}
+						</option>
+						<option
+							onMouseEnter={() => speechHandler(t('engaged'))}
+							value="engaged"
+						>
+							{t('engaged')}
+						</option>
+						<option
+							onMouseEnter={() => speechHandler(t('married'))}
+							value="married"
+						>
+							{t('married')}
+						</option>
+						<option
+							onMouseEnter={() => speechHandler(t('otherRather'))}
+							value="other"
+						>
+							{t('otherRather')}
+						</option>
 					</select>
-					<small className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25">
-						User's marital status
+					<small
+						onMouseEnter={() => speechHandler(t('userMaritalStatus'))}
+						className="text-xs font-medium pl-3 mt-1 mb-2 text-black text-opacity-25"
+					>
+						{t('userMaritalStatus')}
 					</small>
 				</div>
 				<div className="my-8 relative flex justify-end items-start">
 					<button
+						onMouseEnter={() => speechHandler(t('save'))}
 						className="btn-primary-light m-0 py-2 px-16 font-medium text-xl"
 						type="submit"
 					>
-						Save
+						{t('save')}
 					</button>
 				</div>
 			</form>

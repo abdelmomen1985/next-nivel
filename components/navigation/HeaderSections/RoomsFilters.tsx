@@ -13,12 +13,17 @@ const singleRoom = {
 };
 
 const ChildAgeInput = ({ ageIndex, room, changeChildAgeHandler }: any) => (
-	<input
-		type="text"
+	<select
 		className="border rounded-sm shadow-none mx-1"
 		value={room?.childrenAges[ageIndex] ? room?.childrenAges[ageIndex] : ''}
 		onChange={(e) => changeChildAgeHandler(e.target.value, room.id, ageIndex)}
-	/>
+	>
+		{Array.from(Array(16).keys()).map((i: number) => (
+			<option value={i + 1} key={i + 1}>
+				{i + 1}
+			</option>
+		))}
+	</select>
 );
 const RoomsFilters = ({
 	roomCount,
@@ -99,18 +104,26 @@ const RoomsFilters = ({
 				</div>
 			</div>
 			{room.childCount > 0 && (
-				<div className="grid grid-cols-4 gap-4 items-center my-2 border-b pb-3 flex-wrap">
-					{Array(room.childCount)
-						.fill(null)
-						.map((child: any, ageIndex: number) => (
-							<ChildAgeInput
-								key={uuidv4()}
-								room={room}
-								ageIndex={ageIndex}
-								changeChildAgeHandler={changeChildAgeHandler}
-							/>
-						))}
-				</div>
+				<>
+					<label
+						onMouseEnter={() => speechHandler(t('childrenAges'))}
+						htmlFor="children_ages"
+					>
+						{t('childrenAges')}
+					</label>
+					<div className="grid grid-cols-4 gap-4 items-center my-2 border-b pb-3 flex-wrap">
+						{Array(room.childCount)
+							.fill(null)
+							.map((child: any, ageIndex: number) => (
+								<ChildAgeInput
+									key={uuidv4()}
+									room={room}
+									ageIndex={ageIndex}
+									changeChildAgeHandler={changeChildAgeHandler}
+								/>
+							))}
+					</div>
+				</>
 			)}
 		</Fragment>
 	);
@@ -218,22 +231,26 @@ const RoomsFilters = ({
 					{roomDetails.map((room: any, i: number) => (
 						<SingleRoomFilter key={room.id} room={room} i={i} />
 					))}
-					<button
-						onMouseEnter={() => speechHandler(t('addRoom'))}
-						type="button"
-						onClick={() =>
-							setRoomDetails((prev: any[]) => [
-								...prev,
-								{ ...singleRoom, id: uuidv4() },
-							])
-						}
-						className="flex justify-start items-center my-4 border-none bg-transparent"
-					>
-						<i className="w-8 h-8 rounded-full border border-gray-400 text-2xl mx-2">
-							&#43;
-						</i>
-						<h3 className="text-center text-lg font-normal">{t('addRoom')}</h3>
-					</button>
+					{roomDetails?.length <= 9 && (
+						<button
+							onMouseEnter={() => speechHandler(t('addRoom'))}
+							type="button"
+							onClick={() =>
+								setRoomDetails((prev: any[]) => [
+									...prev,
+									{ ...singleRoom, id: uuidv4() },
+								])
+							}
+							className="flex justify-start items-center my-4 border-none bg-transparent"
+						>
+							<i className="w-8 h-8 rounded-full border border-gray-400 text-2xl mx-2">
+								&#43;
+							</i>
+							<h3 className="text-center text-lg font-normal">
+								{t('addRoom')}
+							</h3>
+						</button>
+					)}
 
 					<div className="flex justify-end items-center my-t mb-0 mr-2">
 						<button

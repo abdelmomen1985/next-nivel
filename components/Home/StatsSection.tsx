@@ -25,10 +25,10 @@ const StatsSection = ({ home }: { home: any }) => {
 						{t('reviews')}
 					</h4>
 					<p
-						onMouseEnter={() => speechHandler('Based on 1,500 reviews')}
+						onMouseEnter={() => speechHandler(t('basedOn'))}
 						className="text-primary-dark"
 					>
-						Based on 1,500 reviews
+						{t('basedOn')}
 					</p>
 					<h5>
 						<span onMouseEnter={() => speechHandler('4.5')}>4.5</span>

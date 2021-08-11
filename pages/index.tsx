@@ -9,7 +9,7 @@ const Index: React.FC = () => {
 
   return (
     <Head>
-      <meta name="robots" content="noindex, nofollow" />
+      <link rel="shortcut icon" href="/favicon.ico" />
     </Head>
   );
 };

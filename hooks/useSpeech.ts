@@ -1,25 +1,27 @@
-import { useSpeechSynthesis } from 'react-speech-kit';
-import { useState, useEffect } from 'react';
-import useTranslation from './useTranslation';
+import { useEffect, useState } from "react";
+import { useSpeechSynthesis } from "react-speech-kit";
+import useTranslation from "./useTranslation";
 
 export function useSpeech() {
-	const { locale } = useTranslation();
+  const { locale } = useTranslation();
 
-	const { speak, voices } = useSpeechSynthesis();
-	const [currentVoiceIndex, setCurrentVoiceIndex] = useState<number>(() =>
-		locale === 'ar' ? 1 : 0
-	);
-	useEffect(() => {
-		if (locale === 'ar') {
-			setCurrentVoiceIndex(1);
-		} else {
-			setCurrentVoiceIndex(3);
-		}
-	}, [locale]);
+  const { speak, voices, cancel } = useSpeechSynthesis();
+  const [currentVoiceIndex, setCurrentVoiceIndex] = useState<number>(() =>
+    locale === "ar" ? 1 : 0
+  );
+  useEffect(() => {
+    if (locale === "ar") {
+      setCurrentVoiceIndex(1);
+    } else {
+      setCurrentVoiceIndex(3);
+    }
+  }, [locale]);
 
-	const speechHandler = (text: string) => {
-		console.log('text', text);
-		// speak({ text, voice: voices[currentVoiceIndex] });
-	};
-	return { speechHandler };
+  const speechHandler = (text: string) => {
+    cancel();
+    console.log("text", text);
+    console.log("currentVoiceIndex", currentVoiceIndex);
+    speak({ text, voice: voices[currentVoiceIndex] });
+  };
+  return { speechHandler };
 }

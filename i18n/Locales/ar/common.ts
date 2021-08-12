@@ -11,7 +11,7 @@ const common = {
   guests: "الضيوف",
   specialRates: "اسعار خاصة",
   close: "أغلق",
-  checkRoomsRates: "تفقد الاجنحة والأسعار",
+  startBooking: "  بدء الحجز",
   arrivalTime: "موعد الوصول",
   checkIn: "موعد الوصول",
   checkOut: "موعد الخروج",
@@ -110,7 +110,7 @@ const common = {
   updateReservation: "تحديث الحجز",
   changeRoom: "غير الغرفة",
   selectRate: "اختر السعر",
-  paymentGuestDetails: "بيانات السداد والضيف",
+  paymentGuestDetails: "بيانات السداد والضيوف",
   what2Expect: "ما يجب أن تتوقعه أثناء زيارتك",
   readMore: "اقرأ المزيد",
   sar: "ريال سعودي ",
@@ -140,6 +140,8 @@ const common = {
   female: "أنثى",
   userGender: "جنس المستخدم",
   specialRequests: "طلبات خاصة",
+
+  tos: "أقر بموافقتي وقبولي لخصم قيمه الحجز من بطاقتي االئتمانيه كما أقر بقراءتي وموافقتي علي سياسات االلغاء واتباع النظام العام المعمول به بالفندق",
 };
 
 export default common;

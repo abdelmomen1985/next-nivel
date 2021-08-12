@@ -4,6 +4,8 @@ import React, { useContext, useState } from "react";
 import LoadingCircle from "../../../components/common/LoadingCircle";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
 import Layout from "../../../Layouts/Layout";
+import { initializeApollo } from "../../../lib/apolloClient";
+import { LOAD_PROFILE_LAYOUT } from "../../../query/profile";
 import { GET_USER_BOOKINGS_BY_USER_ID } from "../../../query/user";
 import { BookingType } from "../../../types/booking";
 import { LayoutType } from "../../../types/layout";
@@ -16,12 +18,10 @@ import UserBookings from "./../../../components/profile/ProfileTabs/UserBookings
 import { AppContext } from "./../../../context/AppContext";
 import { getLocalizationProps } from "./../../../context/LangContext";
 
-const ProfilePage = ({ remoteSchemaUrl }: { remoteSchemaUrl: string }) => {
+const ProfilePage = ({ layout }: { layout: LayoutType }) => {
   const { user } = useContext(AppContext);
   const [currentTap, setCurrentTap] = useState<number>(1);
-  const [layout, setLayout] = useState<LayoutType>({});
   const [bookings, setBookings] = useState<BookingType[]>([]);
-  // const remoteSchemaUrl = await getRemoteSchemaUrl();
   const { data, loading } = useQuery(GET_USER_BOOKINGS_BY_USER_ID, {
     variables: {
       visitor_id: user?.id,
@@ -31,7 +31,6 @@ const ProfilePage = ({ remoteSchemaUrl }: { remoteSchemaUrl: string }) => {
     onCompleted() {
       console.log(data);
       setBookings(data?.bookings);
-      setLayout({ ...data?.layout, remoteSchemaUrl });
     },
     onError(err) {
       console.log(err);
@@ -63,13 +62,13 @@ export default ProfilePage;
 export const getAnyProps = async (ctx: any) => {
   const localization = getLocalizationProps(ctx, "common");
   const remoteSchemaUrl = await getRemoteSchemaUrl();
-  // const resp = await client.query({ query: LOAD_ROOMS_BY_RATES });
-  // console.log(resp?.data?.room_rates);
+  const client = initializeApollo();
+  const resp = await client.query({ query: LOAD_PROFILE_LAYOUT });
   return {
     props: {
       localization,
       remoteSchemaUrl,
-      // layout: { ...resp?.data?.layout, remoteSchemaUrl },
+      layout: { ...resp?.data?.layout, remoteSchemaUrl },
     },
   };
 };

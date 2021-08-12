@@ -17,9 +17,9 @@ import ActiveLink from "./../ActiveLink";
 import LocaleSwitch from "./LocaleSwitch";
 
 const EditStay = () => {
-  const { t, locale } = useTranslation();
+  const { locale } = useTranslation();
   const router = useRouter();
-  const { register, reset, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit } = useForm({
     mode: "onTouched",
   });
   const editStayHandler = (data: any) => {

@@ -4,11 +4,11 @@ import styles from "../navigation.module.scss";
 import { useSpeech } from "./../../../hooks/useSpeech";
 import useTranslation from "./../../../hooks/useTranslation";
 const SpecialFilters = ({
-  specialRatesCount,
+  //specialRatesCount,
   handleFilterChange,
   register,
 }: any) => {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const { speechHandler } = useSpeech();
   const [showSpecialRate, setShowSpecialRate] = useState(false);
 

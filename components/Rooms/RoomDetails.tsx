@@ -93,7 +93,7 @@ const RoomDetails = ({
                       padding: "5px",
                       borderRadius: "10px",
                       background:
-                        "linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url('https://bit.ly/2rlzaXi')",
+                        "linear-gradient(rgba(212, 181, 97, 0.8), rgba(216, 186, 142, 0.8)), url('https://bit.ly/2rlzaXi')",
                     }}
                   />
                   <span

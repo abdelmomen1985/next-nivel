@@ -142,6 +142,13 @@ const common = {
   specialRequests: "طلبات خاصة",
 
   tos: "أقر بموافقتي وقبولي لخصم قيمه الحجز من بطاقتي االئتمانيه كما أقر بقراءتي وموافقتي علي سياسات االلغاء واتباع النظام العام المعمول به بالفندق",
+  signupHeader: "تسجيل المستخدم لحجز ",
+  register: "تسجيل",
+  importantLinks: "روابط هامة",
+  about: "عنا",
+  events: "اهم الاخبار",
+  ourLocation: "موقعنا",
+  reservations: "الحجوزات",
 };
 
 export default common;

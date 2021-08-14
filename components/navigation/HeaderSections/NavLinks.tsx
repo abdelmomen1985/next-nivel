@@ -31,6 +31,9 @@ const NavLinks = ({
       <ActiveLink activeClassName={styles.active} href={`/${locale}/meetings`}>
         <a className={styles.navLink}>{t("headerMeetings")}</a>
       </ActiveLink>
+      <ActiveLink activeClassName={styles.active} href={`#`}>
+        <a className={styles.navLink}>{t("reservations")}</a>
+      </ActiveLink>
     </>
   );
 };

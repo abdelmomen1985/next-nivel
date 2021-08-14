@@ -26,7 +26,7 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
           className="m-1"
         />
       </div>
-      <div className="mx-5 my-5 grid grid-col-1 md:grid-cols-3 gap-3 items-start">
+      <div className="mx-12 my-5 grid grid-col-1 md:grid-cols-3 gap-12 items-start">
         <div>
           <p
             className={clsx(
@@ -39,27 +39,27 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
         </div>
         <div className="mx-2 md:mx-2">
           <h3 className="text-primary-dark text-xl font-semibold capitalize">
-            important links
+            {t("importantLinks")}
           </h3>
 
           <Link href="/about">
             <a className="text-gray-dark text-lg font-medium block my-3">
-              About
+              {t("about")}
             </a>
           </Link>
           <Link href="/contact">
             <a className="text-gray-dark text-lg font-medium block my-3">
-              Contact Us
+              {t("contactUs")}
             </a>
           </Link>
           <Link href="/events">
             <a className="text-gray-dark text-lg font-medium block my-3">
-              Events
+              {t("events")}
             </a>
           </Link>
           <Link href="/location">
             <a className="text-gray-dark text-lg font-medium block my-3">
-              Our Location
+              {t("ourLocation")}
             </a>
           </Link>
         </div>

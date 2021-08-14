@@ -96,7 +96,7 @@ const StatsSection = ({ home }: { home: any }) => {
                 onMouseEnter={() => speechHandler("4:00 PM")}
                 className="text-gray-400 text-base md:text-lg font-medium"
               >
-                4:00 PM
+                2:00 PM
               </h5>
             </div>
             <div className="mx-1">
@@ -110,7 +110,7 @@ const StatsSection = ({ home }: { home: any }) => {
                 onMouseEnter={() => speechHandler("5:00 PM")}
                 className="text-gray-400 text-base md:ext-lg font-medium"
               >
-                5:00 PM
+                12:00 PM
               </h5>
             </div>
           </div>

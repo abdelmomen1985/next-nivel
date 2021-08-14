@@ -153,6 +153,13 @@ const common = {
   userMaritalStatus: "User's marital status",
   specialRequests: "Special Requests",
   tos: "I acknowledge my acceptance and acceptance to deduct the value of the reservation from my credit card. I also acknowledge that I have read and agree to the cancellation policies and follow the general system in force in the hotel.",
+  signupHeader: "Sign Up to Book your Next visit",
+  register: "Register",
+  importantLinks: "Important links ",
+  about: "ِAbout",
+  events: " Events",
+  ourLocation: "Our location",
+  reservations: "Reservations",
 };
 
 export default common;

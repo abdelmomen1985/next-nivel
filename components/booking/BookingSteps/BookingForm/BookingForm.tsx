@@ -9,6 +9,8 @@ import clsx from "clsx";
 import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import arCountries from "../../../../countries/ar/world.json";
+import enCountries from "../../../../countries/en/world.json";
 import { months } from "../../../../utils/12months";
 import { getNextTenYears } from "../../../../utils/getNextTenYears";
 import styles from "../../booking.module.scss";
@@ -35,8 +37,12 @@ const BookingForm = ({
     resolver: yupResolver(bookingValidation),
   });
   const [showGuest, setShowGuest] = useState<boolean>(false);
+  const [currLangCountries, setCurrLangCountries] = useState<any[]>([]);
   const [selectedSpecialReqs, setSelectedSpecialReqs] = useState<string[]>([]);
-
+  useEffect(() => {
+    if (locale === "ar") setCurrLangCountries(arCountries);
+    if (locale === "en") setCurrLangCountries(enCountries);
+  }, [locale]);
   useEffect(() => {
     if (!userData) return;
     setValue("cardNo", userData?.cardNo);
@@ -258,7 +264,12 @@ const BookingForm = ({
           >
             {t("country")}
           </label>
-          <input type="text" name="country" ref={register} />
+
+          <select name="country" ref={register}>
+            {currLangCountries.map((country: any) => (
+              <option value={country.name}>{country.name}</option>
+            ))}
+          </select>
         </div>
         {errors.country && (
           <p
@@ -266,6 +277,24 @@ const BookingForm = ({
             className="text-red-600 text-base  font-normal my-1"
           >
             {errors.country?.message[locale]}
+          </p>
+        )}
+        <div className={clsx(styles.formGroup, "w-full md:w-2/3")}>
+          <label
+            onMouseEnter={() => speechHandler(t("city"))}
+            className="capitalize"
+            htmlFor="city"
+          >
+            {t("city")}
+          </label>
+          <input type="text" name="city" ref={register} />
+        </div>
+        {errors.city && (
+          <p
+            onMouseEnter={() => speechHandler(errors.city?.message[locale])}
+            className="text-red-600 text-base  font-normal my-1"
+          >
+            {errors.city?.message[locale]}
           </p>
         )}
         <div className={clsx(styles.formGroup, "w-full md:w-2/3")}>
@@ -327,29 +356,12 @@ const BookingForm = ({
 					</p>
         )}
         */}
-        <div className={clsx(styles.formGroup, "w-full md:w-2/3")}>
-          <label
-            onMouseEnter={() => speechHandler(t("city"))}
-            className="capitalize"
-            htmlFor="city"
-          >
-            {t("city")}
-          </label>
-          <input type="text" name="city" ref={register} />
-        </div>
-        {errors.city && (
-          <p
-            onMouseEnter={() => speechHandler(errors.city?.message[locale])}
-            className="text-red-600 text-base  font-normal my-1"
-          >
-            {errors.city?.message[locale]}
-          </p>
-        )}
+
         <div className={"w-full md:w-2/3"}>
           <label
             onMouseEnter={() => speechHandler(`Special Requests`)}
             className="capitalize"
-            htmlFor="city"
+            htmlFor="specialRequests"
           >
             {t("specialRequests")}
           </label>
@@ -441,13 +453,21 @@ const BookingForm = ({
         <div className={"w-full md:w-2/3"}>
           <input
             type="checkbox"
-            name="agree"
+            name="tos"
             value="true"
             ref={register}
             className="text-xl m-2"
           />
           {t("tos")}
         </div>
+        {errors.tos && (
+          <p
+            onMouseEnter={() => speechHandler(errors.tos?.message[locale])}
+            className="text-red-600 text-base  font-normal my-1"
+          >
+            {errors.tos?.message[locale]}
+          </p>
+        )}
         <button
           onMouseEnter={() =>
             speechHandler(

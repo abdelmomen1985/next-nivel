@@ -49,6 +49,7 @@ const StatsSection = ({ home }: { home: any }) => {
             {t("callUs")}
           </h4>
           <h5
+            style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966 12 556 7000")}
             className="text-black text-lg mt-1 text-left"
           >

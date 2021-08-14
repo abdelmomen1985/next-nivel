@@ -7,7 +7,7 @@ export const bookingValidation = yup.object().shape({
     .string()
     .required({
       en: "Please Enter a valid Credit Card number",
-      ar: "رجاء ادخل رقم بطاقة صالح",
+      ar: "الرجاء ادخل رقم بطاقة صالح",
     })
     .test(
       "test-number",
@@ -21,24 +21,28 @@ export const bookingValidation = yup.object().shape({
   cardYear: yup.string().required("Please enter a valid expiration date."),
   firstName: yup.string().required({
     en: "Please enter your first name",
-    ar: "الرحاء ادخال الاسم الأول",
+    ar: "الرجاء ادخال الاسم الأول",
   }),
   lastName: yup.string().required({
     en: "Please enter your last name",
-    ar: "الرحاء ادخال الاسم الأخير",
+    ar: "الرجاء ادخال الاسم الأخير",
   }),
   email: yup
     .string()
     .required({
       en: "Please enter an email",
-      ar: "الرحاء ادخال البريد الإلكتروني",
+      ar: "الرجاء ادخال البريد الإلكتروني",
     })
     .email({ en: "Please enter a valid email ", ar: "بريد إلكتروني غير صالح" }),
+  tos: yup.boolean().oneOf([true], {
+    en: "Please accept terms of services",
+    ar: "الرجاء الموافقة علي الشروط والاحكام",
+  }),
   phone: yup
     .string()
     .required({
       en: "please Enter your phone number",
-      ar: "الرحاء ادخال رقم هاتفك",
+      ar: "الرجاء ادخال رقم هاتفك",
     })
     .matches(phonePattern, {
       message: { en: "Invalid phone number", ar: "رقم الهاتف غير صحيح" },

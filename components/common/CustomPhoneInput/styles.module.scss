@@ -1,0 +1,44 @@
+.inputContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 15px;
+
+  img,
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  select {
+    max-width: 20px;
+    margin-inline-end: 2px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .numberInput {
+    margin-inline-start: 2px;
+    border-inline-start: 1px solid #c4c4c4;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  span {
+    margin-inline: 2px;
+
+  }
+
+  input {
+    margin-inline-start: 2px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

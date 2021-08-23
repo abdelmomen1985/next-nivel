@@ -61,7 +61,7 @@ const BookingFilters = ({
 	const amenities = [
 		{
 			en: 'Free WiFi',
-			ar: 'واي فاي مجاني',
+			ar: 'إنترنت مجاني',
 		},
 		{
 			en: 'Non-smoking rooms',

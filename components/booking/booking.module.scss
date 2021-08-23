@@ -1,3 +1,21 @@
+@mixin inputStyles {
+  margin: 0 5px;
+  padding: 10px 5px;
+  border: 1px solid #c4c4c4;
+  cursor: pointer;
+  width: 100%;
+  padding: 8.5px 16px 8.5px 115px;
+  border-radius: 5px;
+
+  &:focus {
+    border: 2px solid #000;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 97%;
+  }
+}
+
 .formGroup {
   position: relative;
   margin: 20px 0;
@@ -15,24 +33,16 @@
     text-transform: capitalize;
   }
 
+  textarea {
+    @include inputStyles();
+
+  }
+
   input,
   select {
-    border: none;
-    margin: 0 5px;
-    padding: 10px 5px;
-    border: 1px solid #c4c4c4;
-    cursor: pointer;
-    width: 100%;
+    @include inputStyles();
     height: 52px;
-    padding: 8.5px 16px 8.5px 115px;
 
-    &:focus {
-      border: 2px solid #000;
-    }
-
-    @media screen and (max-width: 768px) {
-      width: 97%;
-    }
   }
 }
 

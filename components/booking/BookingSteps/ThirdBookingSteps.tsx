@@ -72,7 +72,10 @@ const ThirdBookingSteps = ({
 	const addBooking = async (data: any, type: string) => {
 		console.log('data', data);
 		let special_requests = [...data.special_requests];
+		let notes = data?.notes;
 		delete data?.special_requests;
+		delete data?.notes;
+
 		let cleanData = await cleanObjects(data);
 		console.log(special_requests);
 		if (filterValues.roomDetails.length === 1) {
@@ -90,6 +93,7 @@ const ThirdBookingSteps = ({
 				strp_room_id: selectedRoom?.id,
 				visitor_id: user?.id,
 				special_requests: special_requests.length > 0 ? special_requests : null,
+				notes,
 			};
 			console.log(bookingQueryVars);
 			if (type === 'update') {

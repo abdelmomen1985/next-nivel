@@ -71,7 +71,7 @@ const Header = ({
         <nav
           className={clsx(
             styles.navLinks,
-            " justify-center items-center w-full px-10 py-3  bg-gray-light bg-opacity-50",
+            " justify-center items-center w-full px-10 py-3  bg-gray-light bg-opacity-50 trickytoc",
             openNav && isMobile ? "flex" : "hidden md:flex"
           )}
         >

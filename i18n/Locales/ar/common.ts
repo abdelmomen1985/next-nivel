@@ -1,4 +1,5 @@
 const common = {
+	two:'اثنان',
 	join: 'انضم لنقاط لنيفل',
 	signIn: 'تسجيل الدخول',
 	headerHome: 'الرئيسية',

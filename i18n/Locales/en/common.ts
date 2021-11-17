@@ -1,4 +1,5 @@
 const common = {
+	two: 'Two',
 	join: 'Join Nivel Points',
 	signIn: 'Sign In',
 	headerHome: 'Home',

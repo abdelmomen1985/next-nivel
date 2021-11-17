@@ -149,7 +149,7 @@ const common = {
 	about: 'عنا',
 	events: 'اهم الاخبار',
 	ourLocation: 'موقعنا',
-	reservations: 'الحجوزات',
+	reservations: 'حجوزاتي',
 };
 
 export default common;

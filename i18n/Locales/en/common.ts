@@ -2,7 +2,7 @@ const common = {
 	join: 'Join Nivel Points',
 	signIn: 'Sign In',
 	headerHome: 'Home',
-	headerRooms: 'Rooms',
+	headerRooms: 'Suites',
 	headerGallery: 'Gallery',
 	headerLocation: 'Location',
 	headerDining: 'Dining',

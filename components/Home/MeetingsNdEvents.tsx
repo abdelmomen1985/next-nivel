@@ -38,17 +38,6 @@ const eventsData = [
 			en: 'MEETING ROOMS',
 		},
 	},
-	{
-		count: '484',
-		unit: {
-			ar: '',
-			en: '',
-		},
-		title: {
-			ar: 'غرف ضيوف',
-			en: 'Guest Rooms',
-		},
-	},
 ];
 const MeetingsNdEvents = () => {
 	const { t, locale } = useTranslation();

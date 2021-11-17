@@ -15,7 +15,7 @@ import styles from "./meetings.module.scss";
 
 const eventsData = [
   {
-    count: "208",
+    count: "266",
     unit: {
       ar: "متر مربع",
       en: "SQ. M.",
@@ -37,7 +37,7 @@ const eventsData = [
     },
   },
   {
-    count: "2",
+    count: "3",
     unit: {
       ar: "",
       en: "",

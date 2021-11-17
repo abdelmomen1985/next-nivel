@@ -21,7 +21,7 @@ const eventsData = [
       en: "SQ. M.",
     },
     title: {
-      ar: "من مساجة الحدث الإجمالية",
+      ar: "من المساحة الإجمالية",
       en: "OF TOTAL EVENT SPACE",
     },
   },
@@ -32,7 +32,7 @@ const eventsData = [
       en: "SQ. M.",
     },
     title: {
-      ar: "من أضخم إعدادات الغرف",
+      ar: "من اضخم الإعدادات ",
       en: "OF LARGEST ROOM SETUP",
     },
   },

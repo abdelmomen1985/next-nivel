@@ -46,7 +46,7 @@ export const HOME_PAGE = gql`
     amenities(where: { hotel_amenity: true }) {
       ...AmenityFragment
     }
-    strpRooms(limit: 6) {
+    strpRooms(publicationState: LIVE) {
       id
       name
       images {

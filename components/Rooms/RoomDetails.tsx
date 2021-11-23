@@ -19,6 +19,7 @@ const RoomDetails = ({
   const { t, locale } = useTranslation();
   const { speechHandler } = useSpeech();
   const { isMobile } = useContext(AppContext);
+  roomAmenities = roomAmenities.sort((a, b) => a.order - b.order);
   // const [basePrice, setBasePrice] = useState<any>(undefined);
   // const [packagePrices, setPackagePrices] = useState<any>(undefined);
   // useEffect(() => {
@@ -64,6 +65,7 @@ const RoomDetails = ({
       <div className="mx-1 py-2 ">
         <CustomMD
           markdown={roomDetails?.RelWithStrapiRoom[`description_${locale}`]}
+          options={{ forceBlock: true }}
         />
 
         <div className="h-full my-1 px-1">
@@ -106,8 +108,12 @@ const RoomDetails = ({
                     }
                     className="mx-2 text-sm"
                   >
-                    {amenity?.count && +amenity.count != 2 && <b>{amenity?.count} </b>}
-                    {amenity?.count && +amenity.count == 2 && <b>{t("two")} </b>}
+                    {amenity?.count && +amenity.count != 2 && (
+                      <b>{amenity?.count} </b>
+                    )}
+                    {amenity?.count && +amenity.count == 2 && (
+                      <b>{t("two")} </b>
+                    )}
                     {amenity?.amenitiy?.name[locale]}{" "}
                     {amenity?.unit && amenity?.unit}
                   </span>

@@ -91,6 +91,7 @@ export const ROOM_AMENITIES = gql`
     roomAmenities(where: { room: { id: $room_id } }) {
       count
       unit
+      order
       amenitiy {
         ...AmenityFragment
       }

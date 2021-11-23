@@ -1,19 +1,22 @@
-import Markdown, { MarkdownToJSX } from 'markdown-to-jsx';
-import React from 'react';
-import { useSpeech } from './../../hooks/useSpeech';
-import removeMarkdown from 'markdown-to-text';
+import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
+import removeMarkdown from "markdown-to-text";
+import React, { useEffect } from "react";
+import { useSpeech } from "./../../hooks/useSpeech";
 
 export default function CustomMD({
-	markdown,
-	options,
+  markdown,
+  options,
 }: {
-	markdown: string | undefined;
-	options?: MarkdownToJSX.Options;
+  markdown: string | undefined;
+  options?: MarkdownToJSX.Options;
 }) {
-	const { speechHandler } = useSpeech();
-	return (
-		<div onMouseEnter={() => speechHandler(removeMarkdown(markdown ?? ''))}>
-			<Markdown options={options}>{markdown ?? ''}</Markdown>
-		</div>
-	);
+  const { speechHandler } = useSpeech();
+  useEffect(() => {
+    console.log("markdown", markdown);
+  }, [markdown]);
+  return (
+    <div onMouseEnter={() => speechHandler(removeMarkdown(markdown ?? ""))}>
+      <Markdown options={options}>{markdown ?? ""}</Markdown>
+    </div>
+  );
 }

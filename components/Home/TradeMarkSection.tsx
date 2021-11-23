@@ -4,7 +4,7 @@ import CustomMD from "../common/CustomMD";
 import useTranslation from "./../../hooks/useTranslation";
 import styles from "./home.module.scss";
 const TradeMarkSection = ({ home }: { home: any }) => {
-  const { t, locale } = useTranslation();
+  const { locale } = useTranslation();
   return (
     <section
       className={clsx(

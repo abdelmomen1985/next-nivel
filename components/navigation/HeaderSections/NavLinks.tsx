@@ -19,71 +19,75 @@ const NavLinks = ({
 	const { signOutHandler } = useSignout();
 
 	return (
-		<>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/`}>
-				<a className={styles.navLink}>{t('headerHome')}</a>
-			</ActiveLink>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/rooms`}>
-				<a className={styles.navLink}>{t('headerRooms')}</a>
-			</ActiveLink>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/gallery`}>
-				<a className={styles.navLink}>{t('headerGallery')}</a>
-			</ActiveLink>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/location`}>
-				<a className={styles.navLink}>{t('headerLocation')}</a>
-			</ActiveLink>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/dining`}>
-				<a className={styles.navLink}>{t('headerDining')}</a>
-			</ActiveLink>
-			<ActiveLink activeClassName={styles.active} href={`/${locale}/meetings`}>
-				<a className={styles.navLink}>{t('headerMeetings')}</a>
-			</ActiveLink>
-			<ActiveLink
-				activeClassName={styles.active}
-				href={`/${locale}/reservations`}
-			>
-				<a className={styles.navLink}>{t('reservations')}</a>
-			</ActiveLink>
+    <>
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/`}>
+        <a className={styles.navLink}>{t("headerHome")}</a>
+      </ActiveLink>
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/rooms`}>
+        <a className={styles.navLink}>{t("headerRooms")}</a>
+      </ActiveLink>
 
-			{isMobile && (
-				<>
-					{user ? (
-						<>
-							<ActiveLink
-								activeClassName={styles.active}
-								href={`/${locale}/profile`}
-							>
-								<a className={styles.navLink}>{t('headerHome')}</a>
-							</ActiveLink>
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/dining`}>
+        <a className={styles.navLink}>{t("headerDining")}</a>
+      </ActiveLink>
+			
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/meetings`}>
+        <a className={styles.navLink}>{t("headerMeetings")}</a>
+      </ActiveLink>
 
-							<button
-								onClick={signOutHandler}
-								className={clsx(
-									isMobile || isTablet ? 'my-2' : 'my-0',
-									'mx-3 font-medium text-primary-dark'
-								)}
-							>
-								{t('signOut')}
-							</button>
-						</>
-					) : (
-						<button
-							onClick={() => {
-								setLoginModal(true);
-							}}
-							className={clsx(
-								isMobile ? 'my-2' : 'my-0',
-								'mx-3 font-medium text-primary-dark'
-							)}
-						>
-							{t('signIn')}
-						</button>
-					)}
-					<LocaleSwitch />
-				</>
-			)}
-		</>
-	);
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/gallery`}>
+        <a className={styles.navLink}>{t("headerGallery")}</a>
+      </ActiveLink>
+      <ActiveLink activeClassName={styles.active} href={`/${locale}/location`}>
+        <a className={styles.navLink}>{t("headerLocation")}</a>
+      </ActiveLink>
+
+      <ActiveLink
+        activeClassName={styles.active}
+        href={`/${locale}/reservations`}
+      >
+        <a className={styles.navLink}>{t("reservations")}</a>
+      </ActiveLink>
+
+      {isMobile && (
+        <>
+          {user ? (
+            <>
+              <ActiveLink
+                activeClassName={styles.active}
+                href={`/${locale}/profile`}
+              >
+                <a className={styles.navLink}>{t("headerHome")}</a>
+              </ActiveLink>
+
+              <button
+                onClick={signOutHandler}
+                className={clsx(
+                  isMobile || isTablet ? "my-2" : "my-0",
+                  "mx-3 font-medium text-primary-dark"
+                )}
+              >
+                {t("signOut")}
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setLoginModal(true);
+              }}
+              className={clsx(
+                isMobile ? "my-2" : "my-0",
+                "mx-3 font-medium text-primary-dark"
+              )}
+            >
+              {t("signIn")}
+            </button>
+          )}
+          <LocaleSwitch />
+        </>
+      )}
+    </>
+  );
 };
 
 export default NavLinks;

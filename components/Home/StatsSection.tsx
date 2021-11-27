@@ -50,10 +50,17 @@ const StatsSection = ({ home }: { home: any }) => {
           </h4>
           <h5
             style={{ direction: "ltr" }}
-            onMouseEnter={() => speechHandler("+966 12 556 7000")}
+            onMouseEnter={() => speechHandler("+966-017-2559999")}
             className="text-black text-lg mt-1 text-left"
           >
-            +966 12 556 7000
+            +966-017-2559999
+          </h5>
+          <h5
+            style={{ direction: "ltr" }}
+            onMouseEnter={() => speechHandler("++966-017-2553333")}
+            className="text-black text-lg mt-1 text-left"
+          >
+            +966-017-2553333
           </h5>
         </div>
         <div className="mx-0 lg:mx-auto my-2 w-full md:w-1/2 lg:w-1/4 lg:my-0">

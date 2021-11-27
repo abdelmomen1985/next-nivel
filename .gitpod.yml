@@ -1,6 +1,6 @@
 tasks:
-  - init: yarn install && yarn run build
-    command: yarn run dev
+  - init: yarn install && yarn build
+    command: yarn dev
 github:
   prebuilds:
     # enable for the default branch (defaults to true)

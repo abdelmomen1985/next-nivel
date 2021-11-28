@@ -103,22 +103,30 @@ const RoomDetails = ({
                       speechHandler(`
                     ${amenity?.amenitiy?.name[locale]} 
 										${amenity?.count && <span>{amenity?.count} </span>}
-										${amenity?.unit && amenity?.unit}
+										${amenity?.amenitiy?.unit && amenity?.amenitiy?.unit}
                     `)
                     }
                     className="mx-2 text-sm"
                   >
+                    {amenity?.amenitiy?.label_first &&
+                      amenity?.amenitiy?.name[locale]}{" "}
                     {amenity?.count && +amenity.count != 2 && (
                       <b>{amenity?.count} </b>
                     )}
                     {amenity?.count && +amenity.count == 2 && (
                       <b>{t("two")} </b>
                     )}
-                    {amenity?.amenitiy?.name[locale]}{" "}
-                    {amenity?.unit && amenity?.unit}
+                    {amenity?.amenitiy?.unit && amenity?.amenitiy?.unit}{" "}
+                    {!amenity?.amenitiy?.label_first &&
+                      amenity?.amenitiy?.name[locale]}{" "}
                   </span>
                 </li>
               ))}
+            <div className="m-2 h-2"></div>
+            <div className="m-2 h-2"></div>
+            <div className="m-2 h-2"></div>
+            <div className="m-2 h-2"></div>
+            <div className="m-2 h-2"></div>
           </ul>
         </div>
       </div>

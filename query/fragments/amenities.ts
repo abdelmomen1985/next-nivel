@@ -11,5 +11,7 @@ export const AMENITIES_FRAGMENT = gql`
       height
     }
     name
+    unit
+    label_first
   }
-`
+`;

@@ -26,7 +26,7 @@ const eventsData = [
     },
   },
   {
-    count: "104",
+    count: "111",
     unit: {
       ar: "متر مربع",
       en: "SQ. M.",
@@ -101,7 +101,8 @@ export const getAnyProps = async (ctx: any) => {
   const remoteSchemaUrl = await getRemoteSchemaUrl();
   const client = initializeApollo();
   const resp = await client.query({ query: MEETING_ROOMS });
-
+  console.log(resp?.data?.meeting_rooms);
+  
   return {
     props: {
       localization,

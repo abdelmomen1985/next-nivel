@@ -14,7 +14,7 @@ const MeetingRoom = ({ meeting, styles, activeTab }: any) => {
 				className="capitalize"
 			>
 				{meeting?.title[locale]}
-			</h3>
+      </h3>
 			<h5
 				onMouseEnter={() =>
 					speechHandler(`${meeting?.guests[activeTab]} 

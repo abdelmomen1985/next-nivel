@@ -25,7 +25,7 @@ const common = {
 	viewRooms: 'view all rooms',
 	diningNdDrinks: 'Dining and drinks',
 	diningDesc:
-		'Our dining options include three comfortable cafes serving light bites, coffee, and other beverages throughout the day. Alorchid Restaurant offers a range of pan-Asian cuisine while Alqandeel has a range of buffet and a la carte options as well as live cooking stations.',
+		'Our dining options include three comfortable cafes serving light bites, coffee, and other beverages throughout the day. Al-orchid Restaurant offers a range of pan-Asian cuisine while Al-qandeel has a range of buffet and a la carte options as well as live cooking stations.',
 	viewDining: 'View all Dining',
 	meetingsNdEvents: 'Meetings and Events',
 	meetStyle: 'Meet in Style',
@@ -77,6 +77,7 @@ const common = {
 	accessibleRooms: 'accessible rooms',
 	bestAvRate: 'best available rate',
 	book: 'book',
+	bookNow: 'Book now',
 	makeItPackage: 'Make it a package deal',
 	total4Stay: 'Total for Stay',
 	nights: 'nights',

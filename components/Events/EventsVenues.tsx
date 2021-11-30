@@ -109,9 +109,9 @@ const EventsVenues = ({ meetingRooms, styles }: any) => {
 					{t('u_shape')}
 				</button>
 			</div>
-			<div className="flex flex-wrap justify-center items-start">
+      <div className="flex flex-wrap justify-center items-start">
 				{meetingRooms.map((meeting: any) => (
-					<MeetingRoom meeting={meeting} key={meeting?.id} styles={styles} />
+          <MeetingRoom meeting={meeting} key={meeting?.id} styles={styles} activeTab={activeTab} />
 				))}
 			</div>
 		</section>

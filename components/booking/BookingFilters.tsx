@@ -79,6 +79,10 @@ const BookingFilters = ({
 			en: 'Business center',
 			ar: 'مركز لإدارة الأعمال',
 		},
+    {
+			en: 'Accessible Rooms',
+      ar: 'غرف ذوي الهمم',
+		},
 	];
 	return (
 		<>
@@ -118,13 +122,15 @@ const BookingFilters = ({
 					specialRatesCount={specialRatesCount}
 					handleFilterChange={handleFilterChange}
 					register={register}
-				/>
+        />
+                  {/**
 				<div
 					className={clsx(
 						styles.formGroup,
 						'flex justify-start items-center mx-1'
 					)}
-				>
+        >
+
 					<input
 						type="checkbox"
 						className="mx-1"
@@ -138,8 +144,10 @@ const BookingFilters = ({
 						htmlFor="accessibility"
 					>
 						{t('accessibleRooms')}
-					</label>
-				</div>
+          </label>
+
+        </div>
+                   */}
 				<button
 					onMouseEnter={() => speechHandler(t('update'))}
 					type="submit"

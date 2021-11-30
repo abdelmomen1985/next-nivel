@@ -18,15 +18,19 @@ const FirstBookingStep = ({
 			<ChildAlert />
 
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-				{currentRooms.map((room, i) => (
-					<RoomCard
-						purpose="booking"
-						key={i}
-						room={room}
-						selectRoom={selectRoom}
-						pickRoomHandler={pickRoomHandler}
-						remoteUrl={remoteUrl}
-					/>
+        {currentRooms.map((room, i) => (
+                      <>
+            {room.RelWithStrapiRoom && (
+              <RoomCard
+                purpose="booking"
+                key={i}
+                room={room}
+                selectRoom={selectRoom}
+                pickRoomHandler={pickRoomHandler}
+                remoteUrl={remoteUrl}
+              />
+            )}
+            </>
 				))}
 			</div>
 		</div>

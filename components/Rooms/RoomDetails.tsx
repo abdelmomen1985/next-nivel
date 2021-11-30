@@ -5,6 +5,7 @@ import CustomMD from "../common/CustomMD";
 import { AppContext } from "./../../context/AppContext";
 import { useSpeech } from "./../../hooks/useSpeech";
 import useTranslation from "./../../hooks/useTranslation";
+import Link from 'next/link'
 
 const RoomDetails = ({
   roomDetails,
@@ -41,7 +42,7 @@ const RoomDetails = ({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-start mx-1 my-1">
       <div className="mx-2">
         {roomDetails?.RelWithStrapiRoom?.images &&
-        roomDetails?.RelWithStrapiRoom?.images?.length > 0 ? (
+          roomDetails?.RelWithStrapiRoom?.images?.length > 0 ? (
           <Slide
             easing="ease-in"
             transitionDuration={500}
@@ -61,6 +62,16 @@ const RoomDetails = ({
         ) : (
           <img src="https://i.imgur.com/bDujVXa.jpg" />
         )}
+        <div className="text-center">
+          <Link href={`/${locale}/booking`}>
+            <button
+
+              className="my-4 btn-primary-light text-white capitalize text-lg font-medium px-10 py-2 rounded-lg"
+            >
+              {t("bookNow")}
+            </button>
+          </Link>
+        </div>
       </div>
       <div className="mx-1 py-2 ">
         <CustomMD

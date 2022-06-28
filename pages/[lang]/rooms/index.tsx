@@ -2,7 +2,7 @@ import { useLazyQuery } from "@apollo/client";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GetServerSideProps } from "next";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import RoomDetails from "../../../components/Rooms/RoomDetails";
 import { getLocalizationProps } from "../../../context/LangContext";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
@@ -28,6 +28,7 @@ const RoomsPage = ({
   const { t } = useTranslation();
   const { isMobile, isTablet } = useContext(AppContext);
   const [currentRooms] = useState<any[]>([...roomsData]);
+
   const [roomDetails, setRoomDetails] = useState<any>(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [roomAmenitiesState, setRoomAmenitiesState] = useState<any[]>([]);
@@ -77,19 +78,29 @@ const RoomsPage = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {currentRooms.map((room, i) => (
-            <>
-              {room.RelWithStrapiRoom && (
-                <RoomCard
-                  purpose="view"
-                  key={i}
-                  room={room}
-                  selectRoom={selectRoomHandler}
-                  remoteUrl={layout?.remoteSchemaUrl}
-                />
-              )}
-            </>
-          ))}
+          {currentRooms
+            .sort((a, b) =>
+              a.RelWithStrapiRoom?.sorte > b.RelWithStrapiRoom?.sorter
+                ? 1
+                : b.RelWithStrapiRoom?.sorter > a.RelWithStrapiRoom?.sorter
+                ? -1
+                : 0
+            )
+            .map((room, i) => (
+              <>
+                {room.RelWithStrapiRoom && (
+                  <>
+                    <RoomCard
+                      purpose="view"
+                      key={i}
+                      room={room}
+                      selectRoom={selectRoomHandler}
+                      remoteUrl={layout?.remoteSchemaUrl}
+                    />
+                  </>
+                )}
+              </>
+            ))}
         </div>
       </div>
 

@@ -49,6 +49,7 @@ export const HOME_PAGE = gql`
     strpRooms(publicationState: LIVE) {
       id
       name
+      sorter
       images {
         url
       }

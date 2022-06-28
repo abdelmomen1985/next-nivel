@@ -6,6 +6,7 @@ export const ROOM_FIELDS = `
       id
       media
       title
+      
       room_rates{
         id
         base_price 
@@ -19,6 +20,7 @@ export const ROOM_FIELDS = `
 export const Room4RatesFields = `
 				id
 				name
+        sorter
 				images {
 					url
 					width

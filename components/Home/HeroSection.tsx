@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 // @ts-ignore
 import { Slide } from "react-slideshow-image";
 import { AppContext } from "../../context/AppContext";
 
 const sliderImgs = [
-  "/images/hero-slider/1.png",
+  "/images/hero-slider/1.jpg",
   "/images/hero-slider/2.jpg",
   "/images/hero-slider/3.jpg",
+  "/images/hero-slider/4.jpg",
 ];
 const HeroSection = () => {
   const { isMobile } = useContext(AppContext);

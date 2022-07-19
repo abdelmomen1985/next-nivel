@@ -13,6 +13,7 @@ const RoomsNdSuits = ({
 }) => {
   const { t, locale } = useTranslation();
   const { speechHandler } = useSpeech();
+  const roomsToSort = [...rooms];
 
   return (
     <section className="bg-gray-light md:px-10 py-5 px-5 md:py-10 my-4">
@@ -23,7 +24,7 @@ const RoomsNdSuits = ({
         {t("roomsNdSuites")}
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-        {rooms
+        {roomsToSort
           ?.sort((a, b) =>
             a.sorter > b.sorter ? 1 : b.sorter > a.sorter ? -1 : 0
           )

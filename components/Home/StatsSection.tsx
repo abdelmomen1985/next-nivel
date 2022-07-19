@@ -57,28 +57,28 @@ const StatsSection = ({ home }: { home: any }) => {
           <h5
             style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966-17-2232008")}
-            className="text-black text-lg mt-1 text-left"
+            className="text-black text-lg text-left"
           >
             +966-17-2232008
           </h5>
           <h5
             style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966-17-2232007")}
-            className="text-black text-lg mt-1 text-left"
+            className="text-black text-lg text-left"
           >
             +966-17-2232007
           </h5>
           <h5
             style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966-17-2232006")}
-            className="text-black text-lg mt-1 text-left"
+            className="text-black text-lg text-left"
           >
             +966-17-2232006
           </h5>
           <h5
             style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966-17-2232005")}
-            className="text-black text-lg mt-1 text-left"
+            className="text-black text-lg text-left"
           >
             +966-17-2232005
           </h5>
@@ -98,6 +98,19 @@ const StatsSection = ({ home }: { home: any }) => {
             }}
             markdown={home[`address_${locale}`]}
           />
+          <h4
+            onMouseEnter={() => speechHandler(t("email"))}
+            className="text-gray-dark text-lg uppercase font-medium"
+          >
+            {t("email")}
+          </h4>
+          <h5
+            style={{ direction: "ltr" }}
+            onMouseEnter={() => speechHandler("info@nivelhotels.com")}
+            className="text-black text-lg text-left"
+          >
+            info@nivelhotels.com
+          </h5>
         </div>
         <div className="mx-0 lg:mx-auto my-2 lg:my-0">
           <h4

@@ -13,6 +13,7 @@ const RoomsNdSuits = ({
 }) => {
   const { t, locale } = useTranslation();
   const { speechHandler } = useSpeech();
+
   return (
     <section className="bg-gray-light md:px-10 py-5 px-5 md:py-10 my-4">
       <h3
@@ -26,7 +27,7 @@ const RoomsNdSuits = ({
           ?.sort((a, b) =>
             a.sorter > b.sorter ? 1 : b.sorter > a.sorter ? -1 : 0
           )
-          .map((room, i) => (
+          ?.map((room, i) => (
             <div
               className={styles.roomCard}
               key={i}

@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import React from "react";
 import CustomMD from "../common/CustomMD";
 import { useSpeech } from "./../../hooks/useSpeech";
 import useTranslation from "./../../hooks/useTranslation";
@@ -50,17 +49,38 @@ const StatsSection = ({ home }: { home: any }) => {
           </h4>
           <h5
             style={{ direction: "ltr" }}
-            onMouseEnter={() => speechHandler("+966-017-2559999")}
+            onMouseEnter={() => speechHandler("+966-58-2798343")}
             className="text-black text-lg mt-1 text-left"
           >
-            +966-017-2559999
+            +966-58-2798343
           </h5>
           <h5
             style={{ direction: "ltr" }}
-            onMouseEnter={() => speechHandler("++966-017-2553333")}
+            onMouseEnter={() => speechHandler("+966-17-2232008")}
             className="text-black text-lg mt-1 text-left"
           >
-            +966-017-2553333
+            +966-17-2232008
+          </h5>
+          <h5
+            style={{ direction: "ltr" }}
+            onMouseEnter={() => speechHandler("+966-17-2232007")}
+            className="text-black text-lg mt-1 text-left"
+          >
+            +966-17-2232007
+          </h5>
+          <h5
+            style={{ direction: "ltr" }}
+            onMouseEnter={() => speechHandler("+966-17-2232006")}
+            className="text-black text-lg mt-1 text-left"
+          >
+            +966-17-2232006
+          </h5>
+          <h5
+            style={{ direction: "ltr" }}
+            onMouseEnter={() => speechHandler("+966-17-2232005")}
+            className="text-black text-lg mt-1 text-left"
+          >
+            +966-17-2232005
           </h5>
         </div>
         <div className="mx-0 lg:mx-auto my-2 w-full md:w-1/2 lg:w-1/4 lg:my-0">

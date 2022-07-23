@@ -42,7 +42,7 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
             {t("importantLinks")}
           </h3>
 
-          <Link href="/about">
+          <Link href={`/${locale}/about`}>
             <a className="text-gray-dark text-lg font-medium block my-3">
               {t("about")}
             </a>

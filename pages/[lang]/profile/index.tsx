@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GetServerSideProps } from "next";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import LoadingCircle from "../../../components/common/LoadingCircle";
 import { getRemoteSchemaUrl } from "../../../data/remoteSchemaUrl";
 import Layout from "../../../Layouts/Layout";

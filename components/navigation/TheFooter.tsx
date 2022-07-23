@@ -47,17 +47,17 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
               {t("about")}
             </a>
           </Link>
-          <Link href="/contact">
+          <Link href={`/${locale}/contact`}>
             <a className="text-gray-dark text-lg font-medium block my-3">
               {t("contactUs")}
             </a>
           </Link>
-          <Link href="/events">
+          {/* <Link href={`/${locale}/events`}>
             <a className="text-gray-dark text-lg font-medium block my-3">
               {t("events")}
             </a>
-          </Link>
-          <Link href="/location">
+          </Link> */}
+          <Link href={`/${locale}/location`}>
             <a className="text-gray-dark text-lg font-medium block my-3">
               {t("ourLocation")}
             </a>

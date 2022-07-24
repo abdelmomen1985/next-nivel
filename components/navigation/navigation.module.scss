@@ -1,6 +1,6 @@
 @mixin activeNavLink {
   &::after {
-    content: ' ';
+    content: " ";
     background-color: var(--primary-dark-color);
     height: 4px;
     width: 100%;
@@ -11,7 +11,6 @@
     margin: 0 auto;
   }
 }
-
 
 .navBar {
   top: 0;
@@ -56,15 +55,15 @@
     right: 0;
     left: 0;
     margin: 0 auto;
-    z-index: 999
+    z-index: 999;
   }
 }
 
 .navLink {
   color: var(--primary-dark-color);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin: 5px 2.5%;
+  margin: 4px 2%;
   position: relative;
 
   &:hover {
@@ -74,9 +73,7 @@
 
 .active {
   @include activeNavLink;
-
 }
-
 
 .dateContainer {
   position: relative;
@@ -93,7 +90,6 @@
 }
 
 .datePickerContainer {
-
   background-color: #fff;
   z-index: 999;
   position: absolute;
@@ -118,24 +114,22 @@
   overflow-y: scroll;
   max-height: 50vh;
 
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     width: 320px;
     left: 0;
     top: unset;
-
   }
 }
 
 .specialRatesContainer {
-
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     width: 320px;
     left: -120%;
   }
 }
 
 .specialRatesBookingContainer {
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     width: 320px;
     left: -163%;
   }
@@ -175,7 +169,7 @@
     &:after {
       content: "";
       position: absolute;
-      transition: transform .2s ease-in-out;
+      transition: transform 0.2s ease-in-out;
     }
 
     &::-ms-check {
@@ -188,11 +182,11 @@
     &:after {
       border-right: 3px solid var(--primary-dark-color);
       border-bottom: 3px solid var(--primary-dark-color);
-      width: .625em;
+      width: 0.625em;
       height: 1em;
       transform: rotate(45deg) scale(0);
-      right: .5em;
-      top: -.5em;
+      right: 0.5em;
+      top: -0.5em;
       bottom: 0;
       margin: auto;
     }
@@ -216,8 +210,8 @@
     position: absolute;
     background-color: var(--primary-light-color);
     transition-property: all;
-    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-    transition-duration: .15s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
     bottom: -2px;
     right: -2px;
     height: 21px;
@@ -227,7 +221,7 @@
   &::after {
     content: "";
     position: absolute;
-    width: .75rem;
+    width: 0.75rem;
     border-left-width: 2px;
     border-bottom-width: 2px;
     border-color: #fff;

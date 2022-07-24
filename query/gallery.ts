@@ -7,6 +7,7 @@ const GALLERY_FRAGMENT = gql`
     media
     title
     description
+    sorter
   }
 `;
 

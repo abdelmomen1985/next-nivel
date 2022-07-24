@@ -27,6 +27,7 @@ const GalleryPage = ({
   const { isMobile } = useContext(AppContext);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [galleryDetails, setGalleryDetails] = useState<any>(undefined);
+  const galleryToSort = [...galleryCats];
 
   return (
     <Layout layout={layout}>
@@ -42,10 +43,23 @@ const GalleryPage = ({
        * fea5cba7-9ae6-41bd-971f-a6d80e89e056
        */}
       <div className={styles.galleryContainer}>
-        {galleryCats.map((cat: any) => (
-          <>
-            {query?.spa &&
-              cat?.id === "fea5cba7-9ae6-41bd-971f-a6d80e89e056" && (
+        {galleryToSort
+          ?.sort((a, b) =>
+            a.sorter > b.sorter ? 1 : b.sorter > a.sorter ? -1 : 0
+          )
+          .map((cat: any) => (
+            <>
+              {query?.spa &&
+                cat?.id === "fea5cba7-9ae6-41bd-971f-a6d80e89e056" && (
+                  <GalleryCategory
+                    cat={cat}
+                    setGalleryDetails={setGalleryDetails}
+                    setOpenModal={setOpenModal}
+                    styles={styles}
+                    key={cat?.id}
+                  />
+                )}
+              {!query?.spa && (
                 <GalleryCategory
                   cat={cat}
                   setGalleryDetails={setGalleryDetails}
@@ -54,17 +68,8 @@ const GalleryPage = ({
                   key={cat?.id}
                 />
               )}
-            {!query?.spa && (
-              <GalleryCategory
-                cat={cat}
-                setGalleryDetails={setGalleryDetails}
-                setOpenModal={setOpenModal}
-                styles={styles}
-                key={cat?.id}
-              />
-            )}
-          </>
-        ))}
+            </>
+          ))}
       </div>
       <CustomModal
         closeWithin={true}

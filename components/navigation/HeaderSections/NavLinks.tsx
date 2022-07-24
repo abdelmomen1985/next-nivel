@@ -1,24 +1,24 @@
-import React, { useContext } from 'react';
-import useTranslation from '../../../hooks/useTranslation';
-import ActiveLink from '../ActiveLink';
-import styles from '../navigation.module.scss';
-import { useSignout } from './../../../hooks/useSignout';
+import { useContext } from "react";
+import useTranslation from "../../../hooks/useTranslation";
+import ActiveLink from "../ActiveLink";
+import styles from "../navigation.module.scss";
+import { useSignout } from "./../../../hooks/useSignout";
 
-import { AppContext } from './../../../context/AppContext';
-import clsx from 'clsx';
-import LocaleSwitch from './LocaleSwitch';
+import clsx from "clsx";
+import { AppContext } from "./../../../context/AppContext";
+import LocaleSwitch from "./LocaleSwitch";
 const NavLinks = ({
-	openNav,
-	setOpenNav,
+  openNav,
+  setOpenNav,
 }: {
-	openNav: boolean;
-	setOpenNav: (open: boolean) => void;
+  openNav: boolean;
+  setOpenNav: (open: boolean) => void;
 }) => {
-	const { isMobile, user, setLoginModal, isTablet } = useContext(AppContext);
-	const { locale, t } = useTranslation();
-	const { signOutHandler } = useSignout();
+  const { isMobile, user, setLoginModal, isTablet } = useContext(AppContext);
+  const { locale, t } = useTranslation();
+  const { signOutHandler } = useSignout();
 
-	return (
+  return (
     <>
       <ActiveLink activeClassName={styles.active} href={`/${locale}/`}>
         <a className={styles.navLink}>{t("headerHome")}</a>
@@ -30,11 +30,16 @@ const NavLinks = ({
       <ActiveLink activeClassName={styles.active} href={`/${locale}/dining`}>
         <a className={styles.navLink}>{t("headerDining")}</a>
       </ActiveLink>
-			
+
       <ActiveLink activeClassName={styles.active} href={`/${locale}/meetings`}>
         <a className={styles.navLink}>{t("headerMeetings")}</a>
       </ActiveLink>
-
+      <ActiveLink
+        activeClassName={styles.active}
+        href={`/${locale}/gallery?spa=1`}
+      >
+        <a className={styles.navLink}>{t("headerSPA")}</a>
+      </ActiveLink>
       <ActiveLink activeClassName={styles.active} href={`/${locale}/gallery`}>
         <a className={styles.navLink}>{t("headerGallery")}</a>
       </ActiveLink>

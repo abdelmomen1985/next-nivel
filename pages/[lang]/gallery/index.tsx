@@ -17,9 +17,11 @@ import styles from "./gallery.module.scss";
 const GalleryPage = ({
   galleryCats,
   layout,
+  query,
 }: {
   galleryCats: any;
   layout: LayoutType;
+  query: any;
 }) => {
   const { t } = useTranslation();
   const { isMobile } = useContext(AppContext);
@@ -28,22 +30,40 @@ const GalleryPage = ({
 
   return (
     <Layout layout={layout}>
-      <h3 className="text-center text-black font-semibold text-xl">
+      {/* <h3 className="text-center text-black font-semibold text-xl">
         {t("gallery")}
       </h3>
       <h5 className="text-center my-1 text-base font-normal">
         {t("galleryDisc")}
       </h5>
-      <hr className="my-10 w-full" />
+      <hr className="my-10 w-full" /> */}
+      {/**
+       * SPA WORKAROUND
+       * fea5cba7-9ae6-41bd-971f-a6d80e89e056
+       */}
       <div className={styles.galleryContainer}>
         {galleryCats.map((cat: any) => (
-          <GalleryCategory
-            cat={cat}
-            setGalleryDetails={setGalleryDetails}
-            setOpenModal={setOpenModal}
-            styles={styles}
-            key={cat?.id}
-          />
+          <>
+            {query?.spa &&
+              cat?.id === "fea5cba7-9ae6-41bd-971f-a6d80e89e056" && (
+                <GalleryCategory
+                  cat={cat}
+                  setGalleryDetails={setGalleryDetails}
+                  setOpenModal={setOpenModal}
+                  styles={styles}
+                  key={cat?.id}
+                />
+              )}
+            {!query?.spa && (
+              <GalleryCategory
+                cat={cat}
+                setGalleryDetails={setGalleryDetails}
+                setOpenModal={setOpenModal}
+                styles={styles}
+                key={cat?.id}
+              />
+            )}
+          </>
         ))}
       </div>
       <CustomModal
@@ -71,6 +91,7 @@ const GalleryPage = ({
 export default GalleryPage;
 
 const getAnyProps = async (ctx: any) => {
+  const { query } = ctx;
   const localization = getLocalizationProps(ctx, "common");
   const client = initializeApollo();
   const resp = await client.query({ query: LOAD_GALLERY });
@@ -78,6 +99,7 @@ const getAnyProps = async (ctx: any) => {
 
   return {
     props: {
+      query,
       localization,
       galleryCats: resp?.data?.gallery,
       layout: { ...resp?.data?.layout, remoteSchemaUrl },

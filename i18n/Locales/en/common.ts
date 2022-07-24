@@ -8,6 +8,7 @@ const common = {
   headerLocation: "Location",
   headerDining: "Dining",
   headerMeetings: "Meeting Rooms",
+  headerSPA: "SPA",
   rooms: "Rooms",
   guests: "Guests",
   specialRates: "Special Rates",

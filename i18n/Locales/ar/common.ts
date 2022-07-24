@@ -8,6 +8,7 @@ const common = {
   headerLocation: "الموقع",
   headerDining: "المطاعم",
   headerMeetings: "الاجتماعات",
+  headerSPA: "النادي الرياضي",
   rooms: "الأجنحة",
   guests: "الضيوف",
   specialRates: "اسعار خاصة",

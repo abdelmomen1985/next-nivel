@@ -62,6 +62,21 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
               {t("ourLocation")}
             </a>
           </Link>
+          <Link href={`/sitemap.xml`}>
+            <a className="text-gray-dark text-lg font-medium block my-3">
+              {t("siteMap")}
+            </a>
+          </Link>
+          <Link href={`/${locale}/careers`}>
+            <a className="text-gray-dark text-lg font-medium block my-3">
+              {t("careers")}
+            </a>
+          </Link>
+          <Link href={`/${locale}/tos`}>
+            <a className="text-gray-dark text-lg font-medium block my-3">
+              {t("tos")}
+            </a>
+          </Link>
         </div>
         <div className="ml-0 md:ml-6">
           <h3 className="text-primary-dark text-xl font-semibold capitalize">
@@ -72,12 +87,20 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
               <a className={styles.socialMediaLink} id={key}>
                 <Image
                   src={layout?.remoteSchemaUrl + mediaLink?.icon?.url}
-                  width={mediaLink?.icon?.width}
-                  height={mediaLink?.icon?.height}
+                  width={"16px"}
+                  height={"16px"}
+                  className="max-w-[16px]"
                 />
                 <span className="p-2">{mediaLink[`name_${locale}`]}</span>
               </a>
             ))}
+          <div>
+            <Image
+              src={`https://i.imgur.com/Js4cNHw.png`}
+              width={"125px"}
+              height={"125px"}
+            />
+          </div>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ const common = {
   join: "Join Nivel Points",
   signIn: "Sign In",
   headerHome: "Home",
-  headerRooms: "Accomodation",
+  headerRooms: "Accommodation",
   headerGallery: "Gallery",
   headerLocation: "Location",
   headerDining: "Dining",
@@ -155,14 +155,18 @@ const common = {
   otherRather: "Other / Rather not say",
   userMaritalStatus: "User's marital status",
   specialRequests: "Special Requests",
-  tos: "I acknowledge my acceptance and acceptance to deduct the value of the reservation from my credit card. I also acknowledge that I have read and agree to the cancellation policies and follow the general system in force in the hotel.",
+  tos_msg:
+    "I acknowledge my acceptance and acceptance to deduct the value of the reservation from my credit card. I also acknowledge that I have read and agree to the cancellation policies and follow the general system in force in the hotel.",
   signupHeader: "Sign Up to Book your Next visit",
   register: "Register",
   importantLinks: "Important links ",
   about: "ِAbout Us",
   events: "News & Events",
   ourLocation: "Our location",
+  siteMap: "Site Map",
   reservations: "Reservations",
+  careers: "Careers",
+  tos: "Terms of use",
 };
 
 export default common;

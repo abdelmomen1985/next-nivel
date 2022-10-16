@@ -153,7 +153,7 @@
 .formGroup {
   input {
     -moz-appearance: none;
-    -o-apperance: none;
+    -o-appearance: none;
     -webkit-appearance: none;
     background: transparent;
     border: 1px solid #c4c4c4;
@@ -237,6 +237,6 @@
 }
 
 .socialMediaLink {
-  @apply text-lg font-medium my-3 flex justify-start items-center cursor-pointer;
+  @apply text-lg font-medium my-1 flex justify-start items-center cursor-pointer;
   color: var(--primary-light-color);
 }

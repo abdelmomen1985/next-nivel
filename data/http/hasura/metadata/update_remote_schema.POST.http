@@ -1,6 +1,6 @@
-POST https://nivel-backend.hasura.app/v1/metadata
+POST https://nivel-remote.hasura.app/v1/metadata
 Content-Type: application/json
-x-hasura-admin-secret: wYFunZN3WCnepXxE7REG8TNLdm9s0jLfyPaypDIrw5YcierwwRpRQOUowjekZEwi
+x-hasura-admin-secret: mXPY8Rl95vbcnYYHq0w7dHEYOPzKf7pQ0M0h5fvT46mIowsnK5hE7OnpdegNRHWQ
 
 {
     "type": "update_remote_schema",

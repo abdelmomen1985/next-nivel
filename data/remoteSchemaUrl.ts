@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getRemoteSchemaUrl() {
   let remoteSchemaUrl = "";
   const { data } = await axios.post(
-    "https://nivel-backend.hasura.app/v1/metadata",
+    "https://nivel-remote.hasura.app/v1/metadata",
     {
       type: "export_metadata",
       args: {},

@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next -p 3011",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start -p 3011",
     "type-check": "tsc"
   },
@@ -28,6 +29,7 @@
     "multiselect-react-dropdown": "^2.0.5",
     "next": "latest",
     "next-iron-session": "^4.2.0",
+    "next-sitemap": "^3.1.25",
     "rc-steps": "^4.1.3",
     "react": "^17.0.1",
     "react-date-range": "^1.1.4",

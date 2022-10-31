@@ -3,18 +3,27 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import useTranslation from "./useTranslation";
 export function useSpeech() {
   const { locale } = useTranslation();
-
   const { speak, voices, cancel } = useSpeechSynthesis();
+  const arIndex =
+    (voices as SpeechSynthesisVoice[])?.findIndex((item) =>
+      item.lang.includes("ar")
+    ) || 1;
+  const enIndex =
+    (voices as SpeechSynthesisVoice[])?.findIndex((item) =>
+      item.lang.includes("en")
+    ) || 1;
+
   const [currentVoiceIndex, setCurrentVoiceIndex] = useState<number>(() =>
-    locale === "ar" ? 1 : 0
+    locale === "ar" ? arIndex : enIndex
   );
+
   useEffect(() => {
     if (locale === "ar") {
-      setCurrentVoiceIndex(1);
+      setCurrentVoiceIndex(arIndex);
     } else {
-      setCurrentVoiceIndex(3);
+      setCurrentVoiceIndex(enIndex);
     }
-  }, [locale]);
+  }, [locale, arIndex, enIndex]);
 
   const speechHandler = (text: string) => {
     cancel();

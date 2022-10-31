@@ -127,6 +127,9 @@ const RoomsPage = ({
           remoteUrl={layout?.remoteSchemaUrl}
         />
       </CustomModal>
+      <div className="mt-4">
+        <br />
+      </div>
     </Layout>
   );
 };

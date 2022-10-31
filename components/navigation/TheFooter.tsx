@@ -84,7 +84,11 @@ const TheFooter = ({ layout }: { layout: LayoutType }) => {
           </h3>
           {socialMediaLinks.length > 0 &&
             socialMediaLinks.map((mediaLink: any, key: any) => (
-              <a className={styles.socialMediaLink} id={key}>
+              <a
+                className={styles.socialMediaLink}
+                href={mediaLink?.url}
+                id={key}
+              >
                 <Image
                   src={layout?.remoteSchemaUrl + mediaLink?.icon?.url}
                   width={"16px"}

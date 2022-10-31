@@ -30,7 +30,6 @@ const Layout = ({
       </Head>
       <Header withFilters={withFilters} layout={layout} />
       {children}
-
       <TheFooter layout={layout} />
     </div>
   );

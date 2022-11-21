@@ -3,7 +3,6 @@ import {
   faPlusCircle,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { getCountries } from "react-phone-number-input";
 // import 'react-phone-input-2/lib/style.css';
 import "react-phone-number-input/style.css";
 
@@ -15,7 +14,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import arCountries from "../../../../countries/ar/world.json";
 import enCountries from "../../../../countries/en/world.json";
-import { months } from "../../../../utils/12months";
 import { getNextTenYears } from "../../../../utils/getNextTenYears";
 import CustomPhoneInput from "../../../common/CustomPhoneInput/CustomPhoneInput";
 import styles from "../../booking.module.scss";
@@ -24,6 +22,7 @@ import useTranslation from "./../../../../hooks/useTranslation";
 import { bookingValidation } from "./bookingValidation";
 
 const years = getNextTenYears();
+
 const BookingForm = ({
   addBooking,
   userData,
@@ -79,9 +78,7 @@ const BookingForm = ({
       "update"
     );
   };
-  useEffect(() => {
-    getCountries().forEach((country) => console.log(country));
-  }, []);
+
   return (
     <div className="w-full my-5 px-2">
       <h3>{t("allFields")}</h3>
@@ -90,6 +87,7 @@ const BookingForm = ({
           userData ? updateReservationHandler : bookingFormHandler
         )}
       >
+        {/**
         <h3
           onMouseEnter={() => speechHandler(t("payment"))}
           className="flex flex-wrap justify-start items-start my-5"
@@ -124,6 +122,7 @@ const BookingForm = ({
             {errors?.cardNo?.message[locale!]}
           </p>
         )}
+         
         <div className="grid grid-cols-2 gap-2 items-center w-full md:w-2/3">
           <div className={clsx(styles.formGroup)}>
             <label
@@ -186,6 +185,7 @@ const BookingForm = ({
             {errors?.cardYear?.message[locale]}
           </p>
         )}
+        */}
         <h3
           onMouseEnter={() => speechHandler(t("personalInfo"))}
           className="flex flex-wrap justify-start items-center mt-5 mb-1"

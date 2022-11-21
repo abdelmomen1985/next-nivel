@@ -1,8 +1,8 @@
-import valid from "card-validator";
 import * as yup from "yup";
 import { phonePattern } from "./../../../../utils/regex";
 
 export const bookingValidation = yup.object().shape({
+  /*
   cardNo: yup
     .string()
     .required({
@@ -19,6 +19,7 @@ export const bookingValidation = yup.object().shape({
     ar: "الرجاء ادخال تاريخ صالح",
   }),
   cardYear: yup.string().required("Please enter a valid expiration date."),
+  */
   firstName: yup.string().required({
     en: "Please enter your first name",
     ar: "الرجاء ادخال الاسم الأول",

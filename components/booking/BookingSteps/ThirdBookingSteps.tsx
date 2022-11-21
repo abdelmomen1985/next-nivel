@@ -142,7 +142,7 @@ ${stay.special_requests?.join("<br/>")}
           },
         });
         await axios.post(
-          `http://localhost:3011/api/email`,
+          `https://www.nivelhotels.com/api/email`,
           {
             from: {
               email: "info@nivelhotels.com",
@@ -204,7 +204,7 @@ ${stay.special_requests?.join("<br/>")}
           },
         });
         axios.post(
-          `http://localhost:3011/api/email`,
+          `https://www.nivelhotels.com/api/email`,
           {
             from: {
               email: "info@nivelhotels.com",

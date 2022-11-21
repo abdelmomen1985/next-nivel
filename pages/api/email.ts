@@ -1,0 +1,13 @@
+import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await axios.post(`https://api.mailersend.com/v1/email`, req.body, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWQ1NTI4ZjBkMjliMGQ4ZTAyZTViMTliNjk2MjZkZGYzYjM5M2YxMTgxYjQzNDA2Nzc2MTNhZTFmZDU3OWIwZDY5Nzk1NjMxYjgwNjlmYjQiLCJpYXQiOjE2Njg3MTEyNTMuMTg3OTMzLCJuYmYiOjE2Njg3MTEyNTMuMTg3OTM2LCJleHAiOjQ4MjQzODQ4NTMuMTgzODMxLCJzdWIiOiI0NjI2NiIsInNjb3BlcyI6WyJlbWFpbF9mdWxsIiwiZG9tYWluc19mdWxsIiwiYWN0aXZpdHlfZnVsbCIsImFuYWx5dGljc19mdWxsIiwidG9rZW5zX2Z1bGwiLCJ3ZWJob29rc19mdWxsIiwidGVtcGxhdGVzX2Z1bGwiLCJzdXBwcmVzc2lvbnNfZnVsbCIsInNtc19mdWxsIiwiZW1haWxfdmVyaWZpY2F0aW9uX2Z1bGwiXX0.VkC84l3h56tK63t9OmFRg5EipheVUpoHPduU6m-WW-ELfIidAAkGXLsznSSIsTE4uhNKrDktcGpHEAuK0beBB2F_bAt097RCLM07-9esj5SQHD1PhRsfB9psViAeC3xfCw9cP1JxKgZInLyjxKLgHonLpvG7ynewHsPPZK1mt4oHDnJOqok8JF_XA8crhheNqzCuzbvLPIw53yeq92qqNP2Om7o5wzA4gTt8dSuW_iuqHmnO_UuysE8egf7b1urhTzdbx0aewib_hbDb4UJP_iUzLS61ArRrbjVLdt_u1IlI1wtFNwq0TaR8DCQHrYuky5fn6OTrfQgB6QS-hG8p7GjzEcPWTdAwqYrDR0fSpelMxvCEFC4DO8YgePJh9LNYQwt_z4865FSEIa3TGlKo2ruHSyqync_-q4twormm77k0RMLdaWXWXySplh4g62erXOURpK7_BPNgJOfW7PeMAzpNlSmti_zcmBR8xAmwoV0zsXZt6FYx6kMXiZfJFRSI11i4rlKMgg5M54W8cEpmKcJhsfEVgNT1aufI0IsRxyuAPA7xMGo-mYuCw3tUsHdsRmn7BzpFJ_FZLJPgBp8R06qfN95tAU4F1A36eMYvqLZEUd5jV3a64x8Zgmhm6ohNlu5MXJOVzTpIc_L7tpVgeesXAoo6cmVTGBN1QZ7BHNo",
+    },
+  });
+  res.status(200).json({ success: `email sent !` });
+};
+export default handler;

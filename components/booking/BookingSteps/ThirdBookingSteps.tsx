@@ -145,11 +145,11 @@ ${stay.special_requests?.join("<br/>")}
           `https://www.nivelhotels.com/api/email`,
           {
             from: {
-              email: "info@nivelhotels.com",
+              email: "booking@nivelhotels.com",
             },
             to: [
               {
-                email: "marketing@nivelhotels.com",
+                email: "info@nivelhotels.com",
               },
               {
                 email: "abdelmomen1985@gmail.com",
@@ -207,11 +207,11 @@ ${stay.special_requests?.join("<br/>")}
           `https://www.nivelhotels.com/api/email`,
           {
             from: {
-              email: "info@nivelhotels.com",
+              email: "booking@nivelhotels.com",
             },
             to: [
               {
-                email: "marketing@nivelhotels.com",
+                email: "info@nivelhotels.com",
               },
               {
                 email: "abdelmomen1985@gmail.com",

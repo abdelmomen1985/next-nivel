@@ -49,11 +49,12 @@ const StatsSection = ({ home }: { home: any }) => {
           </h4>
           <h5
             style={{ direction: "ltr" }}
-            onMouseEnter={() => speechHandler("+966-58-2798343")}
+            onMouseEnter={() => speechHandler("+966-920012502")}
             className="text-black text-lg mt-1 text-left"
           >
-            +966-58-2798343
+            +966-920012502
           </h5>
+          {/** 
           <h5
             style={{ direction: "ltr" }}
             onMouseEnter={() => speechHandler("+966-17-2232008")}
@@ -82,6 +83,7 @@ const StatsSection = ({ home }: { home: any }) => {
           >
             +966-17-2232005
           </h5>
+          */}
         </div>
         <div className="mx-0 lg:mx-auto my-2 w-full md:w-1/2 lg:w-1/4 lg:my-0">
           <h4

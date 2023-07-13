@@ -1,16 +1,18 @@
-import { useMutation } from "@apollo/client";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { toast } from "react-toastify";
-import { BookingData } from "../../../lib/types";
-import { AppContext } from "./../../../context/AppContext";
-import { useSpeech } from "./../../../hooks/useSpeech";
-import useTranslation from "./../../../hooks/useTranslation";
-import { ADD_BOOKING, UPDATE_BOOKING } from "./../../../query/booking";
-import { cleanObjects } from "./../../../utils/cleanObjects";
-import BookingForm from "./BookingForm/BookingForm";
-import BookingSummary from "./BookingSummary";
+import { useMutation } from '@apollo/client';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { toast } from 'react-toastify';
+
+import { BookingData } from '../../../lib/types';
+import { AppContext } from './../../../context/AppContext';
+import { useSpeech } from './../../../hooks/useSpeech';
+import useTranslation from './../../../hooks/useTranslation';
+import { ADD_BOOKING, UPDATE_BOOKING } from './../../../query/booking';
+import { cleanObjects } from './../../../utils/cleanObjects';
+import BookingForm from './BookingForm/BookingForm';
+import BookingSummary from './BookingSummary';
+
 const ThirdBookingSteps = ({
   selectedRoom,
   filterValues,
@@ -153,6 +155,9 @@ ${stay.special_requests?.join("<br/>")}
               },
               {
                 email: "abdelmomen1985@gmail.com",
+              },
+              {
+                email: "reservation@nivelhotels.com",
               },
             ],
             subject: "New Booking",

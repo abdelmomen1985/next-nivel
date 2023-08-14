@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+
 import AmenitiesSection from "../../components/Home/AmenitiesSection";
 import Dining from "../../components/Home/Dining";
 import HeroSection from "../../components/Home/HeroSection";
@@ -19,6 +20,7 @@ import ExpectSection from "./../../components/Home/ExpectSection";
 import { useSpeech } from "./../../hooks/useSpeech";
 import Layout from "./../../Layouts/Layout";
 import styles from "./home.module.scss";
+
 const HomePage = ({
   home,
   layout,
@@ -40,6 +42,15 @@ const HomePage = ({
     <Layout title="Home Page" layout={layout}>
       <ExpectSection home={home} />
       <HeroSection />
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/12vUP1tXD1g"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
       <StatsSection home={home} />
       <TradeMarkSection home={home} />
       <AmenitiesSection

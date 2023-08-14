@@ -42,15 +42,17 @@ const HomePage = ({
     <Layout title="Home Page" layout={layout}>
       <ExpectSection home={home} />
       <HeroSection />
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/12vUP1tXD1g"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+      <div className="m-6 flex justify-center">
+        <iframe
+          width="960"
+          height="415"
+          src="https://www.youtube.com/embed/12vUP1tXD1g"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
       <StatsSection home={home} />
       <TradeMarkSection home={home} />
       <AmenitiesSection

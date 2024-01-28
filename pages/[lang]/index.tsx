@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 
 import AmenitiesSection from "../../components/Home/AmenitiesSection";
 import Dining from "../../components/Home/Dining";
+import HandiSection from "../../components/Home/HandiSection";
 import HeroSection from "../../components/Home/HeroSection";
 import MeetingsNdEvents from "../../components/Home/MeetingsNdEvents";
 import RoomsNdSuits from "../../components/Home/RoomsNdSuits";
@@ -62,6 +63,7 @@ const HomePage = ({
       <RoomsNdSuits rooms={rooms} remoteSchemaUrl={remoteSchemaUrl} />
       <Dining />
       <MeetingsNdEvents />
+
       {homeSections.length > 0 &&
         homeSections.map((homeSection, i) => (
           <div key={i} className={styles.homeSectionContainer}>
@@ -90,6 +92,7 @@ const HomePage = ({
             </div>
           </div>
         ))}
+      <HandiSection />
     </Layout>
   );
 };

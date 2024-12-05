@@ -35,11 +35,11 @@ const TopLevel = ({
     }
   };
   return (
-    <div className="flex flex-wrap justify-between lg:justify-between items-center my-2 mx-2 md:mx-5 px-1 md:px-2">
+    <div className="text-center flex-wrap justify-between lg:justify-between items-center my-2 mx-2 md:mx-5 px-1 md:px-2">
       <Link href={`/${locale}/`}>
         <img
           src={layout?.remoteSchemaUrl + layout?.top_logo_en?.url}
-          className="cursor-pointer"
+          className="cursor-pointer mx-auto"
           style={{ height: "80px" }}
         />
       </Link>

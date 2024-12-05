@@ -1,10 +1,4 @@
-import {
-  faBars,
-  faMinusCircle,
-  faPlusCircle,
-  faTimes,
-  faUserCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Link from "next/link";
@@ -139,15 +133,17 @@ const TopLevel = ({
                 }}
               />
             ) : (
-              <FontAwesomeIcon
+              <>
+                {/* <FontAwesomeIcon
                 icon={faUserCircle}
                 className="text-primary-light text-3xl "
-              />
+                /> */}
+              </>
             )}
           </button>
           <span>|</span>
           <div className="mx-3 flex">
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faPlusCircle}
               className="text-primary-light text-2xl "
               onClick={() => {
@@ -172,7 +168,7 @@ const TopLevel = ({
                   currentZoomLevel - 10 + "%";
               }}
               className="text-primary-light text-2xl "
-            />
+            /> */}
           </div>
         </div>
         {isMobile && (

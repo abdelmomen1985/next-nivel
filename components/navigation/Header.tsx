@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { LayoutType } from "../../types/layout";
 import AuthModal from "../Auth/AuthModal";
 import { AppContext } from "./../../context/AppContext";
@@ -62,12 +62,6 @@ const Header = ({
         }}
         ref={navMenuRef}
       >
-        <TopLevel
-          setIsRegister={setIsRegister}
-          openNav={openNav}
-          setOpenNav={setOpenNav}
-          layout={layout}
-        />
         <nav
           className={clsx(
             styles.navLinks,
@@ -77,6 +71,13 @@ const Header = ({
         >
           <NavLinks openNav={openNav} setOpenNav={setOpenNav} />
         </nav>
+        <TopLevel
+          setIsRegister={setIsRegister}
+          openNav={openNav}
+          setOpenNav={setOpenNav}
+          layout={layout}
+        />
+
         {withFilters && <Filters updateFilters={updateFiltersState} />}
       </header>
       {loginModal && <AuthModal isRegister={isRegister} />}

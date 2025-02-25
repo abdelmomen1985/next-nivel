@@ -1,57 +1,55 @@
-import React from "react";
-import useTranslation from "../../../hooks/useTranslation";
-import ChildAlert from "../ChildAlert";
-import { useSpeech } from "./../../../hooks/useSpeech";
+import React from 'react'
+import useTranslation from '../../../hooks/useTranslation'
+import ChildAlert from '../ChildAlert'
+import { useSpeech } from './../../../hooks/useSpeech'
 
 const SecondBookingStep = ({
   selectedRoom,
   filterValues,
   pickPackageHandler,
 }: {
-  selectedRoom: any;
-  filterValues: any;
-  pickPackageHandler: (pack: any) => void;
+  selectedRoom: any
+  filterValues: any
+  pickPackageHandler: (pack: any) => void
 }) => {
-  const { t, locale } = useTranslation();
-  const { speechHandler } = useSpeech();
-  console.log("selectedRoom", selectedRoom);
+  const { t, locale } = useTranslation()
+  const { speechHandler } = useSpeech()
+  console.log('selectedRoom', selectedRoom)
   return (
     <section className="w-full mx-auto lg:mx-12">
       <ChildAlert />
       <div className="py-5 flex justify-between items-center mx-5 my-5 border border-gray-200 border-l-0 border-r-0 px-5">
         <h3
-          onMouseEnter={() => speechHandler(t("bestAvRate"))}
+          onMouseEnter={() => speechHandler(t('bestAvRate'))}
           className="text-lg md:text-2xl text-black font-normal capitalize"
         >
-          {t("bestAvRate")}
+          {t('bestAvRate')}
         </h3>
         <div>
           <h2
             onMouseEnter={() =>
-              speechHandler(
-                `${selectedRoom?.basePrice?.base_price} ${t("sar")}`
-              )
+              speechHandler(`${selectedRoom?.basePrice?.base_price} `)
             }
             className="text-black text-center text-xl font-bold"
           >
-            {selectedRoom?.basePrice?.base_price} {t("sar")}
+            {selectedRoom?.basePrice?.base_price} <i className="sicon-sar"></i>
           </h2>
           <button
-            onMouseEnter={() => speechHandler(t("book"))}
+            onMouseEnter={() => speechHandler(t('book'))}
             onClick={() => pickPackageHandler(selectedRoom?.basePrice)}
             className="my-4 bg-outline-primary-light text-primary-light capitalize text-lg font-medium px-10 py-2 rounded-lg"
           >
-            {t("book")}
+            {t('book')}
           </button>
         </div>
       </div>
       <div className="w-full my-8">
         <div className="flex justify-start items-baseline mt-2 my-5 mx-5 px-5">
           <h3
-            onMouseEnter={() => speechHandler(t("makeItPackage"))}
+            onMouseEnter={() => speechHandler(t('makeItPackage'))}
             className="mx-1 text-xl font-medium"
           >
-            {t("makeItPackage")}
+            {t('makeItPackage')}
           </h3>
           <hr className="w-2/3" />
         </div>
@@ -70,25 +68,25 @@ const SecondBookingStep = ({
               <div>
                 <h2
                   onMouseEnter={() =>
-                    speechHandler(`${pack.base_price} ${t("sar")}`)
+                    speechHandler(`${pack.base_price} ${t('sar')}`)
                   }
                   className="text-black text-center text-xl font-bold"
                 >
-                  {pack.base_price} {t("sar")}
+                  {pack.base_price} <i className="sicon-sar"></i>
                 </h2>
                 <button
-                  onMouseEnter={() => speechHandler(t("book"))}
+                  onMouseEnter={() => speechHandler(t('book'))}
                   onClick={() => pickPackageHandler(pack)}
                   className="my-4 bg-outline-primary-light text-primary-light text-lg capitalize font-medium px-10 py-2 rounded-lg"
                 >
-                  {t("book")}
+                  {t('book')}
                 </button>
               </div>
             </div>
           ))}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default SecondBookingStep;
+export default SecondBookingStep

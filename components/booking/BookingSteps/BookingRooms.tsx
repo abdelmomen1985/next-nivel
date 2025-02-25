@@ -1,187 +1,187 @@
-import { useEffect, useState } from 'react';
-import useTranslation from './../../../hooks/useTranslation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
-import styles from '../booking.module.scss';
-import { useSpeech } from './../../../hooks/useSpeech';
+import { useEffect, useState } from 'react'
+import useTranslation from './../../../hooks/useTranslation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import styles from '../booking.module.scss'
+import { useSpeech } from './../../../hooks/useSpeech'
 
 const BookingRooms = ({
-	rooms,
-	currentRoom,
-	selectedPackages,
-	changeRoom,
-	moveToPay,
-	isPayable,
-	currentStep,
+  rooms,
+  currentRoom,
+  selectedPackages,
+  changeRoom,
+  moveToPay,
+  isPayable,
+  currentStep,
 }: {
-	rooms: any;
-	currentRoom: number;
-	selectedPackages: any;
-	changeRoom: (roomNum: number) => void;
-	moveToPay: () => void;
-	isPayable: boolean;
-	currentStep: number;
+  rooms: any
+  currentRoom: number
+  selectedPackages: any
+  changeRoom: (roomNum: number) => void
+  moveToPay: () => void
+  isPayable: boolean
+  currentStep: number
 }) => {
-	const { t, locale } = useTranslation();
-	const [totalPrice, setTotalPrice] = useState<number>(0);
-	const { speechHandler } = useSpeech();
-	useEffect(() => {
-		let total = selectedPackages.reduce(
-			(prev: any, next: any) => prev + next.base_price,
-			0
-		);
-		setTotalPrice(total);
-	}, [selectedPackages]);
-	return (
-		<div className="bg-white border border-black rounded-md shadow-sm">
-			<div className="py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black">
-				<h3
-					onMouseEnter={() => speechHandler(t('reservationSummary'))}
-					className="text-base font-semibold"
-				>
-					{t('reservationSummary')}
-				</h3>
-			</div>
-			{rooms &&
-				rooms.length > 0 &&
-				rooms.map((room: any, i: number) => (
-					<div
-						key={i}
-						className={clsx(
-							currentRoom === i && currentStep !== 3
-								? ' bg-primary-light text-white '
-								: ' ',
-							'px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black my-5'
-						)}
-					>
-						<div className="flex justify-between items-center my-2">
-							<h3
-								onMouseEnter={() => speechHandler(`${t('room')} ${i + 1}`)}
-								className="text-lg font-medium capitalize"
-							>
-								{t('room')} {i + 1}
-							</h3>
-							<h5
-								onMouseEnter={() =>
-									speechHandler(`${
-										selectedPackages.length > 0 &&
-										selectedPackages[i]?.base_price
-											? selectedPackages[i]?.base_price
-											: 0
-									} 
+  const { t, locale } = useTranslation()
+  const [totalPrice, setTotalPrice] = useState<number>(0)
+  const { speechHandler } = useSpeech()
+  useEffect(() => {
+    let total = selectedPackages.reduce(
+      (prev: any, next: any) => prev + next.base_price,
+      0,
+    )
+    setTotalPrice(total)
+  }, [selectedPackages])
+  return (
+    <div className="bg-white border border-black rounded-md shadow-sm">
+      <div className="py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black">
+        <h3
+          onMouseEnter={() => speechHandler(t('reservationSummary'))}
+          className="text-base font-semibold"
+        >
+          {t('reservationSummary')}
+        </h3>
+      </div>
+      {rooms &&
+        rooms.length > 0 &&
+        rooms.map((room: any, i: number) => (
+          <div
+            key={i}
+            className={clsx(
+              currentRoom === i && currentStep !== 3
+                ? ' bg-primary-light text-white '
+                : ' ',
+              'px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black my-5',
+            )}
+          >
+            <div className="flex justify-between items-center my-2">
+              <h3
+                onMouseEnter={() => speechHandler(`${t('room')} ${i + 1}`)}
+                className="text-lg font-medium capitalize"
+              >
+                {t('room')} {i + 1}
+              </h3>
+              <h5
+                onMouseEnter={() =>
+                  speechHandler(`${
+                    selectedPackages.length > 0 &&
+                    selectedPackages[i]?.base_price
+                      ? selectedPackages[i]?.base_price
+                      : 0
+                  } 
 								${t('sar')}`)
-								}
-								className="text-base font-normal"
-							>
-								{selectedPackages.length > 0 && selectedPackages[i]?.base_price
-									? selectedPackages[i]?.base_price
-									: 0}{' '}
-								{t('sar')}
-							</h5>
-						</div>
-						{room?.name && (
-							<>
-								<h5
-									onMouseEnter={() => speechHandler(room?.name[locale])}
-									className="text-base font-normal my-1"
-								>
-									{room?.name[locale]}
-								</h5>
-								<button
-									onMouseEnter={() => speechHandler(t('changeRoom'))}
-									onClick={() => changeRoom(i)}
-									className="bg-transparent underline text-primary-dark font-normal text-lg my-1"
-								>
-									{t('changeRoom')}
-								</button>
-							</>
-						)}
-						<div className="flex justify-start items-center my-2">
-							<FontAwesomeIcon icon={faUserFriends} className="mx-2 w-4 h-4" />
-							<h6
-								onMouseEnter={() =>
-									speechHandler(
-										`${room?.adultsCount} ${
-											room?.adultsCount > 1 ? 'adults' : 'adult'
-										}`
-									)
-								}
-								className="mx-1"
-							>
-								{room?.adultsCount} {room?.adultsCount > 1 ? 'adults' : 'adult'}
-							</h6>
-							{room?.childCount > 0 && (
-								<h6
-									onMouseEnter={() =>
-										speechHandler(`
+                }
+                className="text-base font-normal"
+              >
+                {selectedPackages.length > 0 && selectedPackages[i]?.base_price
+                  ? selectedPackages[i]?.base_price
+                  : 0}{' '}
+                <i className="sicon-sar"></i>
+              </h5>
+            </div>
+            {room?.name && (
+              <>
+                <h5
+                  onMouseEnter={() => speechHandler(room?.name[locale])}
+                  className="text-base font-normal my-1"
+                >
+                  {room?.name[locale]}
+                </h5>
+                <button
+                  onMouseEnter={() => speechHandler(t('changeRoom'))}
+                  onClick={() => changeRoom(i)}
+                  className="bg-transparent underline text-primary-dark font-normal text-lg my-1"
+                >
+                  {t('changeRoom')}
+                </button>
+              </>
+            )}
+            <div className="flex justify-start items-center my-2">
+              <FontAwesomeIcon icon={faUserFriends} className="mx-2 w-4 h-4" />
+              <h6
+                onMouseEnter={() =>
+                  speechHandler(
+                    `${room?.adultsCount} ${
+                      room?.adultsCount > 1 ? 'adults' : 'adult'
+                    }`,
+                  )
+                }
+                className="mx-1"
+              >
+                {room?.adultsCount} {room?.adultsCount > 1 ? 'adults' : 'adult'}
+              </h6>
+              {room?.childCount > 0 && (
+                <h6
+                  onMouseEnter={() =>
+                    speechHandler(`
 								${room?.childCount}
 									${room?.childCount > 1 ? 'children' : 'child'}
 								`)
-									}
-									className="mx-1"
-								>
-									{room?.childCount}{' '}
-									{room?.childCount > 1 ? 'children' : 'child'}
-								</h6>
-							)}
-						</div>
-					</div>
-				))}
-			<div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black my-5">
-				<div className="flex justify-between items-start my-2">
-					<h5
-						onMouseEnter={() => speechHandler(t('totalRoomCharges'))}
-						className="text-base font-normal"
-					>
-						{t('totalRoomCharges')}
-					</h5>
-					<h5
-						onMouseEnter={() => speechHandler(`${totalPrice} ${t('sar')}`)}
-						className="text-base font-normal"
-					>
-						{totalPrice} {t('sar')}
-					</h5>
-				</div>
-				<div className="flex justify-between items-start my-2">
-					<h5
-						onMouseEnter={() => speechHandler(t('totalTaxes'))}
-						className="text-base font-normal"
-					>
-						{t('totalTaxes')}
-					</h5>
-					<h5
-						onMouseEnter={() => speechHandler(`126 ${t('sar')}`)}
-						className="text-base font-normal"
-					>
-						126 {t('sar')}
-					</h5>
-				</div>
-			</div>
-			<div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b flex justify-between items-start border-black my-5">
-				<h5
-					onMouseEnter={() => speechHandler(t('total4Stay'))}
-					className="text-lg font-medium"
-				>
-					{t('total4Stay')}:
-				</h5>
-				<h5
-					onMouseEnter={() => speechHandler(`${totalPrice + 126} ${t('sar')}`)}
-					className="text-lg font-medium"
-				>
-					{totalPrice + 126} {t('sar')}
-				</h5>
-			</div>
-			<button
-				onMouseEnter={() => speechHandler(t('continueToPayment'))}
-				disabled={!isPayable || currentStep === 3}
-				className={styles.paymentBtn}
-				onClick={() => moveToPay()}
-			>
-				{t('continueToPayment')}
-			</button>
-		</div>
-	);
-};
+                  }
+                  className="mx-1"
+                >
+                  {room?.childCount}{' '}
+                  {room?.childCount > 1 ? 'children' : 'child'}
+                </h6>
+              )}
+            </div>
+          </div>
+        ))}
+      <div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b border-black my-5">
+        <div className="flex justify-between items-start my-2">
+          <h5
+            onMouseEnter={() => speechHandler(t('totalRoomCharges'))}
+            className="text-base font-normal"
+          >
+            {t('totalRoomCharges')}
+          </h5>
+          <h5
+            onMouseEnter={() => speechHandler(`${totalPrice} ${t('sar')}`)}
+            className="text-base font-normal"
+          >
+            {totalPrice} <i className="sicon-sar"></i>
+          </h5>
+        </div>
+        <div className="flex justify-between items-start my-2">
+          <h5
+            onMouseEnter={() => speechHandler(t('totalTaxes'))}
+            className="text-base font-normal"
+          >
+            {t('totalTaxes')}
+          </h5>
+          <h5
+            onMouseEnter={() => speechHandler(`126 ${t('sar')}`)}
+            className="text-base font-normal"
+          >
+            126 <i className="sicon-sar"></i>
+          </h5>
+        </div>
+      </div>
+      <div className="px-2 py-3 mx-auto w-full md:w-10/12 border-0 border-b flex justify-between items-start border-black my-5">
+        <h5
+          onMouseEnter={() => speechHandler(t('total4Stay'))}
+          className="text-lg font-medium"
+        >
+          {t('total4Stay')}:
+        </h5>
+        <h5
+          onMouseEnter={() => speechHandler(`${totalPrice + 126} ${t('sar')}`)}
+          className="text-lg font-medium"
+        >
+          {totalPrice + 126} <i className="sicon-sar"></i>
+        </h5>
+      </div>
+      <button
+        onMouseEnter={() => speechHandler(t('continueToPayment'))}
+        disabled={!isPayable || currentStep === 3}
+        className={styles.paymentBtn}
+        onClick={() => moveToPay()}
+      >
+        {t('continueToPayment')}
+      </button>
+    </div>
+  )
+}
 
-export default BookingRooms;
+export default BookingRooms
